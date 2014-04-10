@@ -1,0 +1,12 @@
+{
+  "framework": "jasmine",
+  "before_tests": "grunt coffee",
+  "src_files": [
+    "bower_components/jquery/jquery.js",
+    "bower_components/underscore/underscore.js",
+    "bower_components/backbone/backbone.js",
+    "bower_components/jasmine-jquery/lib/jasmine-jquery.js",
+    ".tmp/scripts/**/*.js",
+    ".tmp/spec/**/*.js"
+  ]
+}
