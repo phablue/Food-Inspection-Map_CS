@@ -10,4 +10,6 @@ describe "Test UI", ->
     it "Changes restaurantName value", ->
       ui = new UI
       expect(ui.restaurantName).toBeNull
-    
+      $(".form-control").val "EpicBurger"
+      ui.searchRestaurant()
+      expect(ui.restaurantName).toBe "EpicBurger"
