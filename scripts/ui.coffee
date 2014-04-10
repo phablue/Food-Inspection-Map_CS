@@ -7,7 +7,9 @@ class UI
     @restaurantName = encodeURIComponent $(".form-control").val()
 
   searchResult: ->
-    $.getJSON(@url, {"dba_name": @restaurantName}).done((data) ->
-      $(".result").html(data.dba_name))
+    $.getJSON(@url, {"dba_name": @restaurantName}).done(@showResult)
+
+  showResult: (data)->
+    $(".result").html(data.dba_name)
 
 window.UI = UI

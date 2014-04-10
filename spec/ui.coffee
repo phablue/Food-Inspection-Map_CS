@@ -26,3 +26,10 @@ describe "Test UI", ->
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       ui.searchResult()
       expect($(".result")).toHaveHtml ui.restaurantName
+
+  describe "Test showResult function", ->
+    it 'Changes <div class = "result"></div> text', ->
+      data = {"dba_name": "icecream"}
+      expect($(".result")).toBeEmpty
+      (new UI).showResult(data)
+      expect($(".result")).toHaveHtml "icecream"
