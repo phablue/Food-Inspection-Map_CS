@@ -8,6 +8,6 @@ class UI
 
   getData: ->
     $.getJSON(@url, {"dba_name": @restaurantName}).done((data) ->
-      $(".result").text(data.dba_name))
+      $(".result").html(data.dba_name))
 
 window.UI = UI

@@ -21,5 +21,8 @@ describe "Test UI", ->
     it 'Changes <div class = "result"></div> text', ->
       ui = new UI
       ui.restaurantName = "Domino pizza"
-      data = {"dba_name": @restaurantName}
+      data = {"dba_name": ui.restaurantName}
       expect($(".result")).toBeEmpty
+      getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
+      ui.getData()
+      expect($(".result")).toHaveHtml ui.restaurantName
