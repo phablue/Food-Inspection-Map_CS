@@ -33,3 +33,7 @@ describe "Test UI", ->
       expect($(".result")).toBeEmpty
       (new UI).showResult(data)
       expect($(".result")).toHaveHtml "icecream"
+
+  describe "Test searchingRestaurant function", ->
+    it "searchingRestaurant function", ->
+      (new UI).searchingRestaurant()

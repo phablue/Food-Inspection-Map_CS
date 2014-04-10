@@ -12,4 +12,7 @@ class UI
   showResult: (data)->
     $(".result").html(data.dba_name)
 
+  searchingRestaurant: ->
+
+
 window.UI = UI
