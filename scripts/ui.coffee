@@ -7,7 +7,7 @@ class UI
     @restaurantName = $(".form-control").val()
 
   searchResult: ->
-    $.getJSON(@url, {"dba_name": @restaurantName}).done(@showResult)
+    $.getJSON(@url, {"dba_name": @restaurantName}).done @showResult
 
   showResult: (data) =>
     i = 0
