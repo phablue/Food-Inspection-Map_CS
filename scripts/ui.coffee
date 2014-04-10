@@ -18,6 +18,7 @@ class UI
       @searchResult()
       event.preventDefault();
 
+
 window.UI = UI
 
 ui = new UI

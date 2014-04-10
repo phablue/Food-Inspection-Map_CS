@@ -9,15 +9,30 @@
       <div class = "page-header">
         <h1>Dirty Restaurant in Chicago</h1>
       </div>
-      <p class = "lead">Search restaurant's name and checks their food inspection records.</p>
-      <div class = "page-main">
+      <div class = "jumbotron">
+        <p class = "lead">Search restaurant's name and checks their food inspection records.</p>
         <form>
           <input type = "text" class = "form-control"><br>
           <button type = "submit" class = "btn btn-default">Search</button>
         </form>
+      </div><br>
+      <div class = "result">
+        <h2 class = "sub-header"></h2>
+        <h3><label>Address : </label></h3><br>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Inspection_type</th>
+              <th>Inspection_date</th>
+              <th>Risk</th>
+              <th>Results</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
       </div>
-      <div class = "result"></div>
-      <div class = "map"></div>
     </div>
     <div id = "footer">
       <div class = "container">

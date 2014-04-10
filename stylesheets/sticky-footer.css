@@ -10,7 +10,7 @@ body {
 }
 
 .page-header h1 {
-  color: #1B84B5;
+  color: #606D80;
   font-size: 40px;
   font-weight: bolder;
 }
@@ -28,12 +28,27 @@ body {
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
-
-.container {
-  width: auto;
-  max-width: 680px;
-  padding: 0 15px;
-}
 .container .text-muted {
   margin: 20px 0;
+}
+
+.jumbotron{
+  background-color: #DCE0E6;
+}
+
+.form-control {
+  width: 500px;
+}
+
+h2 {
+  color: #607890;
+  text-decoration: underline;
+  text-transform: capitalize;
+}
+h3 {
+  color: #607890;
+}
+
+p {
+  color: #031634;
 }
