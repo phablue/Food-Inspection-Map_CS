@@ -6,7 +6,7 @@ class UI
   searchWords: ->
     @restaurantName = encodeURIComponent $(".form-control").val()
 
-  getData: ->
+  searchResult: ->
     $.getJSON(@url, {"dba_name": @restaurantName}).done((data) ->
       $(".result").html(data.dba_name))
 

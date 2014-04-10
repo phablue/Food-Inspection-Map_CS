@@ -14,9 +14,9 @@ describe "Test UI", ->
       ui.searchWords()
       expect(ui.restaurantName).toBe "EpicBurger"
 
-  describe "Test getData function", ->
-    it "getData function", ->
-      (new UI).getData()
+  describe "Test searchResult function", ->
+    it "searchResult function", ->
+      (new UI).searchResult()
 
     it 'Changes <div class = "result"></div> text', ->
       ui = new UI
@@ -24,5 +24,5 @@ describe "Test UI", ->
       data = {"dba_name": ui.restaurantName}
       expect($(".result")).toBeEmpty
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
-      ui.getData()
+      ui.searchResult()
       expect($(".result")).toHaveHtml ui.restaurantName
