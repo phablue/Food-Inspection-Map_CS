@@ -1,10 +1,13 @@
 describe "Test UI", ->
   beforeEach ->
-    setFixtures ('<div> <form class = "form-inline"> \
-                    <input type = "text" class = "form-control" > \
-                    <button type = "submit" class = "btn-default">Search</button> \
-                  </form> </div> \
-                  <div class = "result"></div>')
+    setFixtures ('<div> <form class = "form-inline">
+                    <input type = "text" class = "form-control" >
+                    <button type = "submit" class = "btn-default">Search</button>
+                  </form> </div>
+                  <div class = "result">
+                    <h2 class = "sub-header"></h2>
+                    <h3><label>Address : </label></h3><br>
+                  </div>')
 
   describe "Test searchWords function", ->
     it "Changes restaurantName value", ->
@@ -18,31 +21,40 @@ describe "Test UI", ->
     it "searchResult function", ->
       (new UI).searchResult()
 
-    it 'Changes <div class = "result"></div> text', ->
+    it 'Changes <h2> and <h3> text', ->
       ui = new UI
       ui.restaurantName = "Domino pizza"
-      data = {"dba_name": ui.restaurantName}
-      expect($(".result")).toBeEmpty
+      data = [{"dba_name": ui.restaurantName, "address": "Chicago"}]
+      expect($(".sub-header")).toBeEmpty
+      expect($("h3")).toBeEmpty
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       ui.searchResult()
-      expect($(".result")).toHaveHtml ui.restaurantName
+      expect($(".sub-header")).toHaveHtml ui.restaurantName
+      expect($("h3")).toContainText "Chicago"
 
   describe "Test showResult function", ->
-    it 'Changes <div class = "result"></div> text', ->
-      data = {"dba_name": "icecream"}
-      expect($(".result")).toBeEmpty
-      (new UI).showResult(data)
-      expect($(".result")).toHaveHtml "icecream"
+    it 'Changes <h2> and <h3> text', ->
+      ui = new UI
+      ui.restaurantName = "Domino pizza"
+      data = [{"dba_name": "icecream", "address": "ChinaTown"}]
+      expect($(".sub-header")).toBeEmpty
+      expect($("h3")).toBeEmpty
+      ui.showResult(data)
+      expect($(".sub-header")).toHaveHtml ui.restaurantName
+      expect($("h3")).toContainText "ChinaTown"
 
   describe "Test searchingRestaurant function", ->
     it "searchingRestaurant function", ->
       (new UI).searchingRestaurant()
 
-    it "show result after clicks a search button", ->
-      data = {"dba_name": "dimsum"}
-      expect($(".result")).toBeEmpty
+    it "Changes <h2> and <h3> text after clicks a search button", ->
+      ui = new UI
+      data = [{"dba_name": "dimsum", "address": "The Loop"}]
+      expect($(".sub-header")).toBeEmpty
+      expect($("h3")).toBeEmpty
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       $(".form-control").val "dimsum"
-      (new UI).searchingRestaurant()
+      ui.searchingRestaurant()
       $("button").click()
-      expect($(".result")).toHaveHtml "dimsum"
+      expect($(".sub-header")).toHaveHtml ui.restaurantName
+      expect($("h3")).toContainText "The Loop"
