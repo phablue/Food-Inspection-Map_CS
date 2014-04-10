@@ -13,3 +13,7 @@ describe "Test UI", ->
       $(".form-control").val "EpicBurger"
       ui.searchRestaurant()
       expect(ui.restaurantName).toBe "EpicBurger"
+
+  describe "Test getData function", ->
+    it "getData function", ->
+      (new UI).getData()

@@ -6,4 +6,7 @@ class UI
   searchRestaurant: ->
     @restaurantName = encodeURIComponent $(".form-control").val()
 
+  getData: ->
+
+
 window.UI = UI
