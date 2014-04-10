@@ -13,6 +13,9 @@ class UI
     $(".result").html(data.dba_name)
 
   searchingRestaurant: ->
-
+    $("form").submit =>
+      @searchWords()
+      @searchResult()
+      event.preventDefault();
 
 window.UI = UI

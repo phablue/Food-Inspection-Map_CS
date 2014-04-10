@@ -37,3 +37,12 @@ describe "Test UI", ->
   describe "Test searchingRestaurant function", ->
     it "searchingRestaurant function", ->
       (new UI).searchingRestaurant()
+
+    it "show result after clicks a search button", ->
+      data = {"dba_name": "dimsum"}
+      expect($(".result")).toBeEmpty
+      getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
+      $(".form-control").val "dimsum"
+      (new UI).searchingRestaurant()
+      $("button").click()
+      expect($(".result")).toHaveHtml "dimsum"
