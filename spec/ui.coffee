@@ -17,3 +17,9 @@ describe "Test UI", ->
   describe "Test getData function", ->
     it "getData function", ->
       (new UI).getData()
+
+    it 'Changes <div class = "result"></div> text', ->
+      ui = new UI
+      ui.restaurantName = "Domino pizza"
+      data = {"dba_name": @restaurantName}
+      expect($(".result")).toBeEmpty
