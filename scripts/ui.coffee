@@ -3,7 +3,7 @@ class UI
     @url = "https://data.cityofchicago.org/resource/4ijn-s7e5.json?$limit=25&$offset=0"
     @restaurantName = null
 
-  searchRestaurant: ->
+  searchWords: ->
     @restaurantName = encodeURIComponent $(".form-control").val()
 
   getData: ->

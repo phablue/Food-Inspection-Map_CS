@@ -6,12 +6,12 @@ describe "Test UI", ->
                   </form> </div> \
                   <div class = "result"></div>')
 
-  describe "Test searchRestaurant function", ->
+  describe "Test searchWords function", ->
     it "Changes restaurantName value", ->
       ui = new UI
       expect(ui.restaurantName).toBeNull
       $(".form-control").val "EpicBurger"
-      ui.searchRestaurant()
+      ui.searchWords()
       expect(ui.restaurantName).toBe "EpicBurger"
 
   describe "Test getData function", ->
