@@ -1,6 +1,6 @@
 class UI
   constructor: ->
-    @url = "https://data.cityofchicago.org/resource/4ijn-s7e5.json?$limit=25&$offset=0"
+    @url = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
     @restaurantName = null
 
   searchWords: ->
@@ -9,7 +9,7 @@ class UI
   searchResult: ->
     $.getJSON(@url, {"dba_name": @restaurantName}).done(@showResult)
 
-  showResult: (data)->
+  showResult: (data) ->
     $(".result").html(data.dba_name)
 
   searchingRestaurant: ->
@@ -19,3 +19,6 @@ class UI
       event.preventDefault();
 
 window.UI = UI
+
+ui = new UI
+ui.searchingRestaurant()
