@@ -75,3 +75,13 @@ describe "Test UI", ->
       $("button").click()
       expect($(".sub-header")).toHaveHtml ui.restaurantName
       expect($("h3")).toContainText "The Loop"
+
+    it "show warnning message if search word is not in data, after clicks a search button", ->
+      ui = new UI
+      data = [{"dba_name": "phatai", "address": "The Loop"}]
+      expect($("p")).not.toExist
+      getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
+      $(".form-control").val "dimsum"
+      ui.searchingRestaurant()
+      $("button").click()
+      expect($("p")).toExist
