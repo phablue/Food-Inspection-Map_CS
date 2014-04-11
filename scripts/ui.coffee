@@ -11,7 +11,7 @@ class UI
 
   showResult: (data) =>
     if _.isEmpty(data)
-      $(".title").prepend '<p class="bg-danger">No results for ' + @restaurantName + '</p>'
+      $(".title").prepend '<p class="bg-danger">No results for &nbsp"' + @restaurantName + '"</p>'
     else
       i = 0
       $(".sub-header").text @restaurantName
