@@ -27,6 +27,7 @@ class UI
       event.preventDefault();
 
   resetSearchResult: ->
+    $("tbody").empty();
 
 window.UI = UI
 

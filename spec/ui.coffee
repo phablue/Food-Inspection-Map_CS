@@ -7,7 +7,10 @@ describe "Test UI", ->
                   <div class = "result">
                     <h2 class = "sub-header"></h2>
                     <h3><label>Address : </label></h3><br>
-                  </div>')
+                  </div>
+                  <table class="table table-striped">
+                  <thead></thead>
+                  <tbody></tbody> </table>')
 
   describe "Test searchWords function", ->
     it "Changes restaurantName value", ->
@@ -89,3 +92,11 @@ describe "Test UI", ->
   describe "Test resetSearchResult function", ->
     it "resetSearchResult function", ->
       (new UI).resetSearchResult()
+
+    it "reset <tbody><tbody>", ->
+      $("tbody").append "<tr><td>hi</td></tr>"
+      expect($("td")).toExist
+      expect($("tbody")).toHaveText "hi"
+      (new UI).resetSearchResult()
+      expect($("td")).not.toExist
+      expect($("tbody")).not.toHaveText "hi"
