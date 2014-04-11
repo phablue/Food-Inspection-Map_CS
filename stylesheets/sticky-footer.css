@@ -52,3 +52,10 @@ h3 {
 p {
   color: #031634;
 }
+
+.bg-danger {
+  color: #FE4365;
+  font-size: 18px;
+  font-weight: bolder;
+  padding: 10px 10px 10px 10px;
+}
