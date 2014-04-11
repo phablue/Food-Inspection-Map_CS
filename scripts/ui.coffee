@@ -22,7 +22,7 @@ class UI
 
   searchingRestaurant: ->
     $("form").submit =>
-      $("tbody").empty()
+      @resetSearchResult()
       @searchWords()
       @searchResult()
       event.preventDefault()
