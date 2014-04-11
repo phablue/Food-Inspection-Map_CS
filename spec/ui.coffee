@@ -94,9 +94,12 @@ describe "Test UI", ->
       (new UI).resetSearchResult()
 
     it "reset <tbody><tbody>", ->
+      $(".result").prepend '<p class="bg-danger">danger</p>'
       $("tbody").append "<tr><td>hi</td></tr>"
+      expect($(".bg-danger")).toExist
       expect($("td")).toExist
       expect($("tbody")).toHaveText "hi"
       (new UI).resetSearchResult()
+      expect($(".bg-danger")).not.toExist
       expect($("td")).not.toExist
       expect($("tbody")).not.toHaveText "hi"
