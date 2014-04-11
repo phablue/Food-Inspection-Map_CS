@@ -22,6 +22,7 @@ class UI
                           "</td><td>" +  data[i].violations + "</td></tr>"
         i++
         # how to json data edit? '|' replace to "\n"
+        # pass getjson  searchwords include name
 
   searchingRestaurant: ->
     $("form").submit =>
