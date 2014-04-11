@@ -22,12 +22,14 @@ class UI
 
   searchingRestaurant: ->
     $("form").submit =>
+      $("tbody").empty();
       @searchWords()
       @searchResult()
       event.preventDefault();
 
   resetSearchResult: ->
     $("tbody").empty();
+    $(".bg-danger").empty();
 
 window.UI = UI
 
