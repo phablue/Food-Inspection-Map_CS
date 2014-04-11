@@ -17,8 +17,11 @@ class UI
       $(".sub-header").text @restaurantName
       while i < data.length
         $("h3").html "<label>Address : </label>&nbsp" + data[0].address
-        $("tbody").append "<tr><td>" + (i+1) + "</td><td>" + data[i].inspection_type + "</td><td>" + data[i].inspection_date + "</td><td>" + data[i].risk + "</td><td>" + data[i].results + "</td><td>" + data[i].violations + "</td></tr>"
+        $("tbody").append "<tr><td>" + (i+1) + "</td><td>" + data[i].inspection_type + "</td><td>" +
+                          data[i].inspection_date + "</td><td>" + data[i].risk + "</td><td>" + data[i].results +
+                          "</td><td>" +  data[i].violations + "</td></tr>"
         i++
+        # how to json data edit? '|' replace to "\n"
 
   searchingRestaurant: ->
     $("form").submit =>
