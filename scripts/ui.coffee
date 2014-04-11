@@ -36,6 +36,3 @@ class UI
     $(".title").html '<h2 class = "sub-header"></h2><h3></h3><br>'
 
 window.UI = UI
-
-ui = new UI
-ui.searchingRestaurant()
