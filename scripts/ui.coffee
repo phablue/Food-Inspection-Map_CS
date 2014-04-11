@@ -11,7 +11,7 @@ class UI
 
   showResult: (data) =>
     if _.isEmpty(data)
-      $(".result").prepend '<p class="bg-danger">No results for ' + @restaurantName + '</p>'
+      $(".title").prepend '<p class="bg-danger">No results for ' + @restaurantName + '</p>'
     else
       i = 0
       $(".sub-header").text @restaurantName
@@ -22,14 +22,14 @@ class UI
 
   searchingRestaurant: ->
     $("form").submit =>
-      $("tbody").empty();
+      $("tbody").empty()
       @searchWords()
       @searchResult()
-      event.preventDefault();
+      event.preventDefault()
 
   resetSearchResult: ->
     $("tbody").empty();
-    $(".bg-danger").empty();
+    $(".title").html '<h2 class = "sub-header"></h2><h3></h3><br>'
 
 window.UI = UI
 
