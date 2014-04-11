@@ -85,3 +85,7 @@ describe "Test UI", ->
       ui.searchingRestaurant()
       $("button").click()
       expect($("p")).toExist
+
+  describe "Test resetSearchResult function", ->
+    it "resetSearchResult function", ->
+      (new UI).resetSearchResult()

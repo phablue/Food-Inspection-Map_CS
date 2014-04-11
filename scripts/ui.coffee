@@ -26,6 +26,8 @@ class UI
       @searchResult()
       event.preventDefault();
 
+  resetSearchResult: ->
+
 window.UI = UI
 
 ui = new UI
