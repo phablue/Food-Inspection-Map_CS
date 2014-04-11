@@ -42,7 +42,7 @@ describe "Test UI", ->
       expect($("p")).toExist
 
   describe "Test showResult function", ->
-    it 'Changes <h2> and <h3> text', ->
+    it 'Changes <h2> and <h3> text if data from server is not null', ->
       ui = new UI
       ui.restaurantName = "icecream"
       data = [{"dba_name": "icecream", "address": "ChinaTown"}]
@@ -52,6 +52,13 @@ describe "Test UI", ->
       expect($(".sub-header")).toHaveHtml ui.restaurantName
       expect($("h3")).toContainText "ChinaTown"
 
+    it 'Changes <h2> and <h3> text if data from server is null', ->
+      ui = new UI
+      ui.restaurantName = "Candy"
+      data = [{"dba_name": "Chocolate", "address": "DownTown"}]
+      expect($("p")).not.toExist
+      ui.showResult(data)
+      expect($("p")).toExist
 
   describe "Test searchingRestaurant function", ->
     it "searchingRestaurant function", ->
