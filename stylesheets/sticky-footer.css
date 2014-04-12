@@ -61,8 +61,8 @@ p {
 }
 
 #map-canvas {
-  height: 400px;
+  height: 58%;
   margin: 0px;
   padding: 0px;
-  width: 600px;
+  width: 80%;
 }
