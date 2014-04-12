@@ -5,6 +5,6 @@ class GoogleMap
       zoom: 11
       mapTypeId: google.maps.MapTypeId.ROADMAP
 
-    map = new google.maps.Map($("#map-canvas"), mapProp)
+    map = new google.maps.Map($("#map-canvas")[0], mapProp)
 
 window.GoogleMap = GoogleMap
