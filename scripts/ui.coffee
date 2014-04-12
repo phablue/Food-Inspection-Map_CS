@@ -25,7 +25,7 @@ class UI
         # pass getjson  searchwords include name
 
   searchingRestaurant: ->
-    @hidetable()
+    @hideElement(".result")
     $("form").submit =>
       @resetSearchResult()
       @searchWords()
@@ -36,7 +36,7 @@ class UI
     $("tbody").empty()
     $(".title").html '<h2 class = "sub-header"></h2><h3></h3><br>'
 
-  hidetable: ->
-    $("thead").hide()
+  hideElement: (element) ->
+    $(element).hide()
 
 window.UI = UI
