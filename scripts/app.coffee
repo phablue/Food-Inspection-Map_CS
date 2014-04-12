@@ -3,4 +3,4 @@ $ ->
   googlemap = new GoogleMap
 
   ui.searchingRestaurant()
-  googlemap.showGoogleMap()
+  googlemap.setGoogleMap(google)
