@@ -9,10 +9,11 @@ body {
   margin-bottom: 60px;
 }
 
-.page-header h1 {
+.page-header {
   color: #606D80;
   font-size: 40px;
   font-weight: bolder;
+  text-transform: capitalize;
 }
 
 /* Custom page CSS
