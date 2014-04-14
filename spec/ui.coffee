@@ -5,7 +5,7 @@ describe "Test UI", ->
                   </form> </div>
                   <div class = "result">
                     <div class = "title">
-                      <h1 class = "page-header"><h2 class = "sub-header"></h2></h1>
+                      <h1 class = "page-header"><small></small></h1>
                     </div>
                   <table class="table table-striped">
                   <thead></thead>
@@ -27,12 +27,12 @@ describe "Test UI", ->
       ui = new UI
       ui.restaurantName = "Domino pizza"
       data = [{"dba_name": ui.restaurantName, "address": "Chicago"}]
-      expect($(".sub-header")).toBeEmpty
+      expect($("small")).toBeEmpty
       expect($("h3")).toBeEmpty
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       ui.searchResult()
-      expect($(".page-header")).toHaveHtml ui.restaurantName
-      expect($(".sub-header")).toContainText "Chicago"
+      expect($(".page-header")).toContainText ui.restaurantName
+      expect($("small")).toContainText "Chicago"
 
     it 'show warnning message if search word not in data', ->
       ui = new UI
@@ -49,10 +49,10 @@ describe "Test UI", ->
       ui.restaurantName = "icecream"
       data = [{"dba_name": "icecream", "address": "ChinaTown"}]
       expect($(".page-header")).toBeEmpty
-      expect($(".sub-header")).toBeEmpty
+      expect($("small")).toBeEmpty
       ui.showResult(data)
-      expect($(".page-header")).toHaveHtml ui.restaurantName
-      expect($(".sub-header")).toContainText "ChinaTown"
+      expect($(".page-header")).toContainText ui.restaurantName
+      expect($("small")).toContainText "ChinaTown"
 
     it 'Changes <h1> and <h2> text if data from server is null', ->
       ui = new UI
@@ -70,14 +70,14 @@ describe "Test UI", ->
       ui = new UI
       data = [{"dba_name": "dimsum", "address": "The Loop"}]
       expect($(".page-header")).toBeEmpty
-      expect($(".sub-header")).toBeEmpty
+      expect($("small")).toBeEmpty
       e = $.Event("submit")
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       $(".form-control").val "dimsum"
       ui.searchingRestaurant()
       $(".form-control").trigger(e)
-      expect($(".page-header")).toHaveHtml ui.restaurantName
-      expect($(".sub-header")).toContainText "The Loop"
+      expect($(".page-header")).toContainText ui.restaurantName
+      expect($("small")).toContainText "The Loop"
 
     it "show warnning message if search word is not in data, after clicks a search button", ->
       ui = new UI
