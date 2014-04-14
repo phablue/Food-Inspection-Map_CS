@@ -4,15 +4,15 @@ class UI
     @url = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
     @restaurantName = null
 
-  getDirtyRestaurants: ->
-    $.getJSON(@url).done @showAllDirtyRestaurants
+  # getDirtyRestaurants: ->
+  #   $.getJSON(@url).done @showAllDirtyRestaurants
 
-  showAllDirtyRestaurants: (data) =>
-    unless @checkHasViolations(data)
-      i = 0
-      while i < data.length
-        @googleMap.markLocation(data[i].latitude, data[i].longitude)
-        i++
+  # showAllDirtyRestaurants: (data) =>
+  #   unless @checkHasViolations(data)
+  #     i = 0
+  #     while i < data.length
+  #       @googleMap.markLocation(data[i].latitude, data[i].longitude)
+  #       i++
 
   searchWords: ->
     @restaurantName = $(".form-control").val()
@@ -24,10 +24,12 @@ class UI
     if _.isEmpty(data)
       $(".result").before '<br><br><p class="bg-danger">No results for &nbsp"' + @restaurantName + '"</p>'
     else if !@checkHasViolations(data)
+      $("#map-canvas").css "height": "37%", "width": "50%"
       @showElement ".result"
       i = 0
       $(".page-header").text @restaurantName
       $(".page-header").append "<small>&nbsp&nbsp(" + data[0].address + "Chicago)</small>"
+      @googleMap.markLocation(data[0].latitude, data[0].longitude)
       while i < data.length
         $("tbody").append "<tr><td>" + (i+1) + "</td><td>" + data[i].inspection_type + "</td><td>" +
                           data[i].inspection_date + "</td><td>" + data[i].risk + "</td><td>" + data[i].results +
@@ -37,7 +39,7 @@ class UI
         # pass getjson  searchwords include name
 
   searchingRestaurant: ->
-    @getDirtyRestaurants()
+    # @getDirtyRestaurants()
     @hideElement ".result"
     $("form").submit =>
       @resetSearchResult()
