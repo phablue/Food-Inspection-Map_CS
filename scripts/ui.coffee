@@ -24,16 +24,13 @@ class UI
     if _.isEmpty(data)
       $(".result").before '<br><br><p class="bg-danger">No results for &nbsp"' + @restaurantName + '"</p>'
     else if !@checkHasViolations(data)
-      $("#map-canvas").css "height": "37%", "width": "50%"
-      @showElement ".result"
       i = 0
-      $(".page-header").text @restaurantName
-      $(".page-header").append "<small>&nbsp&nbsp(" + data[0].address + "Chicago)</small>"
+      @setMapCSS()
+      @showElement ".result"
+      @setPageHeader(data)
       @googleMap.markLocation(data[0].latitude, data[0].longitude)
       while i < data.length
-        $("tbody").append "<tr><td>" + (i+1) + "</td><td>" + data[i].inspection_type + "</td><td>" +
-                          data[i].inspection_date + "</td><td>" + data[i].risk + "</td><td>" + data[i].results +
-                          "</td><td>" +  data[i].violations + "</td></tr>"
+        @setTableBody(data, i)
         i++
         # how to json data edit? '|' replace to "\n"
         # pass getjson  searchwords include name
@@ -57,6 +54,18 @@ class UI
 
   showElement: (element) ->
     $(element).show()
+
+  setMapCSS: ->
+    $("#map-canvas").css "height": "37%", "width": "50%"
+
+  setPageHeader: (data) ->
+    $(".page-header").text @restaurantName
+    $(".page-header").append "<small>&nbsp&nbsp(" + data[0].address + "Chicago)</small>"
+
+  setTableBody: (data, i) ->
+    $("tbody").append "<tr><td>" + (i+1) + "</td><td>" + data[i].inspection_type + "</td><td>" +
+                      data[i].inspection_date + "</td><td>" + data[i].risk + "</td><td>" + data[i].results +
+                      "</td><td>" +  data[i].violations + "</td></tr>"
 
   checkHasViolations: (data) ->
     true if _.isNull(@howManyViolations(data))
