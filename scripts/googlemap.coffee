@@ -3,7 +3,7 @@ class GoogleMap
     @google = google
     mapConfig =
       center: new google.maps.LatLng 41.8819, -87.6278
-      zoom: 11
+      zoom: 14
       mapTypeId: google.maps.MapTypeId.ROADMAP
     @map = new google.maps.Map $("#map-canvas")[0], mapConfig
 
