@@ -34,7 +34,7 @@ class UI
       event.preventDefault()
 
   resetSearchResult: ->
-    $(".result").empty()
+    $(".title, tbody").empty()
     $(".bg-danger, br").remove();
     $(".title").html '<h1 class = "page-header"><small></small></h1>'
 
