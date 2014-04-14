@@ -1,6 +1,6 @@
 $ ->
   ui = new UI
-  googlemap = new GoogleMap
+  googlemap = new GoogleMap(google)
 
   ui.searchingRestaurant()
-  googlemap.setGoogleMap(google)
+  googlemap.markLocation()
