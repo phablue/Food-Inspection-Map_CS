@@ -10,9 +10,10 @@ class UI
     $.getJSON(@url, {"dba_name": @restaurantName}).done @showResult
 
   showResult: (data) =>
-    if _.isEmpty(data) && @checkHasViolations(data)
-      $(".title").prepend '<p class="bg-danger">No results for &nbsp"' + @restaurantName + '"</p>'
-    else
+    if _.isEmpty(data)
+      $(".result").before '<br><br><p class="bg-danger">No results for &nbsp"' + @restaurantName + '"</p>'
+    else if !@checkHasViolations(data)
+      @showElement ".result"
       i = 0
       $(".page-header").text @restaurantName
       $(".page-header").append "<small>&nbsp&nbsp(" + data[0].address + "Chicago)</small>"
@@ -27,14 +28,14 @@ class UI
   searchingRestaurant: ->
     @hideElement ".result"
     $("form").submit =>
-      @showElement ".result"
       @resetSearchResult()
       @searchWords()
       @searchResult()
       event.preventDefault()
 
   resetSearchResult: ->
-    $("tbody").empty()
+    $(".result").empty()
+    $(".bg-danger, br").remove();
     $(".title").html '<h1 class = "page-header"><small></small></h1>'
 
   hideElement: (element) ->
