@@ -1,7 +1,18 @@
 class UI
-  constructor: ->
+  constructor: (google) ->
+    @googleMap = new GoogleMap(google)
     @url = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
     @restaurantName = null
+
+  getDirtyRestaurants: ->
+    $.getJSON(@url).done @showAllDirtyRestaurants
+
+  showAllDirtyRestaurants: (data) =>
+    unless @checkHasViolations(data)
+      i = 0
+      while i < data.length
+        @googleMap.markLocation(data[i].latitude, data[i].longitude)
+        i++
 
   searchWords: ->
     @restaurantName = $(".form-control").val()
