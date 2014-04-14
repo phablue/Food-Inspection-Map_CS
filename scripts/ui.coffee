@@ -25,8 +25,9 @@ class UI
         # pass getjson  searchwords include name
 
   searchingRestaurant: ->
-    @hideElement(".result")
+    @hideElement ".result"
     $("form").submit =>
+      @showElement ".result"
       @resetSearchResult()
       @searchWords()
       @searchResult()
