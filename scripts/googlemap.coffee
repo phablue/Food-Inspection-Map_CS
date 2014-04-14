@@ -7,8 +7,8 @@ class GoogleMap
       mapTypeId: google.maps.MapTypeId.ROADMAP
     @map = new google.maps.Map $("#map-canvas")[0], mapConfig
 
-  getLocation: ->
-    new @google.maps.LatLng  41.7662898046204, -87.58231128994727
+  getLocation: (latitude, longitude) ->
+    new @google.maps.LatLng  latitude, longitude
 
   markLocation: ->
     marker = new @google.maps.Marker
