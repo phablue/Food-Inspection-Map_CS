@@ -14,7 +14,7 @@ class UI
       $(".title").prepend '<p class="bg-danger">No results for &nbsp"' + @restaurantName + '"</p>'
     else
       i = 0
-      $(".sub-header").text @restaurantName
+      $(".page-header").text @restaurantName
       while i < data.length
         $("h3").html "<label>Address : </label>&nbsp" + data[0].address
         $("tbody").append "<tr><td>" + (i+1) + "</td><td>" + data[i].inspection_type + "</td><td>" +
@@ -25,7 +25,7 @@ class UI
         # pass getjson  searchwords include name
 
   searchingRestaurant: ->
-    @hideElement(".result")
+    # @hideElement(".result")
     $("form").submit =>
       @resetSearchResult()
       @searchWords()
@@ -34,7 +34,7 @@ class UI
 
   resetSearchResult: ->
     $("tbody").empty()
-    $(".title").html '<h2 class = "sub-header"></h2><h3></h3><br>'
+    $(".title").html '<h1 class = "page-header"></h1><h2 class = "sub-header"></h2><h3></h3><br>'
 
   hideElement: (element) ->
     $(element).hide()
