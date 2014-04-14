@@ -15,29 +15,41 @@ body {
   font-weight: bolder;
 }
 
-#footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: #f5f5f5;
-}
-
-
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
-.container .text-muted {
-  margin: 20px 0;
+.container {
+  margin-top: 100px;
+  width: 90%;
 }
 
-.jumbotron{
+form {
+  margin-top: 15px;
+}
+
+.navbar-fixed-top{
   background-color: #DCE0E6;
+  border-color: #DCE0E6;
+  margin: auto;
+  margin-top: 10px;
+  min-height: 60px;
+  padding-left: 8px;
+  padding-top: 4px;
+  width: 90%;
+}
+
+.navbar-inverse .navbar-brand {
+  color: #606D80;
+  font-size: 32px;
+  font-weight: bolder;
 }
 
 .form-control {
-  width: 500px;
+  height: 37px;
+}
+
+input {
+  width: 100%;
 }
 
 h2 {
@@ -61,7 +73,7 @@ p {
 }
 
 #map-canvas {
-  height: 58%;
+  height: 70%;
   margin: 0px;
   padding: 0px;
   width: 100%;
