@@ -10,9 +10,9 @@ class GoogleMap
   getLocation: (latitude, longitude) ->
     new @google.maps.LatLng  latitude, longitude
 
-  markLocation: ->
+  markLocation: (latitude, longitude)->
     marker = new @google.maps.Marker
-      position: @getLocation(),
+      position: @getLocation(latitude, longitude),
       map: @map
 
 window.GoogleMap = GoogleMap
