@@ -15,8 +15,8 @@ class UI
     else
       i = 0
       $(".page-header").text @restaurantName
+      $(".page-header").append "<small>&nbsp&nbsp(" + data[0].address + "Chicago)</small>"
       while i < data.length
-        $(".sub-header").text "(" + data[0].address + ")"
         $("tbody").append "<tr><td>" + (i+1) + "</td><td>" + data[i].inspection_type + "</td><td>" +
                           data[i].inspection_date + "</td><td>" + data[i].risk + "</td><td>" + data[i].results +
                           "</td><td>" +  data[i].violations + "</td></tr>"
@@ -34,7 +34,7 @@ class UI
 
   resetSearchResult: ->
     $("tbody").empty()
-    $(".title").html '<h1 class = "page-header"><h2 class = "sub-header"></h2></h1>'
+    $(".title").html '<h1 class = "page-header"><small></small></h1>'
 
   hideElement: (element) ->
     $(element).hide()
