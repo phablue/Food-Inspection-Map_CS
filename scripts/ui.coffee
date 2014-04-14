@@ -34,7 +34,7 @@ class UI
 
   resetSearchResult: ->
     $("tbody").empty()
-    $(".title").html '<h1 class = "page-header"></h1><h2 class = "sub-header"></h2><h3></h3><br>'
+    $(".title").html '<h1 class = "page-header"><h2 class = "sub-header"></h2></h1>'
 
   hideElement: (element) ->
     $(element).hide()
