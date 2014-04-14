@@ -16,7 +16,7 @@ class UI
       i = 0
       $(".page-header").text @restaurantName
       while i < data.length
-        $(".sub-header").text data[0].address
+        $(".sub-header").text "(" + data[0].address + ")"
         $("tbody").append "<tr><td>" + (i+1) + "</td><td>" + data[i].inspection_type + "</td><td>" +
                           data[i].inspection_date + "</td><td>" + data[i].risk + "</td><td>" + data[i].results +
                           "</td><td>" +  data[i].violations + "</td></tr>"
