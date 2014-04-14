@@ -15,7 +15,7 @@ class GoogleMap
       map: @map
 
   infoWindow: (contentString) ->
-    infowindow = new google.maps.InfoWindow
+    infowindow = new @google.maps.InfoWindow
       content: (contentString)
 
 window.GoogleMap = GoogleMap
