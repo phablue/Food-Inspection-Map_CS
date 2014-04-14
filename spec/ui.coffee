@@ -123,5 +123,13 @@ describe "Test UI", ->
 
     it "return 0", ->
       data = [{"dba_name": "yolk", "address": "The Loop"}]
-      expect((new UI).howManyViolations(data)).toEqual(0)
+      expect((new UI).howManyViolations(data)).toBeNull
 
+  describe "Test checkHasViolations function", ->
+    it "return true", ->
+      data = [{"dba_name": "yolk", "address": "The Loop", "violations": "dirty"}]
+      expect((new UI).howManyViolations(data)).toBeTruthy
+
+    it "return false", ->
+      data = [{"dba_name": "yolk", "address": "The Loop"}]
+      expect((new UI).howManyViolations(data)).toBeFalsy
