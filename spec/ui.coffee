@@ -71,11 +71,11 @@ describe "Test UI", ->
       data = [{"dba_name": "dimsum", "address": "The Loop"}]
       expect($(".page-header")).toBeEmpty
       expect($(".sub-header")).toBeEmpty
+      e = $.Event("submit")
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
-      #now to test submit
       $(".form-control").val "dimsum"
       ui.searchingRestaurant()
-
+      $(".form-control").trigger(e)
       expect($(".page-header")).toHaveHtml ui.restaurantName
       expect($(".sub-header")).toContainText "The Loop"
 
