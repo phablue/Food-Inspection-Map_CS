@@ -55,5 +55,6 @@ class UI
       if !_.isUndefined(data[i].violations)
         violations++
       i++
+    violations
 
 window.UI = UI

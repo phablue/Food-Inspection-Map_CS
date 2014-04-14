@@ -115,3 +115,13 @@ describe "Test UI", ->
       expect($("h1")).toBeHidden
       (new UI).showElement("h1")
       expect($("h1")).toBeVisible
+
+  describe "Test howManyViolations function", ->
+    it "return 1", ->
+      data = [{"dba_name": "yolk", "address": "The Loop", "violations": "dirty"}]
+      expect((new UI).howManyViolations(data)).toEqual(1)
+
+    it "return 0", ->
+      data = [{"dba_name": "yolk", "address": "The Loop"}]
+      expect((new UI).howManyViolations(data)).toEqual(0)
+
