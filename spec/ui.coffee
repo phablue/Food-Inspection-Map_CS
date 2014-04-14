@@ -103,3 +103,15 @@ describe "Test UI", ->
       expect($(".bg-danger")).not.toExist
       expect($("td")).not.toExist
       expect($("tbody")).not.toHaveText "hi"
+
+  describe "Test hideElement and showElement function", ->
+    it "hide element", ->
+      expect($("h1")).toBeVisible
+      (new UI).hideElement("h1")
+      expect($("h1")).toBeHidden
+
+    it "show element", ->
+      $("h1").hide
+      expect($("h1")).toBeHidden
+      (new UI).showElement("h1")
+      expect($("h1")).toBeVisible
