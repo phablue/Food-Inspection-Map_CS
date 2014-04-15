@@ -12,7 +12,7 @@ class UI
       i = 0
       googleMap = new GoogleMap(@google)
       while i < data.length
-        googleMap.markLocation(data[i].latitude, data[i].longitude)
+        googleMap.markLocation data[i].latitude, data[i].longitude
         i++
 
   searchWords: ->
@@ -62,16 +62,16 @@ class UI
     $("#map-canvas").css "height": "37%", "width": "50%"
 
   noResultMessage: ->
-    $(".result").before '<br><br><p class="bg-danger">No results for &nbsp"' + @restaurantName + '"</p>'
+    $(".result").before '<br><br><p class="bg-danger">No results for &nbsp"'+@restaurantName+'"</p>'
 
   setPageHeader: (data) ->
     $(".page-header").text @restaurantName
-    $(".page-header").append "<small>&nbsp&nbsp(" + data[0].address + ", Chicago)</small>"
+    $(".page-header").append "<small>&nbsp&nbsp("+data[0].address+", Chicago)</small>"
 
   setTableBody: (data, i) ->
-    $("tbody").append "<tr><td>" + (i+1) + "</td><td>" + data[i].inspection_type + "</td><td>" +
-                      data[i].inspection_date + "</td><td>" + data[i].risk + "</td><td>" + data[i].results +
-                      "</td><td>" +  data[i].violations + "</td></tr>"
+    $("tbody").append "<tr><td>"+(i+1)+"</td><td>"+data[i].inspection_type+"</td><td>" +
+                      data[i].inspection_date+"</td><td>"+data[i].risk+"</td><td>"+data[i].results+
+                      "</td><td>"+data[i].violations+"</td></tr>"
 
   checkHasViolations: (data) ->
     true if _.isNull(@howManyViolations(data))
