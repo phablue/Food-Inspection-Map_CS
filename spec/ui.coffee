@@ -18,25 +18,27 @@ describe "Test UI", ->
                   <thead></thead>
                   <tbody></tbody> </table></div>')
 
-  describe "Test getDirtyRestaurants function", ->
-    it "Call showAllDirtyRestaurants function", ->
+  describe "Test findDirtyRestaurants function", ->
+    it "Call getOnlyRestaurantsHasViolations function", ->
       data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
-      showAllDirtyRestaurants = spyOn(new UI(@google), "showAllDirtyRestaurants")
+      getOnlyRestaurantsHasViolations = spyOn(new UI(@google), "getOnlyRestaurantsHasViolations")
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
-      (new UI(@google)).getDirtyRestaurants()
-      expect(showAllDirtyRestaurants).toHaveBeenCalled
+      (new UI(@google)).findDirtyRestaurants()
+      expect(getOnlyRestaurantsHasViolations).toHaveBeenCalled
 
-  describe "Test showAllDirtyRestaurants function", ->
+  describe "Test getOnlyRestaurantsHasViolations function", ->
     it "Call googleMap function if has violations", ->
       data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty"}]
       markLocation = spyOn((new GoogleMap(@google)), "markLocation")
-      (new UI(@google)).showAllDirtyRestaurants(data)
+      openInfoWindow = spyOn((new GoogleMap(@google)), "openInfoWindow")
+      (new UI(@google)).getOnlyRestaurantsHasViolations(data)
       expect(markLocation).toHaveBeenCalled
+      expect(openInfoWindow).toHaveBeenCalled
 
     it "not Call googleMap function if has violations", ->
       data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
       markLocation = spyOn((new GoogleMap(@google)), "markLocation")
-      (new UI(@google)).showAllDirtyRestaurants(data)
+      (new UI(@google)).getOnlyRestaurantsHasViolations(data)
       expect(markLocation).not.toHaveBeenCalled
 
   describe "Test searchWords function", ->
