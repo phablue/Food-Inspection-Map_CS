@@ -9,7 +9,9 @@ describe "Test UI", ->
         event:
           addListener: ->
 
-    setFixtures ('<div> <form>
+    setFixtures ('<div>
+                  <a class = "navbar-brand">Dirty Restaurant in Chicago</a>
+                  <form>
                     <input type = "text" class = "form-control" >
                   </form> </div>
                   <div class = "result">
@@ -166,3 +168,14 @@ describe "Test UI", ->
     it "return false", ->
       data = [{"dba_name": "yolk", "address": "The Loop"}]
       expect((new UI(@google)).howManyViolations(data)).toBeFalsy
+
+  describe "Test goBackHome function", ->
+    it "call functions after click", ->
+      hideElement = spyOn(new UI(@gogle), "hideElement")
+      resetSearchResult = spyOn(new UI(@gogle), "resetSearchResult")
+      findDirtyRestaurants = spyOn(new UI(@gogle), "findDirtyRestaurants")
+      (new UI(@gogle)).goBackHome()
+      $(".navbar-brand").click()
+      expect(hideElement).toHaveBeenCalled
+      expect(resetSearchResult).toHaveBeenCalled
+      expect(findDirtyRestaurants).toHaveBeenCalled

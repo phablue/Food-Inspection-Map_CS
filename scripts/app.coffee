@@ -1,4 +1,4 @@
 $ ->
   ui = new UI(google)
 
-  ui.searchingRestaurant()
+  ui.mainPage()

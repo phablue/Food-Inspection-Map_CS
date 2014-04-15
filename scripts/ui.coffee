@@ -40,7 +40,6 @@ class UI
         i++
 
   searchingRestaurant: ->
-    @findDirtyRestaurants()
     @hideElement ".result"
     $("form").submit (e) =>
       @resetSearchResult()
@@ -90,5 +89,17 @@ class UI
         violations++
       i++
     violations
+
+  goBackHome: ->
+    $(".navbar-brand").click =>
+      $("#map-canvas").css "height": "70%", "width": "100%"
+      @hideElement ".result"
+      @resetSearchResult()
+      @findDirtyRestaurants()
+
+  mainPage: ->
+    @goBackHome()
+    @findDirtyRestaurants()
+    @searchingRestaurant()
 
 window.UI = UI
