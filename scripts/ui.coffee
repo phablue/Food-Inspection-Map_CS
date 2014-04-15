@@ -42,11 +42,11 @@ class UI
   searchingRestaurant: ->
     @findDirtyRestaurants()
     @hideElement ".result"
-    $("form").submit =>
+    $("form").submit (e) =>
       @resetSearchResult()
       @searchWords()
       @searchResult()
-      event.preventDefault()
+      e.preventDefault()
 
   resetSearchResult: ->
     $(".title, tbody").empty()
