@@ -3,6 +3,7 @@ class UI
     @google = google
     @url = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
     @restaurantName = null
+    @mark = null
 
   findDirtyRestaurants: ->
     $.getJSON(@url).done @getOnlyRestaurantsHasViolations
@@ -12,10 +13,10 @@ class UI
     googleMap = new GoogleMap(@google)
     while i < data.length
       unless _.isUndefined(data[i].violations)
-        mark = googleMap.markLocation data[i].latitude, data[i].longitude
-        googleMap.openInfoWindow mark, data[i]
+        $.getJSON(@url, {"dba_name": data[i].dba_name}).done (data) =>
+          mark = googleMap.markLocation data[0].latitude, data[0].longitude
+          googleMap.openInfoWindow mark, data[0], @howManyViolations(data)
       i++
-    #how to make link?
 
   searchWords: ->
     @restaurantName = $(".form-control").val()
@@ -37,8 +38,6 @@ class UI
       while i < data.length
         @setTableBody(data, i)
         i++
-        # how to json data edit? '|' replace to "\n"
-        # pass getjson  searchwords include name
 
   searchingRestaurant: ->
     @findDirtyRestaurants()
@@ -71,9 +70,13 @@ class UI
     $(".page-header").append "<small>&nbsp&nbsp("+data[0].address+", Chicago)</small>"
 
   setTableBody: (data, i) ->
+    violations = @replaceString(data, i)
     $("tbody").append "<tr><td>"+(i+1)+"</td><td>"+data[i].inspection_type+"</td><td>" +
                       data[i].inspection_date+"</td><td>"+data[i].risk+"</td><td>"+data[i].results+
-                      "</td><td>"+data[i].violations+"</td></tr>"
+                      "</td><td>"+violations+"</td></tr>"
+
+  replaceString: (data, i) ->
+    data[i].violations.replace(/\s*\|\s*/gi, '<br>')
 
   checkHasViolations: (data) ->
     true if _.isNull(@howManyViolations(data))
