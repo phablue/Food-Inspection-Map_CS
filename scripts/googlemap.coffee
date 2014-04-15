@@ -21,12 +21,14 @@ class GoogleMap
 
   infoWindow: (data) ->
     infowindow = new @google.maps.InfoWindow
-      content: '<div id="content">'+ 
-                  '<div id="siteNotice">'+'</div>'+'<h1>'+data.dba_name+'</h1>'+ 
-                  '<div id="bodyContent">'+
-                    '<p class="lead"><b>Address : &nbsp</b>'+data.address+', CHICAGO</p>'+
-                    '<p class="lead"><b>Total violations : &nbsp</b>'+(new UI(@google)).howManyViolations(data)+'</p>'+
-                    '<p class="lead"><b>Detail violations : &nbsp</b><a class = "detail">Go Detail</a></p>'+
+      content: '<div id="'+data.dba_name+'">'
+                  '<div id="content">'+
+                    '<div id="siteNotice">'+'</div>'+'<h1>'+data.dba_name+'</h1>'+
+                    '<div id="bodyContent">'+
+                      '<p class="lead"><b>Address : &nbsp</b>'+data.address+', CHICAGO</p>'+
+                      '<p class="lead"><b>Total violations : &nbsp</b>'+(new UI(@google)).howManyViolations(data)+'</p>'+
+                      '<p class="lead"><b>Detail violations : &nbsp</b><a class = "detail">Go Detail</a></p>'+
+                    '</div>'+
                   '</div>'+
                 '</div>'
 
