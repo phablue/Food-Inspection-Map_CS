@@ -26,6 +26,19 @@ describe "Test UI", ->
       (new UI(@google)).getDirtyRestaurants()
       expect(showAllDirtyRestaurants).toHaveBeenCalled
 
+  describe "Test showAllDirtyRestaurants function", ->
+    it "Call googleMap function if has violations", ->
+      data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty"}]
+      markLocation = spyOn((new GoogleMap(@google)), "markLocation")
+      (new UI(@google)).showAllDirtyRestaurants(data)
+      expect(markLocation).toHaveBeenCalled
+
+    it "not Call googleMap function if has violations", ->
+      data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
+      markLocation = spyOn((new GoogleMap(@google)), "markLocation")
+      (new UI(@google)).showAllDirtyRestaurants(data)
+      expect(markLocation).not.toHaveBeenCalled
+
   describe "Test searchWords function", ->
     it "Changes restaurantName value", ->
       ui = new UI(@google)
