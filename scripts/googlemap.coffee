@@ -21,7 +21,7 @@ class GoogleMap
 
   infoWindow: (data) ->
     infowindow = new @google.maps.InfoWindow
-      content: '<div id="'+data.dba_name+'">'
+      content: '<div class="'+data.license_+'">'+
                   '<div id="content">'+
                     '<div id="siteNotice">'+'</div>'+'<h1>'+data.dba_name+'</h1>'+
                     '<div id="bodyContent">'+
