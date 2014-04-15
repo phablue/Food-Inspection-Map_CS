@@ -16,6 +16,16 @@ class GoogleMap
 
   infoWindow: (contentString) ->
     infowindow = new @google.maps.InfoWindow
-      content: (contentString)
+      content: @contentString
+
+  contentString: (data) ->
+    content =  '<div id="content">'+ 
+                  '<div id="siteNotice">'+'</div>'+'<h1>'+data.dba_name+'</h1>'+ 
+                  '<div id="bodyContent">'+
+                    '<p class="lead"><b>Address : &nbsp</b>'+data.address +', CHICAGO</p>'+
+                    '<p class="lead"><b>Total violations : &nbsp</b>'+(new UI(@google)).howManyViolations(data)+'</p>'+
+                    '<p class="lead"><b>Detail violations : &nbsp</b><a href = "/">Go Detial</a></p>'+
+                  '</div>'+
+                '</div>'
 
 window.GoogleMap = GoogleMap
