@@ -1,18 +1,19 @@
 class UI
   constructor: (google) ->
-    @googleMap = new GoogleMap(google)
+    @google = google
     @url = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
     @restaurantName = null
 
-  # getDirtyRestaurants: ->
-  #   $.getJSON(@url).done @showAllDirtyRestaurants
+  getDirtyRestaurants: ->
+    $.getJSON(@url).done @showAllDirtyRestaurants
 
-  # showAllDirtyRestaurants: (data) =>
-  #   unless @checkHasViolations(data)
-  #     i = 0
-  #     while i < data.length
-  #       @googleMap.markLocation(data[i].latitude, data[i].longitude)
-  #       i++
+  showAllDirtyRestaurants: (data) =>
+    unless @checkHasViolations(data)
+      i = 0
+      googleMap = new GoogleMap(@google)
+      while i < data.length
+        googleMap.markLocation(data[i].latitude, data[i].longitude)
+        i++
 
   searchWords: ->
     @restaurantName = $(".form-control").val()
@@ -22,13 +23,14 @@ class UI
 
   showResult: (data) =>
     if _.isEmpty(data)
-      $(".result").before '<br><br><p class="bg-danger">No results for &nbsp"' + @restaurantName + '"</p>'
+      @noResultMessage()
     else if !@checkHasViolations(data)
       i = 0
       @setMapCSS()
       @showElement ".result"
       @setPageHeader(data)
-      @googleMap.markLocation(data[0].latitude, data[0].longitude)
+      googleMap = new GoogleMap(@google)
+      googleMap.markLocation(data[0].latitude, data[0].longitude)
       while i < data.length
         @setTableBody(data, i)
         i++
@@ -36,7 +38,7 @@ class UI
         # pass getjson  searchwords include name
 
   searchingRestaurant: ->
-    # @getDirtyRestaurants()
+    @getDirtyRestaurants()
     @hideElement ".result"
     $("form").submit =>
       @resetSearchResult()
@@ -58,9 +60,12 @@ class UI
   setMapCSS: ->
     $("#map-canvas").css "height": "37%", "width": "50%"
 
+  noResultMessage: ->
+    $(".result").before '<br><br><p class="bg-danger">No results for &nbsp"' + @restaurantName + '"</p>'
+
   setPageHeader: (data) ->
     $(".page-header").text @restaurantName
-    $(".page-header").append "<small>&nbsp&nbsp(" + data[0].address + "Chicago)</small>"
+    $(".page-header").append "<small>&nbsp&nbsp(" + data[0].address + ", Chicago)</small>"
 
   setTableBody: (data, i) ->
     $("tbody").append "<tr><td>" + (i+1) + "</td><td>" + data[i].inspection_type + "</td><td>" +
