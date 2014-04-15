@@ -5,14 +5,19 @@ class GoogleMap
       center: new google.maps.LatLng 41.8819, -87.6278
       zoom: 14
     @map = new google.maps.Map $("#map-canvas")[0], @mapConfig
+    @marker
 
   getLocation: (latitude, longitude) ->
     new @google.maps.LatLng  latitude, longitude
 
   markLocation: (latitude, longitude) ->
-    marker = new @google.maps.Marker
+    @marker = new @google.maps.Marker
       position: @getLocation(latitude, longitude),
       map: @map
+
+  openInfoWindow: ->
+    @google.maps.event.addListener @marker, 'click', ->
+      infowindow.open(@map, @marker);
 
   infoWindow: (contentString) ->
     infowindow = new @google.maps.InfoWindow
