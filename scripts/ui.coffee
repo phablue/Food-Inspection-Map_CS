@@ -4,17 +4,17 @@ class UI
     @url = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
     @restaurantName = null
 
-  getDirtyRestaurants: ->
-    $.getJSON(@url).done @showAllDirtyRestaurants
+  findDirtyRestaurants: ->
+    $.getJSON(@url).done @getOnlyRestaurantsHasViolations
 
-  showAllDirtyRestaurants: (data) =>
-    unless @checkHasViolations(data)
-      i = 0
-      googleMap = new GoogleMap(@google)
-      while i < data.length
+  getOnlyRestaurantsHasViolations: (data) =>
+    i = 0
+    googleMap = new GoogleMap(@google)
+    while i < data.length
+      unless _.isUndefined(data[i].violations)
         mark = googleMap.markLocation data[i].latitude, data[i].longitude
         googleMap.openInfoWindow mark, data[i]
-        i++
+      i++
 
   searchWords: ->
     @restaurantName = $(".form-control").val()
@@ -40,7 +40,7 @@ class UI
         # pass getjson  searchwords include name
 
   searchingRestaurant: ->
-    @getDirtyRestaurants()
+    @findDirtyRestaurants()
     @hideElement ".result"
     $("form").submit =>
       @resetSearchResult()

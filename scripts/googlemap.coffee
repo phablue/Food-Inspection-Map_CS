@@ -20,7 +20,6 @@ class GoogleMap
       infowindow.open(@map, mark)
 
   infoWindow: (data) ->
-    console.log data
     infowindow = new @google.maps.InfoWindow
       content: '<div id="content">'+ 
                   '<div id="siteNotice">'+'</div>'+'<h1>'+data.dba_name+'</h1>'+ 
