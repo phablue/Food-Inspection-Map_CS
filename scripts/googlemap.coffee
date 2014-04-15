@@ -5,31 +5,28 @@ class GoogleMap
       center: new google.maps.LatLng 41.8819, -87.6278
       zoom: 14
     @map = new google.maps.Map $("#map-canvas")[0], @mapConfig
-    @marker
 
   getLocation: (latitude, longitude) ->
     new @google.maps.LatLng  latitude, longitude
 
   markLocation: (latitude, longitude) ->
-    @marker = new @google.maps.Marker
+    marker = new @google.maps.Marker
       position: @getLocation(latitude, longitude),
       map: @map
 
-  openInfoWindow: ->
-    @google.maps.event.addListener @marker, 'click', ->
-      infowindow.open(@map, @marker)
+  openInfoWindow: (mark, data)->
+    @google.maps.event.addListener mark, 'click', =>
+      infowindow = @infoWindow(data)
+      infowindow.open(@map, mark)
 
   infoWindow: (data) ->
     infowindow = new @google.maps.InfoWindow
-      content: @contentString(data)
-
-  contentString: (data) ->
-    content =  '<div id="content">'+ 
+      content: '<div id="content">'+ 
                   '<div id="siteNotice">'+'</div>'+'<h1>'+data.dba_name+'</h1>'+ 
                   '<div id="bodyContent">'+
-                    '<p class="lead"><b>Address : &nbsp</b>'+data.address +', CHICAGO</p>'+
+                    '<p class="lead"><b>Address : &nbsp</b>'+data.address+', CHICAGO</p>'+
                     '<p class="lead"><b>Total violations : &nbsp</b>'+(new UI(@google)).howManyViolations(data)+'</p>'+
-                    '<p class="lead"><b>Detail violations : &nbsp</b><a href = "/">Go Detial</a></p>'+
+                    '<p class="lead"><b>Detail violations : &nbsp</b><a href = "/">Go Detail</a></p>'+
                   '</div>'+
                 '</div>'
 

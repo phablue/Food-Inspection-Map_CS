@@ -12,7 +12,8 @@ class UI
       i = 0
       googleMap = new GoogleMap(@google)
       while i < data.length
-        googleMap.markLocation data[i].latitude, data[i].longitude
+        mark = googleMap.markLocation data[i].latitude, data[i].longitude
+        googleMap.openInfoWindow mark, data[i]
         i++
 
   searchWords: ->
