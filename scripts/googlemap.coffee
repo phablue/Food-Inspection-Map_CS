@@ -26,7 +26,7 @@ class GoogleMap
                   '<div id="bodyContent">'+
                     '<p class="lead"><b>Address : &nbsp</b>'+data.address+', CHICAGO</p>'+
                     '<p class="lead"><b>Total violations : &nbsp</b>'+(new UI(@google)).howManyViolations(data)+'</p>'+
-                    '<p class="lead"><b>Detail violations : &nbsp</b><a href = "/">Go Detail</a></p>'+
+                    '<p class="lead"><b>Detail violations : &nbsp</b><a>Go Detail</a></p>'+
                   '</div>'+
                 '</div>'
 
