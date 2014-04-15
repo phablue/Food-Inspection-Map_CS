@@ -18,6 +18,14 @@ describe "Test UI", ->
                   <thead></thead>
                   <tbody></tbody> </table></div>')
 
+  describe "Test getDirtyRestaurants function", ->
+    it "Call showAllDirtyRestaurants function", ->
+      data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
+      showAllDirtyRestaurants = spyOn(new UI(@google), "showAllDirtyRestaurants")
+      getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
+      (new UI(@google)).getDirtyRestaurants()
+      expect(showAllDirtyRestaurants).toHaveBeenCalled
+
   describe "Test searchWords function", ->
     it "Changes restaurantName value", ->
       ui = new UI(@google)
