@@ -6,6 +6,8 @@ describe "Test UI", ->
         Map: ->
         Marker: ->
         InfoWindow: ->
+        event:
+          addListener: ->
 
     setFixtures ('<div> <form>
                     <input type = "text" class = "form-control" >
@@ -53,41 +55,42 @@ describe "Test UI", ->
     it "searchResult function", ->
       (new UI(@google)).searchResult()
 
-    it 'Changes <h2> and <h3> text if search word in data', ->
+    it 'Changes <h1> text if search word in data', ->
       ui = new UI(@google)
       ui.restaurantName = "Domino pizza"
-      data = [{"dba_name": ui.restaurantName, "address": "Chicago"}]
+      data = [{"dba_name": ui.restaurantName, "address": "Chicago", "violations": "dirty"}]
       expect($("small")).toBeEmpty
-      expect($("h3")).toBeEmpty
+      replaceString = spyOn(new UI(@google), "replaceString")
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       ui.searchResult()
       expect($(".page-header")).toContainText ui.restaurantName
       expect($("small")).toContainText "Chicago"
+      expect(replaceString).toHaveBeenCalled
 
     it 'show warnning message if search word not in data', ->
       ui = new UI(@google)
       ui.restaurantName = "Pizza Hut"
-      data = [{"dba_name": "Domino", "address": "South Loop"}]
+      data = [{"dba_name": "Domino", "address": "South Loop", "violations": "dirty"}]
       expect($("p")).not.toExist
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       ui.searchResult()
       expect($("p")).toExist
 
   describe "Test showResult function", ->
-    it 'Changes <h2> and <h3> text if data from server is not null', ->
+    it 'Changes result if data from server is not null', ->
       ui = new UI(@google)
       ui.restaurantName = "icecream"
-      data = [{"dba_name": "icecream", "address": "ChinaTown"}]
+      data = [{"dba_name": "icecream", "address": "ChinaTown", "violations": "dirty"}]
       expect($(".page-header")).toBeEmpty
       expect($("small")).toBeEmpty
       ui.showResult(data)
       expect($(".page-header")).toContainText ui.restaurantName
       expect($("small")).toContainText "ChinaTown"
 
-    it 'Changes <h1> and <h2> text if data from server is null', ->
+    it 'Changes result if data from server is null', ->
       ui = new UI(@google)
       ui.restaurantName = "Candy"
-      data = [{"dba_name": "Chocolate", "address": "DownTown"}]
+      data = [{"dba_name": "Chocolate", "address": "DownTown", "violations": "dirty"}]
       expect($("p")).not.toExist
       ui.showResult(data)
       expect($("p")).toExist
@@ -98,7 +101,7 @@ describe "Test UI", ->
 
     it "Changes <h1> text after clicks a search button", ->
       ui = new UI(@google)
-      data = [{"dba_name": "dimsum", "address": "The Loop"}]
+      data = [{"dba_name": "dimsum", "address": "The Loop", "violations": "dirty"}]
       expect($(".page-header")).toBeEmpty
       expect($("small")).toBeEmpty
       e = $.Event("submit")
@@ -111,7 +114,7 @@ describe "Test UI", ->
 
     it "show warnning message if search word is not in data, after search", ->
       ui = new UI(@google)
-      data = [{"dba_name": "phatai", "address": "The Loop"}]
+      data = [{"dba_name": "phatai", "address": "The Loop", "violations": "dirty"}]
       expect($("p")).not.toExist
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       $(".form-control").val "dimsum"
