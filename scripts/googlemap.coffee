@@ -17,7 +17,7 @@ class GoogleMap
 
   openInfoWindow: ->
     @google.maps.event.addListener @marker, 'click', ->
-      infowindow.open(@map, @marker);
+      infowindow.open(@map, @marker)
 
   infoWindow: (contentString) ->
     infowindow = new @google.maps.InfoWindow
