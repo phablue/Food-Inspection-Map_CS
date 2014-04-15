@@ -20,13 +20,14 @@ class GoogleMap
       infowindow.open(@map, mark)
 
   infoWindow: (data) ->
+    console.log data
     infowindow = new @google.maps.InfoWindow
       content: '<div id="content">'+ 
                   '<div id="siteNotice">'+'</div>'+'<h1>'+data.dba_name+'</h1>'+ 
                   '<div id="bodyContent">'+
                     '<p class="lead"><b>Address : &nbsp</b>'+data.address+', CHICAGO</p>'+
                     '<p class="lead"><b>Total violations : &nbsp</b>'+(new UI(@google)).howManyViolations(data)+'</p>'+
-                    '<p class="lead"><b>Detail violations : &nbsp</b><a>Go Detail</a></p>'+
+                    '<p class="lead"><b>Detail violations : &nbsp</b><a class = "detail">Go Detail</a></p>'+
                   '</div>'+
                 '</div>'
 
