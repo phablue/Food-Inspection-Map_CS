@@ -100,18 +100,19 @@ describe "Test UI", ->
     it "searchingRestaurant function", ->
       (new UI(@google)).searchingRestaurant()
 
-    it "Changes <h1> text after clicks a search button", ->
+    it "call searchWords, resetSearchResult, searchResult functions clicks a search button", ->
+      searchWords = spyOn(new UI(@google), "searchWords")
+      resetSearchResult = spyOn(new UI(@google), "resetSearchResult")
+      searchResult = spyOn(new UI(@google), "searchResult")
       ui = new UI(@google)
       data = [{"dba_name": "dimsum", "address": "The Loop", "violations": "dirty"}]
-      expect($(".page-header")).toBeEmpty
-      expect($("small")).toBeEmpty
       e = $.Event("submit")
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
-      $(".form-control").val "dimsum"
       ui.searchingRestaurant()
       $(".form-control").trigger(e)
-      expect($(".page-header")).toContainText ui.restaurantName
-      expect($("small")).toContainText "The Loop"
+      expect(searchWords).toHaveBeenCalled
+      expect(resetSearchResult).toHaveBeenCalled
+      expect(searchResult).toHaveBeenCalled
 
     it "show warnning message if search word is not in data, after search", ->
       ui = new UI(@google)
