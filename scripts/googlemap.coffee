@@ -2,6 +2,8 @@ class GoogleMap
   constructor: (google) ->
     @google = google
     @ui = new UI(google)
+    @InfoWindows = []
+    @currentMark = null
     @mapConfig =
       center: new google.maps.LatLng 41.8819, -87.6278
       zoom: 14
@@ -18,13 +20,23 @@ class GoogleMap
       position: @getLocation(latitude, longitude),
       map: @map
 
-  openInfoWindow: (mark, data, violations)->
+  openInfoWindow: (mark, data, violations) ->
+    infowindow = @infoWindow(data, violations)
+    @InfoWindows[infowindow.id] = infowindow
     @google.maps.event.addListener mark, 'click', =>
-      infowindow = @infoWindow(data, violations)
+      @checkCurrentWindow(infowindow)
       infowindow.open(@map, mark)
+
+  checkCurrentWindow: (infowindow)->
+    if @currentMark == null
+      @currentMark = infowindow.id
+    else if infowindow.id != @currentMark
+      @InfoWindows[@currentMark].close()
+      @currentMark = infowindow.id
 
   infoWindow: (data, violations) ->
     infowindow = new @google.maps.InfoWindow
+      id: data.license_
       content: '<div class="'+data.license_+'">'+
                   '<div id="content">'+
                     '<div id="siteNotice">'+'</div>'+'<h1>'+data.dba_name+'</h1>'+
