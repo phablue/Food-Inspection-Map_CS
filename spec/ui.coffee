@@ -137,6 +137,12 @@ describe "Test UI", ->
       expect($("td")).not.toExist
       expect($("tbody")).not.toHaveText "hi"
 
+    it "reset textbox value", ->
+      $(".form-control").val "dimsum"
+      expect($("tbody")).toHaveData "dimsum"
+      (new UI(@google)).resetSearchResult()
+      expect($(".form-control")).toBeEmpty
+
   describe "Test hideElement and showElement function", ->
     it "hide element", ->
       expect($("h1")).toBeVisible

@@ -42,14 +42,15 @@ class UI
   searchingRestaurant: ->
     @hideElement ".result"
     $("form").submit (e) =>
-      @resetSearchResult()
       @searchWords()
+      @resetSearchResult()
       @searchResult()
       e.preventDefault()
 
   resetSearchResult: ->
+    $(".form-control").val("")
     $(".title, tbody").empty()
-    $(".bg-danger, br").remove();
+    $(".bg-danger, br").remove()
     $(".title").html '<h1 class = "page-header"><small></small></h1>'
 
   hideElement: (element) ->
@@ -62,6 +63,7 @@ class UI
     $("#map-canvas").css "height": "37%", "width": "50%"
 
   noResultMessage: ->
+    @hideElement ".container .result"
     $(".result").before '<br><br><p class="bg-danger">No results for &nbsp"'+@restaurantName+'"</p>'
 
   setPageHeader: (data) ->
