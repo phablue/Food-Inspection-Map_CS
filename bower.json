@@ -5,7 +5,8 @@
     "jquery": "~2.0.3",
     "jasmine-jquery": "~1.5.8",
     "underscore": "~1.4.3",
-    "backbone": "~1.0.0"
+    "backbone": "~1.0.0",
+    "sinon": "~1.9.1",
   },
   "devDependencies": {}
 }
