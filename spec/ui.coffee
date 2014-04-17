@@ -4,9 +4,10 @@ describe "Test UI", ->
       maps:
         LatLng: ->
         Map: ->
+          setCenter: ->
         Marker: ->
         InfoWindow: ->
-        event:
+        event: ->
           addListener: ->
 
     setFixtures ('<div>
@@ -139,7 +140,7 @@ describe "Test UI", ->
 
     it "reset textbox value", ->
       $(".form-control").val "dimsum"
-      expect($("tbody")).toHaveData "dimsum"
+      expect($(".form-control")).toHaveValue "dimsum"
       (new UI(@google)).resetSearchResult()
       expect($(".form-control")).toBeEmpty
 
@@ -184,15 +185,15 @@ describe "Test UI", ->
       expect(resetSearchResult).toHaveBeenCalled
       expect(findDirtyRestaurants).toHaveBeenCalled
 
-  describe "Test ReplaceString and resetDate functions", ->
+  describe "Test replaceString and resetDate functions", ->
     it "'|' change to <br> if data has '|'", ->
       data = [{"dba_name": "yolk", "address": "The Loop", "violations": "dirty | smell"}]
       expect(data[0].violations).toBe("dirty | smell")
-      (new UI(@google)).ReplaceString(data, 0)
-      expect(data[0].violations).toEqual("dirty <br> smell")
+      result = (new UI(@google)).replaceString(data, 0)
+      expect(result).toEqual("dirty<br>smell")
 
     it "Data format is year-month-date", ->
       data = [{"dba_name": "yolk", "inspection_date": "2014-04-16T00:00:00", "violations": "dirty | smell"}]
       expect(data[0].inspection_date).toBe("2014-04-16T00:00:00")
-      (new UI(@google)).resetDate(data, 0)
-      expect(data[0].violations).toEqual("2014-04-16")
+      result = (new UI(@google)).resetDate(data, 0)
+      expect(result).toEqual("2014-04-16")

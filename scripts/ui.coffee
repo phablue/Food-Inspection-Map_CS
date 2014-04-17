@@ -33,7 +33,7 @@ class UI
       @showElement ".result"
       @setPageHeader(data)
       googleMap = new GoogleMap(@google)
-      googleMap.mapConfig.center = new @google.maps.LatLng data[0].latitude, data[0].longitude
+      googleMap.map.setCenter(googleMap.getLocation(data[0].latitude, data[0].longitude))
       googleMap.markLocation data[0].latitude, data[0].longitude
       while i < data.length
         @setTableBody(data, i)
