@@ -69,13 +69,17 @@ class UI
     $(".page-header").append "<small>&nbsp&nbsp("+data[0].address+", Chicago)</small>"
 
   setTableBody: (data, i) ->
+    date = @resetDate(data, i)
     violations = @replaceString(data, i)
     $("tbody").append "<tr><td>"+(i+1)+"</td><td>"+data[i].inspection_type+"</td><td>" +
-                      data[i].inspection_date+"</td><td>"+data[i].risk+"</td><td>"+data[i].results+
+                      date+"</td><td>"+data[i].risk+"</td><td>"+data[i].results+
                       "</td><td>"+violations+"</td></tr>"
 
   replaceString: (data, i) ->
     data[i].violations.replace(/\s*\|\s*/gi, '<br>')
+
+  resetDate: (data, i) ->
+    data[i].inspection_date.replace('T00:00:00', '')
 
   checkHasViolations: (data) ->
     true if _.isNull(@howManyViolations(data))
