@@ -79,3 +79,7 @@ p {
   padding: 0px;
   width: 100%;
 }
+
+.navbar-brand:hover {
+  cursor:pointer;
+}
