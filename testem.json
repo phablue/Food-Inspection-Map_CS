@@ -5,7 +5,7 @@
     "bower_components/jquery/jquery.js",
     "bower_components/underscore/underscore.js",
     "bower_components/backbone/backbone.js",
-    "bower_components/sinon/lib/sinon.js",
+    "bower_components/sinonjs/sinon.js",
     "bower_components/jasmine-jquery/lib/jasmine-jquery.js",
     ".tmp/scripts/**/*.js",
     ".tmp/spec/**/*.js"
