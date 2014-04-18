@@ -1,4 +1,5 @@
 describe "Test UI", ->
+  fakeServer = null
   beforeEach ->
     @google = 
       maps:
@@ -23,17 +24,22 @@ describe "Test UI", ->
                   <thead></thead>
                   <tbody></tbody> </table></div>')
 
-    @fakeServer = sinon.fakeServer.create()
+    fakeServer = sinon.fakeServer.create()
 
   afterEach ->
-    @fakeServer.restore()
+    fakeServer.restore()
+
+  respondToRestaurantsUI = (url, data) ->
+    fakeServer.respondWith('GET', url, [200, {'content-type': 'application/json'}, JSON.stringify(data)])
 
   describe "Test findDirtyRestaurants function", ->
     it "Call getOnlyRestaurantsHasViolations function", ->
+      ui = new UI(@google)
+      getOnlyRestaurantsHasViolations = spyOn(ui, "getOnlyRestaurantsHasViolations")
       data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
-      getOnlyRestaurantsHasViolations = spyOn(new UI(@google), "getOnlyRestaurantsHasViolations")
-      getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
-      (new UI(@google)).findDirtyRestaurants()
+      respondToRestaurantsUI(ui.url, data)
+      ui.findDirtyRestaurants()
+      fakeServer.respond()
       expect(getOnlyRestaurantsHasViolations).toHaveBeenCalled
 
   describe "Test getOnlyRestaurantsHasViolations function", ->
