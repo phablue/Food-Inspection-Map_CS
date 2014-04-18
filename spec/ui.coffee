@@ -1,5 +1,8 @@
 describe "Test UI", ->
   fakeServer = null
+  ui = null
+  googlemap = null
+
   beforeEach ->
     @google = 
       maps:
@@ -25,6 +28,8 @@ describe "Test UI", ->
                   <tbody></tbody> </table></div>')
 
     fakeServer = sinon.fakeServer.create()
+    ui = new UI(@google)
+    googlemap = new GoogleMap(@google)
 
   afterEach ->
     fakeServer.restore()
@@ -34,7 +39,6 @@ describe "Test UI", ->
 
   describe "Test findDirtyRestaurants function", ->
     it "Call getOnlyRestaurantsHasViolations function", ->
-      ui = new UI(@google)
       getOnlyRestaurantsHasViolations = spyOn(ui, "getOnlyRestaurantsHasViolations")
       data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
       respondToRestaurantsUI(ui.url, data)
@@ -43,23 +47,24 @@ describe "Test UI", ->
       expect(getOnlyRestaurantsHasViolations).toHaveBeenCalled
 
   describe "Test getOnlyRestaurantsHasViolations function", ->
-    it "Call googleMap function if has violations", ->
+    it "Call markLocation, openInfoWindow functions if has violations", ->
       data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
-      markLocation = spyOn((new GoogleMap(@google)), "markLocation")
-      openInfoWindow = spyOn((new GoogleMap(@google)), "openInfoWindow")
-      (new UI(@google)).getOnlyRestaurantsHasViolations(data)
+      markLocation = spyOn(googlemap, "markLocation")
+      openInfoWindow = spyOn(googlemap, "openInfoWindow")
+      ui.getOnlyRestaurantsHasViolations(data)
       expect(markLocation).toHaveBeenCalled
       expect(openInfoWindow).toHaveBeenCalled
 
-    it "not Call googleMap function if has violations", ->
+    it "Not markLocation, openInfoWindow functions if has no violations", ->
       data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
-      markLocation = spyOn((new GoogleMap(@google)), "markLocation")
-      (new UI(@google)).getOnlyRestaurantsHasViolations(data)
+      markLocation = spyOn(googlemap, "markLocation")
+      openInfoWindow = spyOn(googlemap, "openInfoWindow")
+      ui.getOnlyRestaurantsHasViolations(data)
       expect(markLocation).not.toHaveBeenCalled
+      expect(openInfoWindow).not.toHaveBeenCalled
 
   describe "Test searchWords function", ->
     it "Changes restaurantName value", ->
-      ui = new UI(@google)
       expect(ui.restaurantName).toBeNull
       $(".form-control").val "EpicBurger"
       ui.searchWords()
