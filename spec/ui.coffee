@@ -23,6 +23,11 @@ describe "Test UI", ->
                   <thead></thead>
                   <tbody></tbody> </table></div>')
 
+    @fakeServer = sinon.fakeServer.create()
+
+  afterEach ->
+    @fakeServer.restore()
+
   describe "Test findDirtyRestaurants function", ->
     it "Call getOnlyRestaurantsHasViolations function", ->
       data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
@@ -33,7 +38,7 @@ describe "Test UI", ->
 
   describe "Test getOnlyRestaurantsHasViolations function", ->
     it "Call googleMap function if has violations", ->
-      data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty"}]
+      data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       markLocation = spyOn((new GoogleMap(@google)), "markLocation")
       openInfoWindow = spyOn((new GoogleMap(@google)), "openInfoWindow")
       (new UI(@google)).getOnlyRestaurantsHasViolations(data)
@@ -61,7 +66,7 @@ describe "Test UI", ->
     it 'Changes <h1> text if search word in data', ->
       ui = new UI(@google)
       ui.restaurantName = "Domino pizza"
-      data = [{"dba_name": ui.restaurantName, "address": "Chicago", "violations": "dirty"}]
+      data = [{"dba_name": ui.restaurantName, "address": "Chicago", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($("small")).toBeEmpty
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       ui.searchResult()
@@ -71,7 +76,7 @@ describe "Test UI", ->
     it 'show warnning message if search word not in data', ->
       ui = new UI(@google)
       ui.restaurantName = "Pizza Hut"
-      data = [{"dba_name": "Domino", "address": "South Loop", "violations": "dirty"}]
+      data = [{"dba_name": "Domino", "address": "South Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($("p")).not.toExist
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       ui.searchResult()
@@ -81,7 +86,7 @@ describe "Test UI", ->
     it 'Changes result if data from server is not null', ->
       ui = new UI(@google)
       ui.restaurantName = "icecream"
-      data = [{"dba_name": "icecream", "address": "ChinaTown", "violations": "dirty"}]
+      data = [{"dba_name": "icecream", "address": "ChinaTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($(".page-header")).toBeEmpty
       expect($("small")).toBeEmpty
       ui.showResult(data)
@@ -91,7 +96,7 @@ describe "Test UI", ->
     it 'Changes result if data from server is null', ->
       ui = new UI(@google)
       ui.restaurantName = "Candy"
-      data = [{"dba_name": "Chocolate", "address": "DownTown", "violations": "dirty"}]
+      data = [{"dba_name": "Chocolate", "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($("p")).not.toExist
       ui.showResult(data)
       expect($("p")).toExist
@@ -105,7 +110,7 @@ describe "Test UI", ->
       resetSearchResult = spyOn(new UI(@google), "resetSearchResult")
       searchResult = spyOn(new UI(@google), "searchResult")
       ui = new UI(@google)
-      data = [{"dba_name": "dimsum", "address": "The Loop", "violations": "dirty"}]
+      data = [{"dba_name": "dimsum", "address": "The Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       e = $.Event("submit")
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       ui.searchingRestaurant()
@@ -116,7 +121,7 @@ describe "Test UI", ->
 
     it "show warnning message if search word is not in data, after search", ->
       ui = new UI(@google)
-      data = [{"dba_name": "phatai", "address": "The Loop", "violations": "dirty"}]
+      data = [{"dba_name": "phatai", "address": "The Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($("p")).not.toExist
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       $(".form-control").val "dimsum"
