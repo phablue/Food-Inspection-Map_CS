@@ -90,6 +90,24 @@ describe "Test UI", ->
       fakeServer.respond()
       expect(spyOn(ui, "showResult")).toHaveBeenCalled
 
+    it "Call setMapCSS function if data's dba_name match to restaurantName", ->
+      respondToRestaurantsUI(url, data)
+      ui.searchResult()
+      fakeServer.respond()
+      expect(spyOn(ui, "setMapCSS")).toHaveBeenCalled
+
+    it "Call showElement function if data's dba_name match to restaurantName", ->
+      respondToRestaurantsUI(url, data)
+      ui.searchResult()
+      fakeServer.respond()
+      expect(spyOn(ui, "showElement")).toHaveBeenCalled
+
+    it "Call setPageHeader function if data's dba_name match to restaurantName", ->
+      respondToRestaurantsUI(url, data)
+      ui.searchResult()
+      fakeServer.respond()
+      expect(spyOn(ui, "setPageHeader")).toHaveBeenCalled
+
   describe "Test showResult function", ->
     data = null
 
