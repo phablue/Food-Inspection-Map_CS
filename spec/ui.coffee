@@ -160,6 +160,19 @@ describe "Test UI", ->
       ui.showResult(data)
       expect($("p")).toContainText "No results for"
 
+    it 'Makes <tr><td> if data has violations', ->
+      expect($("tr")).not.toExist
+      expect($("td")).not.toExist
+      ui.showResult(data)
+      expect($("tr")).toExist
+      expect($("td")).toExist
+
+    it '<td> has data values if data has violations', ->
+      expect($("td")).not.toExist
+      ui.showResult(data)
+      expect($("td")).toContainText "dirty"
+      expect($("td")).toContainText "2013-10-05"
+
   describe "Test searchingRestaurant function", ->
     it "searchingRestaurant function", ->
       ui.searchingRestaurant()
