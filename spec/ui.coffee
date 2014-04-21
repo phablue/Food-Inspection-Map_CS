@@ -73,17 +73,22 @@ describe "Test UI", ->
       expect(ui.restaurantName).toBe "EpicBurger"
 
   describe "Test searchResult function", ->
+    data = null
+
+    beforeEach ->
+      data = [{"dba_name": ui.restaurantName, "address": "Chicago", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
+
     it "searchResult function", ->
       ui.searchResult()
 
-    it 'Changes <h1> text if search word in data', ->
+    it "Text in <h1> changes to restaurantName if data's dba_name match to restaurantName", ->
       ui.restaurantName = "Domino pizza"
-      data = [{"dba_name": ui.restaurantName, "address": "Chicago", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($("small")).toBeEmpty
-      getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
+      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
+      respondToRestaurantsUI(url, data)
       ui.searchResult()
+      fakeServer.respond()
       expect($(".page-header")).toContainText ui.restaurantName
-      expect($("small")).toContainText "Chicago"
 
     it 'show warnning message if search word not in data', ->
       ui.restaurantName = "Pizza Hut"
