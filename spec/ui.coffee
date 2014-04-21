@@ -21,7 +21,7 @@ describe "Test UI", ->
                   </form> </div>
                   <div class = "result">
                     <div class = "title">
-                      <h1 class = "page-header"><small></small></h1>
+                      <h1 class = "page-header"></h1>
                     </div>
                   <table class="table table-striped">
                   <thead></thead>
