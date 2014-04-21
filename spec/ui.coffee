@@ -74,16 +74,17 @@ describe "Test UI", ->
 
   describe "Test searchResult function", ->
     data = null
+    url = null
 
     beforeEach ->
-      data = [{"dba_name": ui.restaurantName, "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
+      ui.restaurantName = "Domino pizza"
+      data = [{"dba_name": "Domino pizza", "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
+      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
 
     it "searchResult function", ->
       ui.searchResult()
 
     it "Call showResult function if suscess get http request", ->
-      ui.restaurantName = "Domino pizza"
-      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
       respondToRestaurantsUI(url, data)
       ui.searchResult()
       fakeServer.respond()
