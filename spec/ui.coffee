@@ -39,12 +39,11 @@ describe "Test UI", ->
 
   describe "Test findDirtyRestaurants function", ->
     it "Call getOnlyRestaurantsHasViolations function", ->
-      getOnlyRestaurantsHasViolations = spyOn(ui, "getOnlyRestaurantsHasViolations")
       data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
       respondToRestaurantsUI(ui.url, data)
       ui.findDirtyRestaurants()
       fakeServer.respond()
-      expect(getOnlyRestaurantsHasViolations).toHaveBeenCalled
+      expect(spyOn(ui, "getOnlyRestaurantsHasViolations")).toHaveBeenCalled
 
   describe "Test getOnlyRestaurantsHasViolations function", ->
     it "Call markLocation, openInfoWindow functions if has violations", ->
