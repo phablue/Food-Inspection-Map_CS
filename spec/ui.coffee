@@ -90,6 +90,8 @@ describe "Test UI", ->
       expect(spyOn(ui, "showResult")).toHaveBeenCalled
 
   describe "Test showResult function", ->
+    data = null
+
     beforeEach ->
       data = [{"dba_name": ui.restaurantName, "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
 
