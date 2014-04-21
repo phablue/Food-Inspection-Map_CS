@@ -133,65 +133,32 @@ describe "Test UI", ->
       ui.restaurantName = "Domino pizza"
       data = [{"dba_name": "Domino pizza", "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
 
-    it "Text in <h1> changes to restaurantName if data's dba_name match to restaurantName", ->
-      ui.restaurantName = "Domino pizza"
+    it "Text in <h1> changes to restaurantName if data has violations", ->
       expect($(".page-header")).toBeEmpty
-      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
-      respondToRestaurantsUI(url, data)
-      ui.searchResult()
-      fakeServer.respond()
+      ui.showResult(data)
       expect($(".page-header")).toContainText ui.restaurantName
 
-    it "Makes <small> tag if data's dba_name match to restaurantName", ->
-      ui.restaurantName = "Domino pizza"
+    it "Makes <small> tag if data has violations", ->
       expect($("small")).not.toExist
-      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
-      respondToRestaurantsUI(url, data)
-      ui.searchResult()
-      fakeServer.respond()
+      ui.showResult(data)
       expect($("small")).toExist
 
-    it "Text in <small> is address if data's dba_name match to restaurantName", ->
-      ui.restaurantName = "Domino pizza"
+    it "Text in <small> is address if data has violations", ->
       expect($("small")).toBeEmpty
-      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
-      respondToRestaurantsUI(url, data)
-      ui.searchResult()
-      fakeServer.respond()
+      ui.showResult(data)
       expect($("small")).toContainText "DownTown"
 
-    it 'Makes <p> tag for warnning message if search word not in data', ->
-      ui.restaurantName = "Pizza Hut"
+    it 'Makes <p> tag for warnning message if data empty', ->
+      data = []
       expect($("p")).not.toExist
-      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
-      fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
-      ui.searchResult()
-      fakeServer.respond()
+      ui.showResult(data)
       expect($("p")).toExist
 
-    it 'Text in <p> has a warnning message if search word not in data', ->
-      ui.restaurantName = "Pizza Hut"
+    it 'Text in <p> has a warnning message if data empty', ->
+      data = []
       expect($("p")).not.toExist
-      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
-      fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
-      ui.searchResult()
-      fakeServer.respond()
+      ui.showResult(data)
       expect($("p")).toContainText "No results for"
-
-    it 'Changes result if data from server is not null', ->
-      ui.restaurantName = "icecream"
-      expect($(".page-header")).toBeEmpty
-      expect($("small")).toBeEmpty
-      ui.showResult(data)
-      expect($(".page-header")).toContainText ui.restaurantName
-      expect($("small")).toContainText "ChinaTown"
-
-    it 'Changes result if data from server is null', ->
-      ui.restaurantName = "Candy"
-      data = [{"dba_name": "Chocolate", "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
-      expect($("p")).not.toExist
-      ui.showResult(data)
-      expect($("p")).toExist
 
   describe "Test searchingRestaurant function", ->
     it "searchingRestaurant function", ->
