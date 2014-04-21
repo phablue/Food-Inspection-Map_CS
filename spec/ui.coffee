@@ -74,10 +74,9 @@ describe "Test UI", ->
 
   describe "Test searchResult function", ->
     it "searchResult function", ->
-      (new UI(@google)).searchResult()
+      ui.searchResult()
 
     it 'Changes <h1> text if search word in data', ->
-      ui = new UI(@google)
       ui.restaurantName = "Domino pizza"
       data = [{"dba_name": ui.restaurantName, "address": "Chicago", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($("small")).toBeEmpty
@@ -87,7 +86,6 @@ describe "Test UI", ->
       expect($("small")).toContainText "Chicago"
 
     it 'show warnning message if search word not in data', ->
-      ui = new UI(@google)
       ui.restaurantName = "Pizza Hut"
       data = [{"dba_name": "Domino", "address": "South Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($("p")).not.toExist
@@ -97,7 +95,6 @@ describe "Test UI", ->
 
   describe "Test showResult function", ->
     it 'Changes result if data from server is not null', ->
-      ui = new UI(@google)
       ui.restaurantName = "icecream"
       data = [{"dba_name": "icecream", "address": "ChinaTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($(".page-header")).toBeEmpty
@@ -107,7 +104,6 @@ describe "Test UI", ->
       expect($("small")).toContainText "ChinaTown"
 
     it 'Changes result if data from server is null', ->
-      ui = new UI(@google)
       ui.restaurantName = "Candy"
       data = [{"dba_name": "Chocolate", "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($("p")).not.toExist
@@ -116,13 +112,12 @@ describe "Test UI", ->
 
   describe "Test searchingRestaurant function", ->
     it "searchingRestaurant function", ->
-      (new UI(@google)).searchingRestaurant()
+      ui.searchingRestaurant()
 
     it "call searchWords, resetSearchResult, searchResult functions clicks a search button", ->
-      searchWords = spyOn(new UI(@google), "searchWords")
-      resetSearchResult = spyOn(new UI(@google), "resetSearchResult")
-      searchResult = spyOn(new UI(@google), "searchResult")
-      ui = new UI(@google)
+      searchWords = spyOn(ui, "searchWords")
+      resetSearchResult = spyOn(ui, "resetSearchResult")
+      searchResult = spyOn(ui, "searchResult")
       data = [{"dba_name": "dimsum", "address": "The Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       e = $.Event("submit")
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
@@ -133,7 +128,6 @@ describe "Test UI", ->
       expect(searchResult).toHaveBeenCalled
 
     it "show warnning message if search word is not in data, after search", ->
-      ui = new UI(@google)
       data = [{"dba_name": "phatai", "address": "The Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($("p")).not.toExist
       getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
@@ -144,7 +138,7 @@ describe "Test UI", ->
 
   describe "Test resetSearchResult function", ->
     it "resetSearchResult function", ->
-      (new UI(@google)).resetSearchResult()
+      ui.resetSearchResult()
 
     it "reset <tbody><tbody>", ->
       $(".title").prepend '<p class="bg-danger">danger</p>'
@@ -152,7 +146,7 @@ describe "Test UI", ->
       expect($(".bg-danger")).toExist
       expect($("td")).toExist
       expect($("tbody")).toHaveText "hi"
-      (new UI(@google)).resetSearchResult()
+      ui.resetSearchResult()
       expect($(".bg-danger")).not.toExist
       expect($("td")).not.toExist
       expect($("tbody")).not.toHaveText "hi"
@@ -160,45 +154,45 @@ describe "Test UI", ->
     it "reset textbox value", ->
       $(".form-control").val "dimsum"
       expect($(".form-control")).toHaveValue "dimsum"
-      (new UI(@google)).resetSearchResult()
+      ui.resetSearchResult()
       expect($(".form-control")).toBeEmpty
 
   describe "Test hideElement and showElement function", ->
     it "hide element", ->
       expect($("h1")).toBeVisible
-      (new UI(@google)).hideElement("h1")
+      ui.hideElement("h1")
       expect($("h1")).toBeHidden
 
     it "show element", ->
       $("h1").hide
       expect($("h1")).toBeHidden
-      (new UI(@google)).showElement("h1")
+      ui.showElement("h1")
       expect($("h1")).toBeVisible
 
   describe "Test howManyViolations function", ->
     it "return 1", ->
       data = [{"dba_name": "yolk", "address": "The Loop", "violations": "dirty"}]
-      expect((new UI(@google)).howManyViolations(data)).toEqual(1)
+      expect(ui.howManyViolations(data)).toEqual(1)
 
     it "return 0", ->
       data = [{"dba_name": "yolk", "address": "The Loop"}]
-      expect((new UI(@google)).howManyViolations(data)).toBeNull
+      expect(ui.howManyViolations(data)).toBeNull
 
   describe "Test checkHasViolations function", ->
     it "return true", ->
       data = [{"dba_name": "yolk", "address": "The Loop", "violations": "dirty"}]
-      expect((new UI(@google)).howManyViolations(data)).toBeTruthy
+      expect(ui.howManyViolations(data)).toBeTruthy
 
     it "return false", ->
       data = [{"dba_name": "yolk", "address": "The Loop"}]
-      expect((new UI(@google)).howManyViolations(data)).toBeFalsy
+      expect(ui.howManyViolations(data)).toBeFalsy
 
   describe "Test goBackHome function", ->
     it "call functions after click", ->
-      hideElement = spyOn(new UI(@gogle), "hideElement")
-      resetSearchResult = spyOn(new UI(@gogle), "resetSearchResult")
-      findDirtyRestaurants = spyOn(new UI(@gogle), "findDirtyRestaurants")
-      (new UI(@gogle)).goBackHome()
+      hideElement = spyOn(ui, "hideElement")
+      resetSearchResult = spyOn(ui, "resetSearchResult")
+      findDirtyRestaurants = spyOn(ui, "findDirtyRestaurants")
+      ui.goBackHome()
       $(".navbar-brand").click()
       expect(hideElement).toHaveBeenCalled
       expect(resetSearchResult).toHaveBeenCalled
@@ -208,11 +202,11 @@ describe "Test UI", ->
     it "'|' change to <br> if data has '|'", ->
       data = [{"dba_name": "yolk", "address": "The Loop", "violations": "dirty | smell"}]
       expect(data[0].violations).toBe("dirty | smell")
-      result = (new UI(@google)).replaceString(data, 0)
+      result = ui.replaceString(data, 0)
       expect(result).toEqual("dirty<br>smell")
 
     it "Data format is year-month-date", ->
       data = [{"dba_name": "yolk", "inspection_date": "2014-04-16T00:00:00", "violations": "dirty | smell"}]
       expect(data[0].inspection_date).toBe("2014-04-16T00:00:00")
-      result = (new UI(@google)).resetDate(data, 0)
+      result = ui.resetDate(data, 0)
       expect(result).toEqual("2014-04-16")
