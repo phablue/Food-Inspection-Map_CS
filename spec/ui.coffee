@@ -130,7 +130,8 @@ describe "Test UI", ->
     data = null
 
     beforeEach ->
-      data = [{"dba_name": ui.restaurantName, "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
+      ui.restaurantName = "Domino pizza"
+      data = [{"dba_name": "Domino pizza", "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
 
     it "Text in <h1> changes to restaurantName if data's dba_name match to restaurantName", ->
       ui.restaurantName = "Domino pizza"
