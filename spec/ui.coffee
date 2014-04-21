@@ -120,7 +120,7 @@ describe "Test UI", ->
       respondToRestaurantsUI(url, data)
       ui.searchResult()
       fakeServer.respond()
-      expect($("small")).toContainText "DownTown"      
+      expect($("small")).toContainText "DownTown"
 
     it 'Makes <p> tag for warnning message if search word not in data', ->
       ui.restaurantName = "Pizza Hut"
