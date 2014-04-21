@@ -46,21 +46,15 @@ describe "Test UI", ->
       expect(spyOn(ui, "getOnlyRestaurantsHasViolations")).toHaveBeenCalled
 
   describe "Test getOnlyRestaurantsHasViolations function", ->
-    it "Call markLocation, openInfoWindow functions if has violations", ->
+    it "Call getJSON if data has violations", ->
       data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
-      markLocation = spyOn(googlemap, "markLocation")
-      openInfoWindow = spyOn(googlemap, "openInfoWindow")
       ui.getOnlyRestaurantsHasViolations(data)
-      expect(markLocation).toHaveBeenCalled
-      expect(openInfoWindow).toHaveBeenCalled
+      expect(spyOn($, "getJSON")).toHaveBeenCalled
 
-    it "Not markLocation, openInfoWindow functions if has no violations", ->
+    it "Does not call getJSON if data doesnt have violations", ->
       data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
-      markLocation = spyOn(googlemap, "markLocation")
-      openInfoWindow = spyOn(googlemap, "openInfoWindow")
       ui.getOnlyRestaurantsHasViolations(data)
-      expect(markLocation).not.toHaveBeenCalled
-      expect(openInfoWindow).not.toHaveBeenCalled
+      expect(spyOn($, "getJSON")).not.toHaveBeenCalled
 
   describe "Test searchWords function", ->
     it "Changes restaurantName value", ->
