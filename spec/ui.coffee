@@ -120,6 +120,12 @@ describe "Test UI", ->
       fakeServer.respond()
       expect(spyOn(ui, "setTableBody")).toHaveBeenCalled
 
+    it "Call noResultMessage function if data's dba_name doesnt match to restaurantName", ->
+      fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
+      ui.searchResult()
+      fakeServer.respond()
+      expect(spyOn(ui, "noResultMessage")).toHaveBeenCalled
+
   describe "Test showResult function", ->
     data = null
 
