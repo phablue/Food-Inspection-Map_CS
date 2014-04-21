@@ -117,6 +117,15 @@ describe "Test UI", ->
       fakeServer.respond()
       expect($("p")).toExist
 
+    it 'Text in <p> has a warnning message if search word not in data', ->
+      ui.restaurantName = "Pizza Hut"
+      expect($("p")).not.toExist
+      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
+      fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
+      ui.searchResult()
+      fakeServer.respond()
+      expect($("p")).toContainText "No results for"
+
   describe "Test showResult function", ->
     it 'Changes result if data from server is not null', ->
       ui.restaurantName = "icecream"
