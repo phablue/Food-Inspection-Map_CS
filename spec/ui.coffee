@@ -108,6 +108,13 @@ describe "Test UI", ->
       fakeServer.respond()
       expect(spyOn(ui, "setPageHeader")).toHaveBeenCalled
 
+    it "Call markLocation function if data's dba_name match to restaurantName", ->
+      respondToRestaurantsUI(url, data)
+      ui.searchResult()
+      fakeServer.respond()
+      expect(spyOn(googlemap, "markLocation")).toHaveBeenCalled
+
+
   describe "Test showResult function", ->
     data = null
 
