@@ -83,12 +83,21 @@ describe "Test UI", ->
 
     it "Text in <h1> changes to restaurantName if data's dba_name match to restaurantName", ->
       ui.restaurantName = "Domino pizza"
-      expect($("small")).toBeEmpty
+      expect($(".page-header")).toBeEmpty
       url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
       respondToRestaurantsUI(url, data)
       ui.searchResult()
       fakeServer.respond()
       expect($(".page-header")).toContainText ui.restaurantName
+
+    it "Makes <small> tag if data's dba_name match to restaurantName", ->
+      ui.restaurantName = "Domino pizza"
+      expect($("small")).not.toExist
+      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
+      respondToRestaurantsUI(url, data)
+      ui.searchResult()
+      fakeServer.respond()
+      expect($("small")).toExist
 
     it 'show warnning message if search word not in data', ->
       ui.restaurantName = "Pizza Hut"
