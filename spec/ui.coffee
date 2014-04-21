@@ -89,6 +89,10 @@ describe "Test UI", ->
       fakeServer.respond()
       expect(spyOn(ui, "showResult")).toHaveBeenCalled
 
+  describe "Test showResult function", ->
+    beforeEach ->
+      data = [{"dba_name": ui.restaurantName, "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
+
     it "Text in <h1> changes to restaurantName if data's dba_name match to restaurantName", ->
       ui.restaurantName = "Domino pizza"
       expect($(".page-header")).toBeEmpty
@@ -134,10 +138,8 @@ describe "Test UI", ->
       fakeServer.respond()
       expect($("p")).toContainText "No results for"
 
-  describe "Test showResult function", ->
     it 'Changes result if data from server is not null', ->
       ui.restaurantName = "icecream"
-      data = [{"dba_name": "icecream", "address": "ChinaTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($(".page-header")).toBeEmpty
       expect($("small")).toBeEmpty
       ui.showResult(data)
