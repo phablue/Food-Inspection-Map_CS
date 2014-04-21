@@ -76,7 +76,7 @@ describe "Test UI", ->
     data = null
 
     beforeEach ->
-      data = [{"dba_name": ui.restaurantName, "address": "Chicago", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
+      data = [{"dba_name": ui.restaurantName, "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
 
     it "searchResult function", ->
       ui.searchResult()
@@ -98,6 +98,15 @@ describe "Test UI", ->
       ui.searchResult()
       fakeServer.respond()
       expect($("small")).toExist
+
+    it "Text in <small> is address if data's dba_name match to restaurantName", ->
+      ui.restaurantName = "Domino pizza"
+      expect($("small")).toBeEmpty
+      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
+      respondToRestaurantsUI(url, data)
+      ui.searchResult()
+      fakeServer.respond()
+      expect($("small")).toContainText "DownTown"      
 
     it 'show warnning message if search word not in data', ->
       ui.restaurantName = "Pizza Hut"
