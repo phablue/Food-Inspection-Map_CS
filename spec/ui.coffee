@@ -108,12 +108,13 @@ describe "Test UI", ->
       fakeServer.respond()
       expect($("small")).toContainText "DownTown"      
 
-    it 'show warnning message if search word not in data', ->
+    it 'Makes <p> tag for warnning message if search word not in data', ->
       ui.restaurantName = "Pizza Hut"
-      data = [{"dba_name": "Domino", "address": "South Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($("p")).not.toExist
-      getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
+      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
+      fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
       ui.searchResult()
+      fakeServer.respond()
       expect($("p")).toExist
 
   describe "Test showResult function", ->
