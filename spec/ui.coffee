@@ -81,6 +81,14 @@ describe "Test UI", ->
     it "searchResult function", ->
       ui.searchResult()
 
+    it "Call showResult function if suscess get http request", ->
+      ui.restaurantName = "Domino pizza"
+      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
+      respondToRestaurantsUI(url, data)
+      ui.searchResult()
+      fakeServer.respond()
+      expect(spyOn(ui, "showResult")).toHaveBeenCalled
+
     it "Text in <h1> changes to restaurantName if data's dba_name match to restaurantName", ->
       ui.restaurantName = "Domino pizza"
       expect($(".page-header")).toBeEmpty
