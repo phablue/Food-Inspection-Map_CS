@@ -56,6 +56,15 @@ describe "Test UI", ->
       ui.getOnlyRestaurantsHasViolations(data)
       expect(spyOn($, "getJSON")).not.toHaveBeenCalled
 
+    it "Call markLocation and openInfoWindow function from googleMap, if data has violations", ->
+      data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty","inspection_date": "2013-10-05T00:00:00", "latitude": "40.523", "longitude": "80.2342"}]
+      url = ui.url+"?"+$.param({"dba_name": "Domino pizza"})
+      respondToRestaurantsUI(url, data)
+      ui.getOnlyRestaurantsHasViolations(data)
+      fakeServer.respond()
+      expect(spyOn(googlemap, "markLocation")).toHaveBeenCalled
+      expect(spyOn(googlemap, "openInfoWindow")).toHaveBeenCalled
+
   describe "Test searchWords function", ->
     it "Changes restaurantName value", ->
       expect(ui.restaurantName).toBeNull
