@@ -79,7 +79,7 @@ describe "Test UI", ->
     beforeEach ->
       ui.restaurantName = "Domino pizza"
       data = [{"dba_name": "Domino pizza", "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
-      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
+      url = "#{ui.url}?#{$.param({"dba_name": ui.restaurantName})}"
 
     it "searchResult function", ->
       ui.searchResult()
@@ -181,7 +181,7 @@ describe "Test UI", ->
     beforeEach ->
       e = $.Event("submit")
       data = [{"dba_name": "dimsum", "address": "The Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
-      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
+      url = "#{ui.url}?#{$.param({"dba_name": ui.restaurantName})}"
 
     it "searchingRestaurant function", ->
       ui.searchingRestaurant()
