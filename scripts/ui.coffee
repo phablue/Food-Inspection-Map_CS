@@ -64,18 +64,18 @@ class UI
 
   noResultMessage: ->
     @hideElement ".container .result"
-    $(".result").before '<br><br><p class="bg-danger">No results for &nbsp"'+@restaurantName+'"</p>'
+    $(".result").before "<br><br><p class='bg-danger'>No results for &nbsp'#{@restaurantName}'</p>"
 
   setPageHeader: (data) ->
     $(".page-header").text @restaurantName
-    $(".page-header").append "<small>&nbsp&nbsp("+data[0].address+", Chicago)</small>"
+    $(".page-header").append "<small>&nbsp&nbsp(#{data[0].address}, Chicago)</small>"
 
   setTableBody: (data, i) ->
     date = @resetDate(data, i)
     violations = @replaceString(data, i)
-    $("tbody").append "<tr><td>"+(i+1)+"</td><td>"+data[i].inspection_type+"</td><td>" +
-                      date+"</td><td>"+data[i].risk+"</td><td>"+data[i].results+
-                      "</td><td>"+violations+"</td></tr>"
+    $("tbody").append """<tr><td>#{i+1}</td><td>#{data[i].inspection_type}</td><td>
+                      #{date}</td><td>#{data[i].risk}</td><td>#{data[i].results}
+                      </td><td>#{violations}</td></tr>"""
 
   replaceString: (data, i) ->
     data[i].violations.replace(/\s*\|\s*/gi, '<br>')
