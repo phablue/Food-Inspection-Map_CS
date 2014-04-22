@@ -48,9 +48,10 @@ class UI
 
   resetSearchResult: ->
     $(".form-control").val("")
-    $(".title, tbody").empty()
+    $("thead").html ""
+    $("tbody").html ""
     $(".bg-danger, br").remove()
-    $(".title").html '<h1 class = "page-header"><small></small></h1>'
+    $(".title").html ''
 
   setMapCSS: ->
     $("#map-canvas").css "height": "37%", "width": "50%"
