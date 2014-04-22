@@ -70,6 +70,16 @@ class UI
     $(".title").append """<h1 class = 'page-header'>#{@restaurantName}
                          <small>&nbsp&nbsp(#{data[0].address}, Chicago)</small>"""
 
+  setTableHead: ->
+    $("thead").append """<tr>
+                            <th>#</th>
+                            <th>Inspection Type</th>
+                            <th>Inspection Date</th>
+                            <th>Risk</th>
+                            <th>Results</th>
+                            <th>Violations</th>
+                        </tr>"""
+
   setTableBody: (data, i) ->
     date = @resetDate(data, i)
     violations = @replaceString(data, i)
