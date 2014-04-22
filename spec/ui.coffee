@@ -174,30 +174,33 @@ describe "Test UI", ->
       expect($("td")).toContainText "2013-10-05"
 
   describe "Test searchingRestaurant function", ->
+    data = null
+    e= null
+    url = null
+
+    beforeEach ->
+      e = $.Event("submit")
+      data = [{"dba_name": "dimsum", "address": "The Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
+      url = ui.url+"?"+$.param({"dba_name": ui.restaurantName})
+
     it "searchingRestaurant function", ->
       ui.searchingRestaurant()
 
     it "call searchWords, resetSearchResult, searchResult functions clicks a search button", ->
-      searchWords = spyOn(ui, "searchWords")
-      resetSearchResult = spyOn(ui, "resetSearchResult")
-      searchResult = spyOn(ui, "searchResult")
-      data = [{"dba_name": "dimsum", "address": "The Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
-      e = $.Event("submit")
-      getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
       ui.searchingRestaurant()
       $(".form-control").trigger(e)
-      expect(searchWords).toHaveBeenCalled
-      expect(resetSearchResult).toHaveBeenCalled
-      expect(searchResult).toHaveBeenCalled
+      expect(spyOn(ui, "searchWords")).toHaveBeenCalled
+      expect(spyOn(ui, "resetSearchResult")).toHaveBeenCalled
+      expect(spyOn(ui, "searchResult")).toHaveBeenCalled
 
     it "show warnning message if search word is not in data, after search", ->
-      data = [{"dba_name": "phatai", "address": "The Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
       expect($("p")).not.toExist
-      getJson = spyOn($, "getJSON").andReturn done: (e) -> e(data)
-      $(".form-control").val "dimsum"
+      ui.restaurantName = "Pizza"
+      fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
       ui.searchingRestaurant()
-      $("button").click()
-      expect($("p")).toExist
+      $(".form-control").trigger(e)
+      fakeServer.respond()
+      expect($("p")).toContainText "No results for"
 
   describe "Test resetSearchResult function", ->
     it "resetSearchResult function", ->
