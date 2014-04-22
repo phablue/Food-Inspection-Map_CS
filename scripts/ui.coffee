@@ -35,6 +35,7 @@ class UI
       googleMap = new GoogleMap(@google)
       googleMap.map.setCenter(googleMap.getLocation(data[0].latitude, data[0].longitude))
       googleMap.markLocation data[0].latitude, data[0].longitude
+      @setTableHead()
       while i < data.length
         @setTableBody(data, i)
         i++
