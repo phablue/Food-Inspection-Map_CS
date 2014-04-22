@@ -31,7 +31,7 @@ class UI
       i = 0
       @setMapCSS()
       @showElement ".result"
-      @setPageHeader(data)
+      @setTitle(data)
       googleMap = new GoogleMap(@google)
       googleMap.map.setCenter(googleMap.getLocation(data[0].latitude, data[0].longitude))
       googleMap.markLocation data[0].latitude, data[0].longitude
@@ -66,9 +66,9 @@ class UI
     @hideElement ".container .result"
     $(".result").before "<br><br><p class='bg-danger'>No results for &nbsp'#{@restaurantName}'</p>"
 
-  setPageHeader: (data) ->
-    $(".page-header").text @restaurantName
-    $(".page-header").append "<small>&nbsp&nbsp(#{data[0].address}, Chicago)</small>"
+  setTitle: (data) ->
+    $(".title").append """<h1 class = 'page-header'>#{@restaurantName}
+                         <small>&nbsp&nbsp(#{data[0].address}, Chicago)</small>"""
 
   setTableBody: (data, i) ->
     date = @resetDate(data, i)
