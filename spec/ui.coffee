@@ -131,10 +131,15 @@ describe "Test UI", ->
       ui.restaurantName = "Domino pizza"
       data = [{"dba_name": "Domino pizza", "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
 
-    it "Text in <h1> changes to restaurantName if data has violations", ->
-      expect($(".page-header")).toBeEmpty
+    it "Makes <h1> tag if data has violations", ->
+      expect($("h1")).not.toExist
       ui.showResult(data)
-      expect($(".page-header")).toContainText ui.restaurantName
+      expect($("h1")).toExist
+
+    it "Text in <h1> is restaurantName if data has violations", ->
+      expect($("h1")).not.toExist
+      ui.showResult(data)
+      expect($("h1")).toContainText "Domino pizza"
 
     it "Makes <small> tag if data has violations", ->
       expect($("small")).not.toExist
@@ -142,7 +147,7 @@ describe "Test UI", ->
       expect($("small")).toExist
 
     it "Text in <small> is address if data has violations", ->
-      expect($("small")).toBeEmpty
+      expect($("small")).not.toExist
       ui.showResult(data)
       expect($("small")).toContainText "DownTown"
 
