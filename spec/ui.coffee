@@ -20,12 +20,10 @@ describe "Test UI", ->
                     <input type = "text" class = "form-control" >
                   </form> </div>
                   <div class = "result">
-                    <div class = "title">
-                      <h1 class = "page-header"></h1>
-                    </div>
+                    <div class = "title"></div>
                   <table class="table table-striped">
                   <thead></thead>
-                  <tbody></tbody> </table></div>')
+                  <tbody></tbody></table></div>')
 
     fakeServer = sinon.fakeServer.create()
     ui = new UI(@google)
