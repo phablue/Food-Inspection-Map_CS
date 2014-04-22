@@ -238,6 +238,32 @@ describe "Test UI", ->
       ui.showElement("h1")
       expect($("h1")).toBeVisible
 
+  describe "Test SetTitle function", ->
+    data = null
+
+    beforeEach ->
+      data = [{"dba_name": "dimsum", "address": "The Loop", "risk": "high", "result": "Pass", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
+
+    it "Makes <h1> and <small> Tags", ->
+      expect($("h1")).not.toExist
+      expect($("small")).not.toExist
+      ui.setTitle(data)
+      expect($("h1")).toExist
+      expect($("small")).toExist
+
+    it "Makes <h1> and <h1> has restaurantName", ->
+      ui.restaurantName = "dimsum"
+      expect($("h1")).not.toExist
+      ui.setTitle(data)
+      expect($("h1")).toExist
+      expect($("h1")).toContainText "dimsum"
+
+    it "Makes <small> and <small> has address from data", ->
+      expect($("small")).not.toExist
+      ui.setTitle(data)
+      expect($("small")).toExist
+      expect($("small")).toContainText "The Loop"
+
   describe "Test howManyViolations function", ->
     it "return 1", ->
       data = [{"dba_name": "yolk", "address": "The Loop", "violations": "dirty"}]
