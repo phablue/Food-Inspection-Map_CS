@@ -246,7 +246,25 @@
         expect($("small")).toExist
         expect($("small")).toContainText "The Loop"
 
-    describe "Test setTableBody", ->
+    describe "Test setTableHead function", ->
+      it "makes <tr><th> tag", ->
+        expect($("tr, th")).not.toExist
+        ui.setTableHead()
+        expect($("tr, th")).toExist
+
+      it "thead has <tr><th>", ->
+        expect($("tr, th")).not.toExist
+        ui.setTableHead()
+        expect($("thead")).toHaveHtml """<tr>
+                                            <th>#</th>
+                                            <th>Inspection Type</th>
+                                            <th>Inspection Date</th>
+                                            <th>Risk</th>
+                                            <th>Results</th>
+                                            <th>Violations</th>
+                                        </tr>"""
+
+    describe "Test setTableBody function", ->
       data = null
 
       beforeEach ->
