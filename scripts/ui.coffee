@@ -56,7 +56,6 @@ class UI
     $("#map-canvas").css "height": "37%", "width": "50%"
 
   noResultMessage: ->
-    @hideElement ".container .result"
     $(".result").before "<br><br><p class='bg-danger'>No results for &nbsp'#{@restaurantName}'</p>"
 
   setTitle: (data) ->
@@ -102,7 +101,6 @@ class UI
   goBackHome: ->
     $(".navbar-brand").click =>
       $("#map-canvas").css "height": "70%", "width": "100%"
-      @hideElement ".result"
       @resetSearchResult()
       @findDirtyRestaurants()
 

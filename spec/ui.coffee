@@ -94,12 +94,6 @@
         fakeServer.respond()
         expect(spyOn(ui, "setMapCSS")).toHaveBeenCalled
 
-      it "Call showElement function if data's dba_name match to restaurantName", ->
-        respondToRestaurantsUI(url, data)
-        ui.searchResult()
-        fakeServer.respond()
-        expect(spyOn(ui, "showElement")).toHaveBeenCalled
-
       it "Call setTitle function if data's dba_name match to restaurantName", ->
         respondToRestaurantsUI(url, data)
         ui.searchResult()
@@ -226,18 +220,6 @@
         ui.resetSearchResult()
         expect($(".form-control")).toBeEmpty
 
-    describe "Test hideElement and showElement function", ->
-      it "hide element", ->
-        expect($("h1")).toBeVisible
-        ui.hideElement("h1")
-        expect($("h1")).toBeHidden
-
-      it "show element", ->
-        $("h1").hide
-        expect($("h1")).toBeHidden
-        ui.showElement("h1")
-        expect($("h1")).toBeVisible
-
     describe "Test SetTitle function", ->
       data = null
 
@@ -304,12 +286,10 @@
 
     describe "Test goBackHome function", ->
       it "call functions after click", ->
-        hideElement = spyOn(ui, "hideElement")
         resetSearchResult = spyOn(ui, "resetSearchResult")
         findDirtyRestaurants = spyOn(ui, "findDirtyRestaurants")
         ui.goBackHome()
         $(".navbar-brand").click()
-        expect(hideElement).toHaveBeenCalled
         expect(resetSearchResult).toHaveBeenCalled
         expect(findDirtyRestaurants).toHaveBeenCalled
 
