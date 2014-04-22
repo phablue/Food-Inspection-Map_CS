@@ -30,7 +30,6 @@ class UI
     else if !@checkHasViolations(data)
       i = 0
       @setMapCSS()
-      @showElement ".result"
       @setTitle(data)
       googleMap = new GoogleMap(@google)
       googleMap.map.setCenter(googleMap.getLocation(data[0].latitude, data[0].longitude))
@@ -41,7 +40,6 @@ class UI
         i++
 
   searchingRestaurant: ->
-    @hideElement ".result"
     $("form").submit (e) =>
       @searchWords()
       @resetSearchResult()
@@ -53,12 +51,6 @@ class UI
     $(".title, tbody").empty()
     $(".bg-danger, br").remove()
     $(".title").html '<h1 class = "page-header"><small></small></h1>'
-
-  hideElement: (element) ->
-    $(element).hide()
-
-  showElement: (element) ->
-    $(element).show()
 
   setMapCSS: ->
     $("#map-canvas").css "height": "37%", "width": "50%"
