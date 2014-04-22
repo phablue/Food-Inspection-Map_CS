@@ -102,11 +102,11 @@ describe "Test UI", ->
       fakeServer.respond()
       expect(spyOn(ui, "showElement")).toHaveBeenCalled
 
-    it "Call setPageHeader function if data's dba_name match to restaurantName", ->
+    it "Call setTitle function if data's dba_name match to restaurantName", ->
       respondToRestaurantsUI(url, data)
       ui.searchResult()
       fakeServer.respond()
-      expect(spyOn(ui, "setPageHeader")).toHaveBeenCalled
+      expect(spyOn(ui, "setTitle")).toHaveBeenCalled
 
     it "Call markLocation function if data's dba_name match to restaurantName", ->
       respondToRestaurantsUI(url, data)
