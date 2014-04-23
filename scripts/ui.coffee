@@ -32,6 +32,7 @@ class UI
       @setMapCSS()
       @setTitle(data)
       googleMap = new GoogleMap(@google)
+      $("#map-canvas").off "click"
       googleMap.map.setCenter(googleMap.getLocation(data[0].latitude, data[0].longitude))
       googleMap.markLocation data[0].latitude, data[0].longitude
       @setTableHead()

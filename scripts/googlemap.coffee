@@ -9,6 +9,7 @@ class GoogleMap
       zoom: 14
     @map = new google.maps.Map $("#map-canvas")[0], @mapConfig
     $('#map-canvas').on 'click', '.detail', (e) =>
+      $("#map-canvas").off "click"
       @ui.restaurantName = $(e.target).data('id')
       @ui.searchResult()
 
