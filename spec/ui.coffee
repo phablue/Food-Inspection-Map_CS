@@ -37,22 +37,27 @@
 
     describe "Test findDirtyRestaurants function", ->
       it "Call getOnlyRestaurantsHasViolations function", ->
+        getOnlyRestaurantsHasViolations = spyOn(ui, "getOnlyRestaurantsHasViolations")
         data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
         respondToRestaurantsUI(ui.url, data)
         ui.findDirtyRestaurants()
         fakeServer.respond()
-        expect(spyOn(ui, "getOnlyRestaurantsHasViolations")).toHaveBeenCalled
+        expect(getOnlyRestaurantsHasViolations).toHaveBeenCalled
 
     describe "Test getOnlyRestaurantsHasViolations function", ->
-      it "Call getJSON if data has violations", ->
+      it "fakeServer request length is 1 if data has violations", ->
         data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
+        respondToRestaurantsUI(ui.url, data)
         ui.getOnlyRestaurantsHasViolations(data)
-        expect(spyOn($, "getJSON")).toHaveBeenCalled
+        fakeServer.respond()
+        expect(fakeServer.requests.length).toEqual(1)
 
-      it "Does not call getJSON if data doesnt have violations", ->
+      it "fakeServer request length is 0 if data doesnt have violations", ->
         data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
+        respondToRestaurantsUI(ui.url, data)
         ui.getOnlyRestaurantsHasViolations(data)
-        expect(spyOn($, "getJSON")).not.toHaveBeenCalled
+        fakeServer.respond()
+        expect(fakeServer.requests.length).toEqual(0)
 
       it "Call markLocation and openInfoWindow function from googleMap, if data has violations", ->
         data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty","inspection_date": "2013-10-05T00:00:00", "latitude": "40.523", "longitude": "80.2342"}]
