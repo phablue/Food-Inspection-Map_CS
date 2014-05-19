@@ -44,6 +44,21 @@
         fakeServer.respond()
         expect(getOnlyRestaurantsHasViolations).toHaveBeenCalled
 
+      it "fakeServer request length is 1 if data has violations", ->
+        data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
+        url = "#{ui.url}?#{$.param({"dba_name": "Domino pizza"})}"
+        respondToRestaurantsUI(url, data)
+        ui.findDirtyRestaurants()
+        fakeServer.respond()
+        expect(fakeServer.requests.length).toEqual(1)
+
+      it "fakeServer request length is 0 if data doesnt have violations", ->
+        data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
+        fakeServer.respondWith('GET', ui.url, [404, {'content-type': 'application/json'}, "No violations"])
+        ui.findDirtyRestaurants()
+        fakeServer.respond()
+        expect(fakeServer.requests.length).toEqual(1)
+
     describe "Test getOnlyRestaurantsHasViolations function", ->
       it "fakeServer request length is 1 if data has violations", ->
         data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
@@ -52,7 +67,7 @@
         fakeServer.respond()
         expect(fakeServer.requests.length).toEqual(1)
 
-      it "fakeServer request length is 0 if data doesnt have violations", ->
+      it "fakeServer request length is 1 if data doesnt have violations", ->
         data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
         respondToRestaurantsUI(ui.url, data)
         ui.getOnlyRestaurantsHasViolations(data)
