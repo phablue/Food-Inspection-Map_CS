@@ -99,44 +99,47 @@
         data = [{"dba_name": "Domino pizza", "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
         url = "#{ui.url}?#{$.param({"dba_name": ui.restaurantName})}"
 
-      it "searchResult function", ->
-        ui.searchResult()
-
       it "Call showResult function if suscess get http request", ->
         respondToRestaurantsUI(url, data)
+        showResult = spyOn(ui, "showResult")
         ui.searchResult()
         fakeServer.respond()
-        expect(spyOn(ui, "showResult")).toHaveBeenCalled
+        expect(showResult).toHaveBeenCalled
 
       it "Call setMapCSS function if data's dba_name match to restaurantName", ->
         respondToRestaurantsUI(url, data)
+        setMapCSS = spyOn(ui, "setMapCSS")
         ui.searchResult()
         fakeServer.respond()
-        expect(spyOn(ui, "setMapCSS")).toHaveBeenCalled
+        expect(setMapCSS).toHaveBeenCalled
 
       it "Call setTitle function if data's dba_name match to restaurantName", ->
         respondToRestaurantsUI(url, data)
+        setTitle = spyOn(ui, "setTitle")
         ui.searchResult()
         fakeServer.respond()
-        expect(spyOn(ui, "setTitle")).toHaveBeenCalled
+        expect(setTitle).toHaveBeenCalled
 
       it "Call markLocation function if data's dba_name match to restaurantName", ->
         respondToRestaurantsUI(url, data)
+        markLocation = spyOn(googlemap, "markLocation")
         ui.searchResult()
         fakeServer.respond()
-        expect(spyOn(googlemap, "markLocation")).toHaveBeenCalled
+        expect(markLocation).toHaveBeenCalled
 
       it "Call setTableBody function if data's dba_name match to restaurantName", ->
         respondToRestaurantsUI(url, data)
+        setTableBody = spyOn(ui, "setTableBody")
         ui.searchResult()
         fakeServer.respond()
-        expect(spyOn(ui, "setTableBody")).toHaveBeenCalled
+        expect(setTableBody).toHaveBeenCalled
 
       it "Call noResultMessage function if data's dba_name doesnt match to restaurantName", ->
         fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
+        noResultMessage = spyOn(ui, "noResultMessage")
         ui.searchResult()
         fakeServer.respond()
-        expect(spyOn(ui, "noResultMessage")).toHaveBeenCalled
+        expect(noResultMessage).toHaveBeenCalled
 
     describe "Test showResult function", ->
       data = null
