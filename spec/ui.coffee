@@ -134,12 +134,71 @@
         fakeServer.respond()
         expect(setTableBody).toHaveBeenCalled
 
+      it "Makes <h1> tag if data has violations", ->
+        respondToRestaurantsUI(url, data)
+        expect($("h1")).not.toExist
+        ui.searchResult()
+        fakeServer.respond()
+        expect($("h1")).toExist
+
+      it "Text in <h1> is restaurantName if data has violations", ->
+        respondToRestaurantsUI(url, data)
+        expect($("h1")).not.toExist
+        ui.searchResult()
+        fakeServer.respond()
+        expect($("h1")).toContainText "Domino pizza"
+
+      it "Makes <small> tag if data has violations", ->
+        respondToRestaurantsUI(url, data)
+        expect($("small")).not.toExist
+        ui.searchResult()
+        fakeServer.respond()
+        expect($("small")).toExist
+
+      it "Text in <small> is address if data has violations", ->
+        respondToRestaurantsUI(url, data)
+        expect($("small")).not.toExist
+        ui.searchResult()
+        fakeServer.respond()
+        expect($("small")).toContainText "DownTown"
+
+      it 'Makes <tr><td> if data has violations', ->
+        respondToRestaurantsUI(url, data)
+        expect($("tr")).not.toExist
+        expect($("td")).not.toExist
+        ui.searchResult()
+        fakeServer.respond()
+        expect($("tr")).toExist
+        expect($("td")).toExist
+
+      it '<td> has data values if data has violations', ->
+        respondToRestaurantsUI(url, data)
+        expect($("td")).not.toExist
+        ui.searchResult()
+        fakeServer.respond()
+        expect($("td")).toContainText "dirty"
+        expect($("td")).toContainText "2013-10-05"
+
       it "Call noResultMessage function if data's dba_name doesnt match to restaurantName", ->
         fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
         noResultMessage = spyOn(ui, "noResultMessage")
         ui.searchResult()
         fakeServer.respond()
         expect(noResultMessage).toHaveBeenCalled
+
+      it 'Makes <p> tag for warnning message if data empty', ->
+        fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
+        expect($("p")).not.toExist
+        ui.searchResult()
+        fakeServer.respond()
+        expect($("p")).toExist
+
+      it 'Text in <p> has a warnning message if data empty', ->
+        fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
+        expect($("p")).not.toExist
+        ui.searchResult()
+        fakeServer.respond()
+        expect($("p")).toContainText "No results for"      
 
     describe "Test showResult function", ->
       data = null
