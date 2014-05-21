@@ -13,4 +13,9 @@ class Inspections extends Backbone.Collection
   allRestaurantsHasViolations: ->
     this.filter((restaurant) -> restaurant.get("violations"))
 
+  namesOfRestaurantsViolations: ->
+    restaurants = []
+    @allRestaurantsHasViolations().forEach((restaurant) -> restaurants.push(restaurant.get("dba_name")))
+    _.uniq(restaurants);
+
 window.Inspections = Inspections
