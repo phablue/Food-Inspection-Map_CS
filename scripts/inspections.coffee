@@ -3,14 +3,14 @@ class Inspections extends Backbone.Collection
     @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
 
   url: ->
-    @urlByName()
+    @resourceURL
 
   urlByName: (restaurntName) ->
     unless _.isUndefined(restaurntName)
       return "#{@resourceURL}?dba_name=#{restaurntName}"
     @resourceURL
 
-  hasViolations: ->
-    @filter(function(restaurant){return restaurant.get("violations")});
+  allRestaurantsHasViolations: ->
+    this.filter((restaurant) -> restaurant.get("violations"))
 
 window.Inspections = Inspections
