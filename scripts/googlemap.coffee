@@ -35,18 +35,18 @@ class GoogleMap
       @infoWindows[@currentMark].close()
       @currentMark = infowindow.id
 
-  infoWindow: (data, violations) ->
+  infoWindow: (data, numOfInspections) ->
     infowindow = new @google.maps.InfoWindow
       id: data.license_
-      content: '<div class="'+data.license_+'">'+
-                  '<div id="content">'+
-                    '<div id="siteNotice">'+'</div>'+'<h1>'+data.dba_name+'</h1>'+
-                    '<div id="bodyContent">'+
-                      '<p class="lead"><b>Address : &nbsp</b>'+data.address+', CHICAGO</p>'+
-                      '<p class="lead"><b>Total violations : &nbsp</b>'+violations+'</p>'+
-                      '<p class="lead"><b>Detail violations : &nbsp</b><a data-id="' + data.dba_name + '" class = "detail">Go Detail</a></p>'+
-                    '</div>'+
-                  '</div>'+
-                '</div>'
+      content: """<div class="#{data.license}">
+                  <div id="content">
+                    <div id="siteNotice"></div><h1>#{data.dba_name}</h1>
+                    <div id="bodyContent">
+                      <p class="lead"><b>Address : &nbsp</b>#{data.address}, CHICAGO</p>
+                      <p class="lead"><b>Total Inspections Q'ty : &nbsp</b>#{numOfInspections}</p>
+                      <p class="lead"><a data-id="#{data.dba_name}" class = "detail">Go Detail</a></p>
+                    </div>
+                  </div>
+                </div>"""
 
 window.GoogleMap = GoogleMap
