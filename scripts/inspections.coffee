@@ -1,6 +1,7 @@
 class Inspections extends Backbone.Collection
   initialize: (@google) ->
-    @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json?$order=inspection_date%20ASC"
+    @google = google
+    @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
 
   url: ->
     @resourceURL
@@ -20,5 +21,12 @@ class Inspections extends Backbone.Collection
     address = []
     @allRestaurantsHasViolations().forEach((restaurant) -> address.push(restaurant.get("address")))
     _.uniq(address);
+
+  restaurantsOnGoogleMap: ->
+    googleMap = new GoogleMap(@google)
+    _.each(@addressOfRestaurantsViolations(), (restaurantAddress) =>
+      restaurant = @restaurantHasViolationsByAddress(restaurantAddress)
+      mark = googleMap.markLocation restaurant[0].get("latitude"), restaurant[0].get("longitude")
+      googleMap.openInfoWindow mark, restaurant[0].toJSON(), restaurant.length)
 
 window.Inspections = Inspections
