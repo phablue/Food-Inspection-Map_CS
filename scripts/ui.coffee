@@ -1,6 +1,7 @@
 class UI
   constructor: (google) ->
     @google = google
+    @Inspections = new Inspections()
     @url = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
     @restaurantName = null
     @mark = null
