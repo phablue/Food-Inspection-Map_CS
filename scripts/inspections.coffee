@@ -7,7 +7,7 @@ class Inspections extends Backbone.Collection
     @urlByName()
 
   urlByName: ->
-    unless _.isNull(UI.restaurantName)
+    unless _.isUndefined(UI.restaurantName)
       return "#{@resourceURL}?dba_name=#{UI.restaurantName}"
     @resourceURL
 
