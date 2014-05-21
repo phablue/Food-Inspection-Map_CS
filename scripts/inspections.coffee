@@ -11,18 +11,18 @@ class Inspections extends Backbone.Collection
       return "#{@resourceURL}?dba_name=#{UI.restaurantName}"
     @resourceURL
 
-  allRestaurantsHasViolations: ->
+  restaurantsViolations: ->
     this.filter((restaurant) -> restaurant.get("violations"))
 
   restaurantHasViolationsByAddress: (restaurantAddress) ->
-    @allRestaurantsHasViolations().filter((restaurant) -> restaurant.get("address") == restaurantAddress)
+    @restaurantsViolations().filter((restaurant) -> restaurant.get("address") == restaurantAddress)
 
   addressOfRestaurantsViolations: ->
     address = []
-    @allRestaurantsHasViolations().forEach((restaurant) -> address.push(restaurant.get("address")))
+    @restaurantsViolations().forEach((restaurant) -> address.push(restaurant.get("address")))
     _.uniq(address);
 
-  restaurantsOnGoogleMap: ->
+  restaurantsViolationsOnGoogleMap: ->
     googleMap = new GoogleMap(@google)
     _.each(@addressOfRestaurantsViolations(), (restaurantAddress) =>
       restaurant = @restaurantHasViolationsByAddress(restaurantAddress)
