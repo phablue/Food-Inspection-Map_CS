@@ -1,6 +1,6 @@
 class Inspections extends Backbone.Collection
-  initialize: ->
-    @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
+  initialize: (@google) ->
+    @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json?$order=inspection_date%20ASC"
 
   url: ->
     @resourceURL
@@ -13,12 +13,12 @@ class Inspections extends Backbone.Collection
   allRestaurantsHasViolations: ->
     this.filter((restaurant) -> restaurant.get("violations"))
 
-  restaurantHasViolationsByName: (restaurantName) ->
-    @allRestaurantsHasViolations().filter((restaurant) -> restaurant.get("dba_name") == restaurantName)
+  restaurantHasViolationsByAddress: (restaurantAddress) ->
+    @allRestaurantsHasViolations().filter((restaurant) -> restaurant.get("address") == restaurantAddress)
 
-  namesOfRestaurantsViolations: ->
-    restaurants = []
-    @allRestaurantsHasViolations().forEach((restaurant) -> restaurants.push(restaurant.get("dba_name")))
-    _.uniq(restaurants);
+  addressOfRestaurantsViolations: ->
+    address = []
+    @allRestaurantsHasViolations().forEach((restaurant) -> address.push(restaurant.get("address")))
+    _.uniq(address);
 
 window.Inspections = Inspections
