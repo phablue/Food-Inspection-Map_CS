@@ -6,18 +6,18 @@ class UI
     @restaurantName = null
     @mark = null
 
-  findDirtyRestaurants: ->
-    $.getJSON(@url).done @getOnlyRestaurantsHasViolations
+  # findDirtyRestaurants: ->
+  #   $.getJSON(@url).done @getOnlyRestaurantsHasViolations
 
-  getOnlyRestaurantsHasViolations: (data) =>
-    i = 0
-    googleMap = new GoogleMap(@google)
-    while i < data.length
-      unless _.isUndefined(data[i].violations)
-        $.getJSON(@url, {"dba_name": data[i].dba_name}).done (data) =>
-          mark = googleMap.markLocation data[0].latitude, data[0].longitude
-          googleMap.openInfoWindow mark, data[0], @howManyViolations(data)
-      i++
+  # getOnlyRestaurantsHasViolations: (data) =>
+  #   i = 0
+  #   googleMap = new GoogleMap(@google)
+  #   while i < data.length
+  #     unless _.isUndefined(data[i].violations)
+  #       $.getJSON(@url, {"dba_name": data[i].dba_name}).done (data) =>
+  #         mark = googleMap.markLocation data[0].latitude, data[0].longitude
+  #         googleMap.openInfoWindow mark, data[0], @howManyViolations(data)
+  #     i++
 
   searchWords: ->
     @restaurantName = $(".form-control").val()
