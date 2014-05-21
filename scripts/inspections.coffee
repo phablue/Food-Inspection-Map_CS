@@ -4,11 +4,11 @@ class Inspections extends Backbone.Collection
     @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
 
   url: ->
-    @resourceURL
+    @urlByName()
 
-  urlByName: (restaurantName) ->
-    unless _.isUndefined(restaurantName)
-      return "#{@resourceURL}?dba_name=#{restaurantName}"
+  urlByName: ->
+    unless _.isNull(UI.restaurantName)
+      return "#{@resourceURL}?dba_name=#{UI.restaurantName}"
     @resourceURL
 
   allRestaurantsHasViolations: ->
