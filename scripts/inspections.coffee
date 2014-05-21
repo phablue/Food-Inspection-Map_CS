@@ -13,9 +13,8 @@ class Inspections extends Backbone.Collection
   allRestaurantsHasViolations: ->
     this.filter((restaurant) -> restaurant.get("violations"))
 
-  restaurantHasViolationsByName: (i) ->
-    _this = this
-    @allRestaurantsHasViolations().filter((restaurant) -> restaurant.get("dba_name") == _this.namesOfRestaurantsViolations()[i])
+  restaurantHasViolationsByName: (restaurantName) ->
+    @allRestaurantsHasViolations().filter((restaurant) -> restaurant.get("dba_name") == restaurantName)
 
   namesOfRestaurantsViolations: ->
     restaurants = []
