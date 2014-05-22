@@ -8,6 +8,7 @@
     "bower_components/sinonjs/sinon.js",
     "bower_components/jasmine-jquery/lib/jasmine-jquery.js",
     ".tmp/scripts/googlemap.js",
+    ".tmp/scripts/inspections.js",
     ".tmp/scripts/ui.js",
     ".tmp/spec/**/*.js"
   ]
