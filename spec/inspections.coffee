@@ -23,6 +23,19 @@ describe "Test Inspections class", ->
   respondWithDataServer = (url, data) ->
     fakeServer.respondWith('GET', url, [200, {'content-type': 'application/json'}, JSON.stringify(data)])
 
+  it "fakeServer requests length is 1, if success to do fetch()", ->
+    data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty"}]
+    respondWithDataServer(inspections.url(), data)
+    inspections.fetch()
+    fakeServer.respond()
+    expect(fakeServer.requests.length).toBe 1
+
+  it "fakeServer requests length is 1, if dosnt do fetch()", ->
+    data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty"}]
+    respondWithDataServer(inspections.url(), data)
+    fakeServer.respond()
+    expect(fakeServer.requests.length).toBe 0
+
   describe "Test urlByName function", ->
     it "url is resourceURL, if UI restaurantName is null", ->
       expect(inspections.ui.restaurantName).toBeNull()
