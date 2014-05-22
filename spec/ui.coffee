@@ -243,24 +243,6 @@ describe "Test UI", ->
       ui.resetSearchResult()
       expect($(".form-control")).toBeEmpty
 
-  describe "Test howManyViolations function", ->
-    it "return 1", ->
-      data = [{"dba_name": "yolk", "address": "The Loop", "violations": "dirty"}]
-      expect(ui.howManyViolations(data)).toEqual(1)
-
-    it "return 0", ->
-      data = [{"dba_name": "yolk", "address": "The Loop"}]
-      expect(ui.howManyViolations(data)).toBeNull
-
-  describe "Test checkHasViolations function", ->
-    it "return true", ->
-      data = [{"dba_name": "yolk", "address": "The Loop", "violations": "dirty"}]
-      expect(ui.howManyViolations(data)).toBeTruthy
-
-    it "return false", ->
-      data = [{"dba_name": "yolk", "address": "The Loop"}]
-      expect(ui.howManyViolations(data)).toBeFalsy
-
   describe "Test goBackHome function", ->
     it "call functions after click", ->
       resetSearchResult = spyOn(ui, "resetSearchResult")
