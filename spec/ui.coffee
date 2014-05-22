@@ -252,15 +252,15 @@ describe "Test UI", ->
       expect(resetSearchResult).toHaveBeenCalled
       expect(getInspectionsDataOnGoogleMap).toHaveBeenCalled
 
-  describe "Test replaceString and resetDate functions", ->
+  describe "Test replaceViolations and resetDate functions", ->
     it "'|' change to <br> if data has '|'", ->
       data = [{"dba_name": "yolk", "address": "The Loop", "violations": "dirty | smell"}]
       expect(data[0].violations).toBe("dirty | smell")
-      result = ui.replaceString(data, 0)
+      result = ui.replaceViolations(data[0])
       expect(result).toEqual("dirty<br>smell")
 
     it "Data format is year-month-date", ->
       data = [{"dba_name": "yolk", "inspection_date": "2014-04-16T00:00:00", "violations": "dirty | smell"}]
       expect(data[0].inspection_date).toBe("2014-04-16T00:00:00")
-      result = ui.resetDate(data, 0)
+      result = ui.resetDate(data[0])
       expect(result).toEqual("2014-04-16")

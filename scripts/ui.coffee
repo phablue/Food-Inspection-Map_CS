@@ -66,12 +66,12 @@ class UI
 
   setTableBody: (data) ->
     date = @resetDate(data)
-    violations = @replaceString(data)
+    violations = @replaceViolations(data)
     $("tbody").append """<tr><td>#{date}</td><td>#{data.inspection_type}</td>
                          <td>#{data.risk}</td><td>#{data.results}
                          </td><td>#{violations}</td></tr>"""
 
-  replaceString: (data) ->
+  replaceViolations: (data) ->
     data.violations.replace(/\s*\|\s*/gi, '<br>')
 
   resetDate: (data) ->
