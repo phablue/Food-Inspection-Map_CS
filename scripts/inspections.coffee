@@ -15,18 +15,18 @@ class Inspections extends Backbone.Collection
   restaurantsViolations: ->
     this.filter((restaurant) -> restaurant.get("violations"))
 
-  restaurantHasViolationsByAddress: (restaurantAddress) ->
-    @restaurantsViolations().filter((restaurant) -> restaurant.get("address") == restaurantAddress)
+  restaurantHasViolationsByLicenseID: (restaurantLicenseID) ->
+    @restaurantsViolations().filter((restaurant) -> restaurant.get("license_") == restaurantLicenseID)
 
-  addressOfRestaurantsViolations: ->
-    address = []
-    @restaurantsViolations().forEach((restaurant) -> address.push(restaurant.get("address")))
-    _.uniq(address);
+  licenseIDsOfRestaurantsViolations: ->
+    licenseIDs = []
+    @restaurantsViolations().forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
+    _.uniq(licenseIDs);
 
   restaurantsViolationsOnGoogleMap: ->
     googleMap = new GoogleMap(@google)
-    _.each(@addressOfRestaurantsViolations(), (restaurantAddress) =>
-      restaurant = @restaurantHasViolationsByAddress(restaurantAddress)
+    _.each(@licenseIDsOfRestaurantsViolations(), (restaurantLicenseID) =>
+      restaurant = @restaurantHasViolationsByLicenseID(restaurantLicenseID)
       mark = googleMap.markLocation restaurant[0].get("latitude"), restaurant[0].get("longitude")
       googleMap.openInfoWindow mark, restaurant[0].toJSON(), restaurant.length)
 
