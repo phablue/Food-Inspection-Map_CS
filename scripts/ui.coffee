@@ -19,17 +19,13 @@ class UI
         @showResult(@inspections.toJSON())
 
   showResult: (data) =>
-    if _.isEmpty(data)
-      @noResultMessage()
-    else if !@checkHasViolations(data)
+    unless _.isEmpty(data)
       @setMapCSS()
       @setTitle(data)
-      googleMap = new GoogleMap(@google)
-      $("#map-canvas").off "click"
-      googleMap.map.setCenter(googleMap.getLocation(data[0].latitude, data[0].longitude))
-      googleMap.markLocation data[0].latitude, data[0].longitude
+      @showMarkOnGoogleMap(data)
       @setTableHead()
       _.each(data, (d) => @setTableBody(d))
+    @noResultMessage()
 
   searchingRestaurant: ->
     $("form").submit (e) =>
@@ -42,6 +38,12 @@ class UI
     $(".form-control").val("")
     $(".page-header, small, tr, th, td").remove()
     $(".bg-danger, br").remove()
+
+  showMarkOnGoogleMap: (data) ->
+    googleMap = new GoogleMap(@google)
+    $("#map-canvas").off "click"
+    googleMap.map.setCenter(googleMap.getLocation(data[0].latitude, data[0].longitude))
+    googleMap.markLocation data[0].latitude, data[0].longitude
 
   setMapCSS: ->
     $("#map-canvas").css "height": "37%", "width": "50%"
@@ -74,19 +76,6 @@ class UI
 
   resetDate: (data) ->
     data.inspection_date.replace('T00:00:00', '')
-
-  checkHasViolations: (data) ->
-    true if _.isNull(@howManyViolations(data))
-    false
-
-  howManyViolations: (data) ->
-    violations = 0
-    i = 0
-    while i < data.length
-      if !_.isUndefined(data[i].violations)
-        violations++
-      i++
-    violations
 
   goBackHome: ->
     $(".navbar-brand").click =>
