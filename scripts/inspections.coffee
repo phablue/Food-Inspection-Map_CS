@@ -1,5 +1,6 @@
 class Inspections extends Backbone.Collection
-  initialize: (google) ->
+  initialize: (google, ui) ->
+    @ui = ui
     @google = google
     @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
 
@@ -7,9 +8,8 @@ class Inspections extends Backbone.Collection
     @urlByName()
 
   urlByName: ->
-    restaurantName = new UI(@google).restaurantName
-    unless _.isNull(restaurantName)
-      return "#{@resourceURL}?dba_name=#{restaurantName}"
+    unless _.isNull(@ui.restaurantName)
+      return "#{@resourceURL}?dba_name=#{@ui.restaurantName}"
     @resourceURL
 
   restaurantsViolations: ->
