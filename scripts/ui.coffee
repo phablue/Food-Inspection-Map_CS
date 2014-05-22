@@ -19,13 +19,13 @@ class UI
         @showResult(@inspections.toJSON())
 
   showResult: (data) =>
-    unless _.isEmpty(data)
-      @setMapCSS()
-      @setTitle(data)
-      @showMarkOnGoogleMap(data)
-      @setTableHead()
-      _.each(data, (d) => @setTableBody(d))
-    @noResultMessage()
+    if _.isEmpty(data)
+      return @noResultMessage()
+    @setMapCSS()
+    @setTitle(data)
+    @showMarkOnGoogleMap(data)
+    @setTableHead()
+    _.each(data, (d) => @setTableBody(d))
 
   searchingRestaurant: ->
     $("form").submit (e) =>
