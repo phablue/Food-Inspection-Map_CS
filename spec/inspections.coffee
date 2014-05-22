@@ -1,6 +1,6 @@
 describe "Test Inspections class", ->
   inspections = null
-  fakeserver = null
+  fakeServer = null
   google = null
 
   beforeEach ->
@@ -15,17 +15,17 @@ describe "Test Inspections class", ->
           addListener: ->
 
     inspections = new Inspections(google, new UI())
-    fakeserver = sinon.fakeServer.create()
+    fakeServer = sinon.fakeServer.create()
 
   afterEach ->
-    fakeserver.restore();
+    fakeServer.restore();
 
-  respondWithDataServer: (url, data) ->
+  respondWithDataServer = (url, data) ->
     fakeServer.respondWith('GET', url, [200, {'content-type': 'application/json'}, JSON.stringify(data)])
 
   describe "Test urlByName function", ->
     it "url is resourceURL, if UI restaurantName is null", ->
-      inspections.ui.restaurantName = null
+      expect(inspections.ui.restaurantName).toBeNull()
       url = inspections.url()
       expect(url).toBe(inspections.resourceURL)
 

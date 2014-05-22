@@ -2,7 +2,7 @@ class UI
   constructor: (google) ->
     @google = google
     @inspections = new Inspections(google, this)
-    @restaurantName = "null"
+    @restaurantName = null
     @mark = null
 
   getInspectionsDataOnGoogleMap: ->
