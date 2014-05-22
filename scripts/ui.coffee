@@ -55,9 +55,8 @@ class UI
 
   setTableHead: ->
     $("thead").append """<tr>
-                            <th>#</th>
-                            <th>Inspection Type</th>
                             <th>Inspection Date</th>
+                            <th>Inspection Type</th>
                             <th>Risk</th>
                             <th>Results</th>
                             <th>Violations</th>
@@ -66,9 +65,9 @@ class UI
   setTableBody: (data) ->
     date = @resetDate(data)
     violations = @replaceString(data)
-    $("tbody").append """<tr><td>#{i+1}</td><td>#{data.inspection_type}</td><td>
-                      #{date}</td><td>#{data.risk}</td><td>#{data.results}
-                      </td><td>#{violations}</td></tr>"""
+    $("tbody").append """<tr><td>#{date}</td><td>#{data.inspection_type}</td>
+                         <td>#{data.risk}</td><td>#{data.results}
+                         </td><td>#{violations}</td></tr>"""
 
   replaceString: (data) ->
     data.violations.replace(/\s*\|\s*/gi, '<br>')
