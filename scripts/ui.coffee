@@ -5,6 +5,11 @@ class UI
     @restaurantName = null
     @mark = null
 
+  getInspectionsDataOnGoogleMap: ->
+    @inspections.fetch
+      success: =>
+        @inspections.restaurantsViolationsOnGoogleMap()
+
   searchWords: ->
     @restaurantName = $(".form-control").val()
 
