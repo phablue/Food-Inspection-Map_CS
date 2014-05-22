@@ -14,8 +14,9 @@ class UI
     @restaurantName = $(".form-control").val()
 
   searchResult: ->
-    # $.getJSON(@url, {"dba_name": @restaurantName}).done @showResult
-    @searchWords()
+    @inspections.fetch
+      success: =>
+        @showResult(@inspections.toJSON())
 
   showResult: (data) =>
     if _.isEmpty(data)
@@ -35,6 +36,7 @@ class UI
 
   searchingRestaurant: ->
     $("form").submit (e) =>
+      @searchWords()
       @resetSearchResult()
       @searchResult()
       e.preventDefault()
