@@ -49,6 +49,7 @@ class UI
     $("#map-canvas").css "height": "37%", "width": "50%"
 
   noResultMessage: ->
+    $("#map-canvas").css "height": "0%", "width": "0%"
     $(".result").before "<br><br><p class='bg-danger'>No results for &nbsp'#{@restaurantName}'</p>"
 
   setTitle: (data) ->

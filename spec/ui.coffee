@@ -195,23 +195,46 @@ describe "Test UI", ->
 
   describe "Test searchingRestaurant function", ->
     data = null
-    e= null
+    e = null
     url = null
 
     beforeEach ->
       e = $.Event("submit")
       data = [{"dba_name": "dimsum", "address": "The Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
-      url = "#{ui.url}?#{$.param({"dba_name": ui.restaurantName})}"
 
-    it "searchingRestaurant function", ->
+    it "ui.restaurantName value changed to search words after submit search words", ->
+      respondToRestaurantsUI(ui.inspections.url(), data)
       ui.searchingRestaurant()
-
-    it "call searchWords, resetSearchResult, searchResult functions clicks a search button", ->
-      ui.searchingRestaurant()
+      $(".form-control").val "dimsum"
       $(".form-control").trigger(e)
-      expect(spyOn(ui, "searchWords")).toHaveBeenCalled
-      expect(spyOn(ui, "resetSearchResult")).toHaveBeenCalled
-      expect(spyOn(ui, "searchResult")).toHaveBeenCalled
+      fakeServer.respond()
+      expect(ui.restaurantName).toBe "dimsum"
+
+    it "Show title after submit search words", ->
+      respondToRestaurantsUI(ui.inspections.url(), data)
+      ui.searchingRestaurant()
+      $(".form-control").val "dimsum"
+      expect($("h1")).not.toExist
+      expect($("small")).not.toExist
+      $(".form-control").trigger(e)
+      fakeServer.respond()
+      expect($("h1")).toExist
+      expect($("small")).toExist
+      expect($("h1")).toContainText "dimsum"
+      expect($("small")).toContainText "The Loop"
+
+    it "Show data on table after submit search words", ->
+      respondToRestaurantsUI(ui.inspections.url(), data)
+      ui.searchingRestaurant()
+      $(".form-control").val "dimsum"
+      expect($("tr")).not.toExist
+      expect($("td")).not.toExist
+      $(".form-control").trigger(e)
+      fakeServer.respond()
+      expect($("tr")).toExist
+      expect($("td")).toExist
+      expect($("td")).toContainText "dirty"
+      expect($("td")).toContainText "2013-10-05"
 
     it "show warnning message if search word is not in data, after search", ->
       expect($("p")).not.toExist
