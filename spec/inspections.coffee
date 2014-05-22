@@ -33,3 +33,20 @@ describe "Test Inspections class", ->
       inspections.ui.restaurantName = "hi"
       url = inspections.url()
       expect(url).toBe("#{inspections.resourceURL}?dba_name=hi")
+
+  describe "Test restaurantsViolations function", ->
+    it "return data, if data has violation", ->
+      data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty"}]
+      respondWithDataServer(inspections.url(), data)
+      inspections.fetch()
+      fakeServer.respond()
+      result = JSON.stringify(inspections.restaurantsViolations())
+      expect(result).toBe(JSON.stringify(data))
+
+    it "return [], if data doesnt have violation", ->
+      data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
+      respondWithDataServer(inspections.url(), data)
+      inspections.fetch()
+      inspections.restaurantsViolations()
+      result = JSON.stringify(inspections.restaurantsViolations())
+      expect(result).toBe(JSON.stringify([]))
