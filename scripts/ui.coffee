@@ -22,7 +22,6 @@ class UI
     if _.isEmpty(data)
       @noResultMessage()
     else if !@checkHasViolations(data)
-      i = 0
       @setMapCSS()
       @setTitle(data)
       googleMap = new GoogleMap(@google)
@@ -30,9 +29,7 @@ class UI
       googleMap.map.setCenter(googleMap.getLocation(data[0].latitude, data[0].longitude))
       googleMap.markLocation data[0].latitude, data[0].longitude
       @setTableHead()
-      while i < data.length
-        @setTableBody(data, i)
-        i++
+      _.each(data, (d) => @setTableBody(d))
 
   searchingRestaurant: ->
     $("form").submit (e) =>
@@ -66,18 +63,18 @@ class UI
                             <th>Violations</th>
                         </tr>"""
 
-  setTableBody: (data, i) ->
-    date = @resetDate(data, i)
-    violations = @replaceString(data, i)
-    $("tbody").append """<tr><td>#{i+1}</td><td>#{data[i].inspection_type}</td><td>
-                      #{date}</td><td>#{data[i].risk}</td><td>#{data[i].results}
+  setTableBody: (data) ->
+    date = @resetDate(data)
+    violations = @replaceString(data)
+    $("tbody").append """<tr><td>#{i+1}</td><td>#{data.inspection_type}</td><td>
+                      #{date}</td><td>#{data.risk}</td><td>#{data.results}
                       </td><td>#{violations}</td></tr>"""
 
-  replaceString: (data, i) ->
-    data[i].violations.replace(/\s*\|\s*/gi, '<br>')
+  replaceString: (data) ->
+    data.violations.replace(/\s*\|\s*/gi, '<br>')
 
-  resetDate: (data, i) ->
-    data[i].inspection_date.replace('T00:00:00', '')
+  resetDate: (data) ->
+    data.inspection_date.replace('T00:00:00', '')
 
   checkHasViolations: (data) ->
     true if _.isNull(@howManyViolations(data))
