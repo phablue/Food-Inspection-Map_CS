@@ -49,73 +49,63 @@ describe "Test UI", ->
     beforeEach ->
       ui.restaurantName = "Domino pizza"
       data = [{"dba_name": "Domino pizza", "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
-      url = "#{ui.url}?#{$.param({"dba_name": ui.restaurantName})}"
+      respondToRestaurantsUI(ui.inspections.url(), data)
 
     it "Call showResult function if suscess get http request", ->
-      respondToRestaurantsUI(url, data)
       showResult = spyOn(ui, "showResult")
       ui.searchResult()
       fakeServer.respond()
       expect(showResult).toHaveBeenCalled
 
     it "Call setMapCSS function if data's dba_name match to restaurantName", ->
-      respondToRestaurantsUI(url, data)
       setMapCSS = spyOn(ui, "setMapCSS")
       ui.searchResult()
       fakeServer.respond()
       expect(setMapCSS).toHaveBeenCalled
 
     it "Call setTitle function if data's dba_name match to restaurantName", ->
-      respondToRestaurantsUI(url, data)
       setTitle = spyOn(ui, "setTitle")
       ui.searchResult()
       fakeServer.respond()
       expect(setTitle).toHaveBeenCalled
 
     it "Call markLocation function if data's dba_name match to restaurantName", ->
-      respondToRestaurantsUI(url, data)
       markLocation = spyOn(googlemap, "markLocation")
       ui.searchResult()
       fakeServer.respond()
       expect(markLocation).toHaveBeenCalled
 
     it "Call setTableBody function if data's dba_name match to restaurantName", ->
-      respondToRestaurantsUI(url, data)
       setTableBody = spyOn(ui, "setTableBody")
       ui.searchResult()
       fakeServer.respond()
       expect(setTableBody).toHaveBeenCalled
 
     it "Makes <h1> tag if data has violations", ->
-      respondToRestaurantsUI(url, data)
       expect($("h1")).not.toExist
       ui.searchResult()
       fakeServer.respond()
       expect($("h1")).toExist
 
     it "Text in <h1> is restaurantName if data has violations", ->
-      respondToRestaurantsUI(url, data)
       expect($("h1")).not.toExist
       ui.searchResult()
       fakeServer.respond()
       expect($("h1")).toContainText "Domino pizza"
 
     it "Makes <small> tag if data has violations", ->
-      respondToRestaurantsUI(url, data)
       expect($("small")).not.toExist
       ui.searchResult()
       fakeServer.respond()
       expect($("small")).toExist
 
     it "Text in <small> is address if data has violations", ->
-      respondToRestaurantsUI(url, data)
       expect($("small")).not.toExist
       ui.searchResult()
       fakeServer.respond()
       expect($("small")).toContainText "DownTown"
 
     it 'Makes <tr><td> if data has violations', ->
-      respondToRestaurantsUI(url, data)
       expect($("tr")).not.toExist
       expect($("td")).not.toExist
       ui.searchResult()
@@ -124,7 +114,6 @@ describe "Test UI", ->
       expect($("td")).toExist
 
     it '<td> has data values if data has violations', ->
-      respondToRestaurantsUI(url, data)
       expect($("td")).not.toExist
       ui.searchResult()
       fakeServer.respond()
@@ -339,11 +328,11 @@ describe "Test UI", ->
   describe "Test goBackHome function", ->
     it "call functions after click", ->
       resetSearchResult = spyOn(ui, "resetSearchResult")
-      findDirtyRestaurants = spyOn(ui, "findDirtyRestaurants")
+      getInspectionsDataOnGoogleMap = spyOn(ui, "getInspectionsDataOnGoogleMap")
       ui.goBackHome()
       $(".navbar-brand").click()
       expect(resetSearchResult).toHaveBeenCalled
-      expect(findDirtyRestaurants).toHaveBeenCalled
+      expect(getInspectionsDataOnGoogleMap).toHaveBeenCalled
 
   describe "Test replaceString and resetDate functions", ->
     it "'|' change to <br> if data has '|'", ->
