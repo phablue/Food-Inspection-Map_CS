@@ -35,7 +35,7 @@ describe "Test Inspections class", ->
       expect(url).toBe("#{inspections.resourceURL}?dba_name=hi")
 
   describe "Test restaurantsViolations function", ->
-    it "return data, if data has violation", ->
+    it "Return data, if data has violation", ->
       data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty"}]
       respondWithDataServer(inspections.url(), data)
       inspections.fetch()
@@ -43,10 +43,29 @@ describe "Test Inspections class", ->
       result = JSON.stringify(inspections.restaurantsViolations())
       expect(result).toBe(JSON.stringify(data))
 
-    it "return [], if data doesnt have violation", ->
+    it "Return [], if data doesnt have violation", ->
       data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
       respondWithDataServer(inspections.url(), data)
       inspections.fetch()
-      inspections.restaurantsViolations()
+      fakeServer.respond()
       result = JSON.stringify(inspections.restaurantsViolations())
       expect(result).toBe(JSON.stringify([]))
+
+  describe "Test addressOfRestaurantsViolations function", ->
+    it "Return only address ['Chicago', 'Seattle'] in data", ->
+      data = [{"address": "Chicago", "violations": "dirty"}, {"address": "Seattle", "violations": "Too dirty"}]
+      respondWithDataServer(inspections.url(), data)
+      inspections.fetch()
+      fakeServer.respond()
+      result = inspections.addressOfRestaurantsViolations()
+      expect(result.length).toBe 2
+      expect(result).toEqual(["Chicago", "Seattle"])
+
+    it "Return ['Seoul'] in data after delete duplications", ->
+      data = [{"address": "Seoul", "violations": "dirty"}, {"address": "Seoul", "violations": "Too dirty"}]
+      respondWithDataServer(inspections.url(), data)
+      inspections.fetch()
+      fakeServer.respond()
+      result = inspections.addressOfRestaurantsViolations()
+      expect(result.length).toBe 1
+      expect(result).toEqual(["Seoul"])
