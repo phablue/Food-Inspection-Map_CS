@@ -64,21 +64,21 @@ describe "Test Inspections class", ->
       result = JSON.stringify(inspections.restaurantsViolations())
       expect(result).toBe(JSON.stringify([]))
 
-  describe "Test addressOfRestaurantsViolations function", ->
-    it "Return only address ['Chicago', 'Seattle'] in data", ->
-      data = [{"address": "Chicago", "violations": "dirty"}, {"address": "Seattle", "violations": "Too dirty"}]
+  describe "Test licenseIDsOfRestaurantsViolations function", ->
+    it "Return only license_ ['Chicago', 'Seattle'] in data", ->
+      data = [{"license_": "Chicago", "violations": "dirty"}, {"license_": "Seattle", "violations": "Too dirty"}]
       respondWithDataServer(inspections.url(), data)
       inspections.fetch()
       fakeServer.respond()
-      result = inspections.addressOfRestaurantsViolations()
+      result = inspections.licenseIDsOfRestaurantsViolations()
       expect(result.length).toBe 2
       expect(result).toEqual(["Chicago", "Seattle"])
 
     it "Return ['Seoul'] in data after delete duplications", ->
-      data = [{"address": "Seoul", "violations": "dirty"}, {"address": "Seoul", "violations": "Too dirty"}]
+      data = [{"license_": "Seoul", "violations": "dirty"}, {"license_": "Seoul", "violations": "Too dirty"}]
       respondWithDataServer(inspections.url(), data)
       inspections.fetch()
       fakeServer.respond()
-      result = inspections.addressOfRestaurantsViolations()
+      result = inspections.licenseIDsOfRestaurantsViolations()
       expect(result.length).toBe 1
       expect(result).toEqual(["Seoul"])
