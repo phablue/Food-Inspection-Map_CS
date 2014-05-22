@@ -11,7 +11,7 @@ class UI
         @inspections.restaurantsViolationsOnGoogleMap()
 
   searchWords: ->
-    @restaurantName = $(".form-control").val()
+    @restaurantName = encodeURIComponent $(".form-control").val()
 
   searchResult: ->
     # $.getJSON(@url, {"dba_name": @restaurantName}).done @showResult
@@ -35,7 +35,6 @@ class UI
 
   searchingRestaurant: ->
     $("form").submit (e) =>
-      @searchWords()
       @resetSearchResult()
       @searchResult()
       e.preventDefault()
@@ -95,7 +94,8 @@ class UI
     $(".navbar-brand").click =>
       $("#map-canvas").css "height": "70%", "width": "100%"
       @resetSearchResult()
-      # @findDirtyRestaurants()
+      @restaurantName = null
+      @getInspectionsDataOnGoogleMap()
 
   mainPage: ->
     @goBackHome()
