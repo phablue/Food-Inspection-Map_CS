@@ -11,7 +11,7 @@ class UI
         @inspections.restaurantsViolationsOnGoogleMap()
 
   searchWords: ->
-    @restaurantName = encodeURIComponent $(".form-control").val()
+    @restaurantName = $(".form-control").val()
 
   searchResult: ->
     # $.getJSON(@url, {"dba_name": @restaurantName}).done @showResult
@@ -51,7 +51,7 @@ class UI
     $(".result").before "<br><br><p class='bg-danger'>No results for &nbsp'#{@restaurantName}'</p>"
 
   setTitle: (data) ->
-    $(".title").append """<h1 class = 'page-header'>#{@restaurantName}
+    $(".title").append """<h1 class = 'page-header'>#{data[0].dba_name}
                          <small>&nbsp&nbsp(#{data[0].address}, Chicago)</small>"""
 
   setTableHead: ->
