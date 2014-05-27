@@ -42,8 +42,8 @@ class UI
   showMarkOnGoogleMap: (data) ->
     googleMap = new GoogleMap(@google)
     $("#map-canvas").off "click"
-    googleMap.map.setCenter(googleMap.getLocation(data[0].latitude, data[0].longitude))
-    googleMap.markLocation data[0].latitude, data[0].longitude
+    googleMap.map.setCenter(googleMap.getLocation(data[0].get("latitude"), data[0].get("longitude")))
+    googleMap.markLocation data[0].get("latitude"), data[0].get("longitude")
 
   setMapCSS: ->
     $("#map-canvas").css "height": "37%", "width": "50%"
@@ -53,8 +53,8 @@ class UI
     $(".result").before "<br><br><p class='bg-danger'>No results for &nbsp'#{@restaurantName}'</p>"
 
   setTitle: (data) ->
-    $(".title").append """<h1 class = 'page-header'>#{data[0].dba_name}
-                         <small>&nbsp&nbsp(#{data[0].address}, Chicago)</small>"""
+    $(".title").append """<h1 class = 'page-header'>#{data[0].get("dba_name")}
+                         <small>&nbsp&nbsp(#{data[0].get("address")}, Chicago)</small>"""
 
   setTableHead: ->
     $("thead").append """<tr>
@@ -68,15 +68,15 @@ class UI
   setTableBody: (data) ->
     date = @resetDate(data)
     violations = @replaceViolations(data)
-    $("tbody").append """<tr><td>#{date}</td><td>#{data.inspection_type}</td>
-                         <td>#{data.risk}</td><td>#{data.results}
+    $("tbody").append """<tr><td>#{date}</td><td>#{data.get("inspection_type")}</td>
+                         <td>#{data.get("risk")}</td><td>#{data.get("results")}
                          </td><td>#{violations}</td></tr>"""
 
   replaceViolations: (data) ->
-    data.violations.replace(/\s*\|\s*/gi, '<br>')
+    data.get("violations").replace(/\s*\|\s*/gi, '<br>')
 
   resetDate: (data) ->
-    data.inspection_date.replace('T00:00:00', '')
+    data.get("inspection_date").replace('T00:00:00', '')
 
   goBackHome: ->
     $(".navbar-brand").click =>
