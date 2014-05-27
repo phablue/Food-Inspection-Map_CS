@@ -14,7 +14,7 @@ describe "Test Inspections class", ->
         event: ->
           addListener: ->
 
-    inspections = new Inspections(google, new UI())
+    inspections = new Inspections({google: google, ui: new UI()})
     fakeServer = sinon.fakeServer.create()
 
   afterEach ->
