@@ -16,7 +16,7 @@ class UI
   searchResult: ->
     @inspections.fetch
       success: =>
-        @showResult(@inspections.toJSON())
+        @showResult(@inspections.restaurantsViolations())
 
   showResult: (data) =>
     if _.isEmpty(data)
