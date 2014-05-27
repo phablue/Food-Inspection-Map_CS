@@ -45,7 +45,7 @@ describe "Test Inspections class", ->
     it "url is resourceURL?dba_name=hi, if UI restaurantName is 'hi'", ->
       inspections.ui.restaurantName = "hi"
       url = inspections.url()
-      expect(url).toBe("#{inspections.resourceURL}?dba_name=hi")
+      expect(url).toBe("#{inspections.resourceURL}&dba_name=hi")
 
   describe "Test restaurantsViolations function", ->
     it "Return data, if data has violation", ->
