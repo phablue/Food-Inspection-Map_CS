@@ -13,11 +13,11 @@ class Inspections extends Backbone.Collection
     @resourceURL
 
   restaurantHasViolationsByLicenseID: (restaurantLicenseID) ->
-    @restaurantsViolations().filter((restaurant) -> restaurant.get("license_") == restaurantLicenseID)
+    this.filter((restaurant) -> restaurant.get("license_") == restaurantLicenseID)
 
   licenseIDsOfRestaurantsViolations: ->
     licenseIDs = []
-    @restaurantsViolations().forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
+    this.forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
     _.uniq(licenseIDs);
 
   restaurantsViolationsOnGoogleMap: ->
