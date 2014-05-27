@@ -47,23 +47,6 @@ describe "Test Inspections class", ->
       url = inspections.url()
       expect(url).toBe("#{inspections.resourceURL}&dba_name=hi")
 
-  describe "Test restaurantsViolations function", ->
-    it "Return data, if data has violation", ->
-      data = [{"dba_name": "Domino pizza", "address": "Chicago", "violations": "dirty"}]
-      respondWithDataServer(inspections.url(), data)
-      inspections.fetch()
-      fakeServer.respond()
-      result = JSON.stringify(inspections.restaurantsViolations())
-      expect(result).toBe(JSON.stringify(data))
-
-    it "Return [], if data doesnt have violation", ->
-      data = [{"dba_name": "Domino pizza", "address": "Chicago"}]
-      respondWithDataServer(inspections.url(), data)
-      inspections.fetch()
-      fakeServer.respond()
-      result = JSON.stringify(inspections.restaurantsViolations())
-      expect(result).toBe(JSON.stringify([]))
-
   describe "Test licenseIDsOfRestaurantsViolations function", ->
     it "Return only license_ ['Chicago', 'Seattle'] in data", ->
       data = [{"license_": "Chicago", "violations": "dirty"}, {"license_": "Seattle", "violations": "Too dirty"}]
