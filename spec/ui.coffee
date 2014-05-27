@@ -122,25 +122,25 @@ describe "Test UI", ->
       expect($("td")).toContainText "2013-10-05"
 
     it "Call noResultMessage function if data's dba_name doesnt match to restaurantName", ->
-      fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
+      fakeServer.respondWith('GET', ui.inspections.url(), [204, {'content-type': 'application/json'}, JSON.stringify([])])
       noResultMessage = spyOn(ui, "noResultMessage")
       ui.searchResult()
       fakeServer.respond()
       expect(noResultMessage).toHaveBeenCalled
 
     it 'Makes <p> tag for warnning message if data empty', ->
-      fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
+      fakeServer.respondWith('GET', ui.inspections.url(), [204, {'content-type': 'application/json'}, JSON.stringify([])])
       expect($("p")).not.toExist
       ui.searchResult()
       fakeServer.respond()
       expect($("p")).toExist
 
     it 'Text in <p> has a warnning message if data empty', ->
-      fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
+      fakeServer.respondWith('GET', ui.inspections.url(), [204, {'content-type': 'application/json'}, JSON.stringify([])])
       expect($("p")).not.toExist
       ui.searchResult()
       fakeServer.respond()
-      expect($("p")).toContainText "No results for"      
+      expect($("p")).toContainText "No results for"
 
   describe "Test showResult function", ->
     data = null
@@ -204,48 +204,44 @@ describe "Test UI", ->
     data = null
 
     beforeEach ->
-      data = [{"dba_name": "dimsum", "address": "The Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
+      data = [{dba_name: "dimsum", address: "The Loop", violations: "dirty", inspection_date: "2013-10-05T00:00:00", risk: "high", inspection_type: "risk", results: "failed"}]
 
     it "ui.restaurantName value changed to search words after submit search words", ->
-      respondToRestaurantsUI(ui.inspections.url(), data)
       ui.searchingRestaurant()
       $(".form-control").val "dimsum"
-      $("form").trigger("submit");
+      $("form").trigger("submit")
+      respondToRestaurantsUI(ui.inspections.url(), data)
       fakeServer.respond()
       expect(ui.restaurantName).toBe "dimsum"
 
     it "Show title after submit search words", ->
-      respondToRestaurantsUI(ui.inspections.url(), data)
-      ui.searchingRestaurant()
       $(".form-control").val "dimsum"
+      ui.searchingRestaurant()
       expect($("h1")).not.toExist
       expect($("small")).not.toExist
-      $("form").trigger("submit");
+      $("form").trigger("submit")
+      respondToRestaurantsUI(ui.inspections.url(), data)
       fakeServer.respond()
-      expect($("h1")).toExist
-      expect($("small")).toExist
       expect($("h1")).toContainText "dimsum"
       expect($("small")).toContainText "The Loop"
 
     it "Show data on table after submit search words", ->
-      respondToRestaurantsUI(ui.inspections.url(), data)
-      ui.searchingRestaurant()
       $(".form-control").val "dimsum"
-      expect($("tr")).not.toExist
+      ui.searchingRestaurant()
+      expect($("th")).not.toExist
       expect($("td")).not.toExist
-      $("form").trigger("submit");
+      $("form").trigger("submit")
+      respondToRestaurantsUI(ui.inspections.url(), data)
       fakeServer.respond()
-      expect($("tr")).toExist
-      expect($("td")).toExist
+      expect($("th")).toContainText "Violations"
       expect($("td")).toContainText "dirty"
-      expect($("td")).toContainText "2013-10-05"
 
     it "show warnning message if search word is not in data, after search", ->
       expect($("p")).not.toExist
-      ui.restaurantName = "Pizza"
-      fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
+      $(".form-control").val "pizza"
       ui.searchingRestaurant()
-      $("form").trigger("submit");
+      $("form").trigger("submit")
+      fakeServer.respondWith('GET', ui.inspections.url(), [204, {'content-type': 'application/json'}, JSON.stringify([])])
       fakeServer.respond()
       expect($("p")).toContainText "No results for"
 
