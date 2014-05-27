@@ -12,6 +12,9 @@ class Inspections extends Backbone.Collection
       return "#{@resourceURL}&dba_name=#{encodeURIComponent @ui.restaurantName}"
     @resourceURL
 
+  restaurantsFilterBy2014Year: ->
+    this.filter((restaurant) -> restaurant.get("inspection_date").match(/2014-*/g))
+
   restaurantHasViolationsByLicenseID: (restaurantLicenseID) ->
     this.filter((restaurant) -> restaurant.get("license_") == restaurantLicenseID)
 
