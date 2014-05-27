@@ -49,7 +49,7 @@ describe "Test UI", ->
 
     beforeEach ->
       ui.restaurantName = "Domino pizza"
-      data = [{"dba_name": "Domino pizza", "address": "DownTown", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
+      data = [{"dba_name": "Domino pizza", "address": "DownTown", "violations": "dirty", "inspection_date": "2014-10-05T00:00:00"}]
       respondToRestaurantsUI(ui.inspections.url(), data)
 
     it "Call showResult function if suscess get http request", ->
@@ -119,7 +119,7 @@ describe "Test UI", ->
       ui.searchResult()
       fakeServer.respond()
       expect($("td")).toContainText "dirty"
-      expect($("td")).toContainText "2013-10-05"
+      expect($("td")).toContainText "2014-10-05"
 
     it "Call noResultMessage function if data's dba_name doesnt match to restaurantName", ->
       fakeServer.respondWith('GET', ui.inspections.url(), [204, {'content-type': 'application/json'}, JSON.stringify([])])
@@ -151,7 +151,7 @@ describe "Test UI", ->
         dba_name: "Domino pizza"
         address: "DownTown"
         violations: "dirty"
-        inspection_date: "2013-10-05T00:00:00"
+        inspection_date: "2014-10-05T00:00:00"
       dataCollection = new Backbone.Collection([dataModel])
       data = dataCollection.models
 
@@ -198,13 +198,13 @@ describe "Test UI", ->
       expect($("td")).not.toExist
       ui.showResult(data)
       expect($("td")).toContainText "dirty"
-      expect($("td")).toContainText "2013-10-05"
+      expect($("td")).toContainText "2014-10-05"
 
   describe "Test searchingRestaurant function", ->
     data = null
 
     beforeEach ->
-      data = [{dba_name: "dimsum", address: "The Loop", violations: "dirty", inspection_date: "2013-10-05T00:00:00", risk: "high", inspection_type: "risk", results: "failed"}]
+      data = [{dba_name: "dimsum", address: "The Loop", violations: "dirty", inspection_date: "2014-10-05T00:00:00", risk: "high", inspection_type: "risk", results: "failed"}]
 
     it "ui.restaurantName value changed to search words after submit search words", ->
       ui.searchingRestaurant()
