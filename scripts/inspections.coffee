@@ -2,14 +2,14 @@ class Inspections extends Backbone.Collection
   initialize: (options) ->
     @ui = options.ui
     @google = options.google
-    @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
+    @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json?$where=violations IS NOT NULL"
 
   url: ->
     @urlByName()
 
   urlByName: ->
     unless _.isNull(@ui.restaurantName)
-      return "#{@resourceURL}?dba_name=#{encodeURIComponent @ui.restaurantName}"
+      return "#{@resourceURL}&dba_name=#{encodeURIComponent @ui.restaurantName}"
     @resourceURL
 
   restaurantsViolations: ->
