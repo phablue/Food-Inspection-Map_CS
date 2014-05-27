@@ -14,17 +14,17 @@ describe "Test UI", ->
         event: ->
           addListener: ->
 
-    setFixtures ('<div class = "container">
-                  <div id = "map-canvas"></div>
-                  <div class = "result">
-                    <div class = "title">
+    setFixtures ('<form class="navbar-form navbar-right">
+                    <div class = "form-group">
+                      <input type = "text" class = "form-control" placeholder = "Search...">
                     </div>
+                  </form>
+                  <div class = "container"><div id = "map-canvas"></div>
+                  <div class = "result"><div class = "title"></div>
                     <div class = "row placeholders">
                       <table class = "table table-striped">
-                        <thead>
-                        </thead>
-                        <tbody>
-                        </tbody>
+                        <thead></thead>
+                        <tbody></tbody>
                       </table>
                     </div>
                   </div>')
