@@ -16,11 +16,11 @@ class Inspections extends Backbone.Collection
     this.filter((restaurant) -> restaurant.get("inspection_date").match(/2014-*/g))
 
   restaurantHasViolationsByLicenseID: (restaurantLicenseID) ->
-    this.filter((restaurant) -> restaurant.get("license_") == restaurantLicenseID)
+    @restaurantsFilterBy2014Year().filter((restaurant) -> restaurant.get("license_") == restaurantLicenseID)
 
   licenseIDsOfRestaurantsViolations: ->
     licenseIDs = []
-    this.forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
+    @restaurantsFilterBy2014Year().forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
     _.uniq(licenseIDs);
 
   restaurantsViolationsOnGoogleMap: ->
