@@ -20,7 +20,7 @@ describe "Test UI", ->
                   </form>
                   <div id="map-canvas"></div>
                   <div class="result"><div class="title"></div>
-                    <table class ="table-striped">
+                    <table>
                       <thead></thead>
                       <tbody></tbody>
                     </table>
@@ -202,18 +202,15 @@ describe "Test UI", ->
 
   describe "Test searchingRestaurant function", ->
     data = null
-    e = null
-    url = null
 
     beforeEach ->
-      e = $.Event("submit")
       data = [{"dba_name": "dimsum", "address": "The Loop", "violations": "dirty", "inspection_date": "2013-10-05T00:00:00"}]
 
     it "ui.restaurantName value changed to search words after submit search words", ->
       respondToRestaurantsUI(ui.inspections.url(), data)
       ui.searchingRestaurant()
       $(".form-control").val "dimsum"
-      $(".form-control").trigger(e)
+      $("form").trigger("submit");
       fakeServer.respond()
       expect(ui.restaurantName).toBe "dimsum"
 
@@ -223,7 +220,7 @@ describe "Test UI", ->
       $(".form-control").val "dimsum"
       expect($("h1")).not.toExist
       expect($("small")).not.toExist
-      $(".form-control").trigger(e)
+      $("form").trigger("submit");
       fakeServer.respond()
       expect($("h1")).toExist
       expect($("small")).toExist
@@ -236,7 +233,7 @@ describe "Test UI", ->
       $(".form-control").val "dimsum"
       expect($("tr")).not.toExist
       expect($("td")).not.toExist
-      $(".form-control").trigger(e)
+      $("form").trigger("submit");
       fakeServer.respond()
       expect($("tr")).toExist
       expect($("td")).toExist
@@ -248,7 +245,7 @@ describe "Test UI", ->
       ui.restaurantName = "Pizza"
       fakeServer.respondWith('GET', url, [204, {'content-type': 'application/json'}, JSON.stringify([])])
       ui.searchingRestaurant()
-      $(".form-control").trigger(e)
+      $("form").trigger("submit");
       fakeServer.respond()
       expect($("p")).toContainText "No results for"
 
@@ -283,14 +280,21 @@ describe "Test UI", ->
       expect(getInspectionsDataOnGoogleMap).toHaveBeenCalled
 
   describe "Test replaceViolations and resetDate functions", ->
+    dataModel = null
+
+    beforeEach ->
+      dataModel = new Backbone.Model
+        dba_name: "Domino pizza"
+        address: "DownTown"
+        violations: "dirty | smell"
+        inspection_date: "2014-04-16T00:00:00"
+
     it "'|' change to <br> if data has '|'", ->
-      data = [{"dba_name": "yolk", "address": "The Loop", "violations": "dirty | smell"}]
-      expect(data[0].violations).toBe("dirty | smell")
-      result = ui.replaceViolations(data[0])
+      expect(dataModel.get("violations")).toBe("dirty | smell")
+      result = ui.replaceViolations(dataModel)
       expect(result).toEqual("dirty<br>smell")
 
     it "Data format is year-month-date", ->
-      data = [{"dba_name": "yolk", "inspection_date": "2014-04-16T00:00:00", "violations": "dirty | smell"}]
-      expect(data[0].inspection_date).toBe("2014-04-16T00:00:00")
-      result = ui.resetDate(data[0])
+      expect(dataModel.get("inspection_date")).toBe("2014-04-16T00:00:00")
+      result = ui.resetDate(dataModel)
       expect(result).toEqual("2014-04-16")
