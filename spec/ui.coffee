@@ -14,13 +14,13 @@ describe "Test UI", ->
         event: ->
           addListener: ->
 
-    setFixtures ('<a class = "navbar-brand">Food Inspection Map in Chicago</a>
+    setFixtures ('<a class="navbar-brand">Food Inspection Map in Chicago</a>
                   <form>
-                    <input type = "text" class = "form-control" placeholder = "Search...">
+                    <input type="text" class="form-control" placeholder="Search...">
                   </form>
-                  <div id = "map-canvas"></div>
-                  <div class = "result"><div class = "title"></div>
-                    <table class = "table-striped">
+                  <div id="map-canvas"></div>
+                  <div class="result"><div class="title"></div>
+                    <table class ="table-striped">
                       <thead></thead>
                       <tbody></tbody>
                     </table>
