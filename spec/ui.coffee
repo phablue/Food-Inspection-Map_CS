@@ -14,19 +14,16 @@ describe "Test UI", ->
         event: ->
           addListener: ->
 
-    setFixtures ('<form class="navbar-form navbar-right">
-                    <div class = "form-group">
-                      <input type = "text" class = "form-control" placeholder = "Search...">
-                    </div>
+    setFixtures ('<a class = "navbar-brand">Food Inspection Map in Chicago</a>
+                  <form>
+                    <input type = "text" class = "form-control" placeholder = "Search...">
                   </form>
-                  <div class = "container"><div id = "map-canvas"></div>
+                  <div id = "map-canvas"></div>
                   <div class = "result"><div class = "title"></div>
-                    <div class = "row placeholders">
-                      <table class = "table table-striped">
-                        <thead></thead>
-                        <tbody></tbody>
-                      </table>
-                    </div>
+                    <table class = "table-striped">
+                      <thead></thead>
+                      <tbody></tbody>
+                    </table>
                   </div>')
 
     fakeServer = sinon.fakeServer.create()
@@ -230,7 +227,6 @@ describe "Test UI", ->
       fakeServer.respond()
       expect($("h1")).toExist
       expect($("small")).toExist
-      console.log $("h1")
       expect($("h1")).toContainText "dimsum"
       expect($("small")).toContainText "The Loop"
 
