@@ -1,7 +1,7 @@
 class UI
   constructor: (google) ->
     @google = google
-    @inspections = new Inspections(google, this)
+    @inspections = new Inspections({google: google, ui: this})
     @restaurantName = null
     @mark = null
 

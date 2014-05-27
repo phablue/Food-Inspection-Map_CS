@@ -1,7 +1,7 @@
 class Inspections extends Backbone.Collection
-  initialize: (google, ui) ->
-    @ui = ui
-    @google = google
+  initialize: (options) ->
+    @ui = options.ui
+    @google = options.google
     @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json"
 
   url: ->
