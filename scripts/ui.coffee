@@ -19,9 +19,10 @@ class UI
       success: =>
         @showResult(@inspections.restaurantsFilterBy2014Year())
 
-  showResult: (data) =>
+  showResult: (data) ->
     if _.isEmpty(data)
       return @noResultMessage()
+    @showDetailOfResult(data)
 
   showDetailOfResult: (data) ->
     @setMapCSS()
