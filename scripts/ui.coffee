@@ -64,7 +64,7 @@ class UI
     $(".result").before "<div class='bs-callout bs-callout-warning'><h3>About #{totalResultQty} results<h3> </div>"
 
   resultsList: (data) ->
-    $(".title").before "<li><h3>#{data[0].get('dba_name')} <small> (#{data[0].get('address')})</small></h3></li>"
+    $(".title").before "<li><h3>#{data.get('dba_name')} <small> (#{data.get('address')})</small></h3></li>"
 
   setMapCSS: (height, width) ->
     $("#map-canvas").css "height": "#{height}", "width": "#{width}"
