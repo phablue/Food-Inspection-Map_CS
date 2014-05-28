@@ -22,7 +22,8 @@ class UI
   showResult: (data) ->
     if _.isEmpty(data)
       return @noResultMessage()
-    @showDetailOfResult(data)
+    else if data.length == 1
+      return @showDetailOfResult(data)
 
   showDetailOfResult: (data) ->
     @setMapCSS()
