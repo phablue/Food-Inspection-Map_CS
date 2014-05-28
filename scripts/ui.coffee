@@ -3,6 +3,7 @@ class UI
     @google = google
     @inspections = new Inspections({google: google, ui: this})
     @restaurantName = null
+    @restaurantID = null
     @mark = null
 
   getInspectionsDataOnGoogleMap: ->
@@ -36,8 +37,7 @@ class UI
 
   resetSearchResult: ->
     $(".form-control").val("")
-    $(".page-header, small, tr, th, td").remove()
-    $(".bg-danger, br").remove()
+    $("li, .page-header, small, tr, th, td, .bs-callout-warning, .bg-danger, br").remove()
 
   showMarkOnGoogleMap: (data) ->
     googleMap = new GoogleMap(@google)
