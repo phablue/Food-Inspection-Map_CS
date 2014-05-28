@@ -22,6 +22,8 @@ class UI
   showResult: (data) =>
     if _.isEmpty(data)
       return @noResultMessage()
+
+  showDetailOfResult: (data) ->
     @setMapCSS()
     @setTitle(data)
     @showMarkOnGoogleMap(data)
