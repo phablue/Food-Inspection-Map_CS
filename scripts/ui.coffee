@@ -26,7 +26,7 @@ class UI
       return @showDetailOfResult(data)
 
   showDetailOfResult: (data) ->
-    @setMapCSS()
+    @setMapCSS("37%", "50%")
     @setTitle(data)
     @showMarkOnGoogleMap(data)
     @setTableHead()
@@ -50,14 +50,14 @@ class UI
     googleMap.markLocation data[0].get("latitude"), data[0].get("longitude")
 
   noResultMessage: ->
-    $("#map-canvas").css "height": "0%", "width": "0%"
+    @setMapCSS("0%", "0%")
     $(".result").before "<br><br><p class='bg-danger'>No results for &nbsp'#{@restaurantName}'</p>"
 
   resultMessage: (totalResultQty) ->
     $(".result").before "<div class='bs-callout bs-callout-warning'><h3>About #{totalResultQty} results<h3> </div>"
 
   setMapCSS: (height, width) ->
-    $("#map-canvas").css "height": "#{height}", "width": "#{width}" #"height": "37%", "width": "50%"
+    $("#map-canvas").css "height": "#{height}", "width": "#{width}"
 
   setTitle: (data) ->
     $(".title").append """<h1 class = 'page-header'>#{data[0].get("dba_name")}
