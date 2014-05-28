@@ -19,6 +19,26 @@ body {
 /* Custom page CSS
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
+.bs-callout-warning {
+background-color: #fcf8f2;
+border-color: #f0ad4e;
+}
+
+.bs-callout {
+margin: 20px 0;
+padding: 20px;
+border-left: 3px solid #eee;
+}
+
+.bs-callout-warning h3 {
+color: #f0ad4e;
+}
+
+.bs-callout h3 {
+margin-top: 0;
+margin-bottom: 5px;
+}
+
 .container {
   margin-top: 100px;
   width: 90%;
