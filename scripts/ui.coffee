@@ -9,7 +9,7 @@ class UI
   getInspectionsDataOnGoogleMap: ->
     @inspections.fetch
       success: =>
-        @inspections.restaurantsViolationsOnGoogleMap(@inspectionlicenseIDsOfRestaurantsViolations())
+        @inspections.restaurantsViolationsOnGoogleMap(@inspections.licenseIDsOfRestaurantsViolations())
 
   searchWords: ->
     @restaurantName = $(".form-control").val()

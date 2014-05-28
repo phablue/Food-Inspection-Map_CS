@@ -17,21 +17,21 @@ class Inspections extends Backbone.Collection
   restaurantsFilterBy2014Year: ->
     this.filter((restaurant) -> restaurant.get("inspection_date").match(/2014-*/g))
 
-  restaurantHasViolationsByLicenseID: (restaurantLicenseID) ->
-    @restaurantsFilterBy2014Year().filter((restaurant) -> restaurant.get("license_") == restaurantLicenseID)
+  restaurantHasViolationsByLicenseID: (restaurantID) ->
+    @restaurantsFilterBy2014Year().filter((restaurant) -> restaurant.get("license_") == restaurantID)
 
   licenseIDsOfRestaurantsViolations: ->
     licenseIDs = []
     @restaurantsFilterBy2014Year().forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
     _.uniq(licenseIDs);
 
-  restaurantsViolationsOnGoogleMap: (restaurants) ->
+  restaurantsViolationsOnGoogleMap: (restaurantsID) ->
     googleMap = new GoogleMap(@google)
-    _.each(restaurants, (restaurantLicenseID) =>
-      restaurant = @restaurantHasViolationsByLicenseID(restaurantLicenseID)
-      @settingForGoogleMap(restaurant))
+    _.each(restaurantsID, (restaurantID) =>
+      restaurant = @restaurantHasViolationsByLicenseID(restaurantID)
+      @settingForGoogleMap(googleMap, restaurant))
 
-  settingForGoogleMap: (data) ->
+  settingForGoogleMap: (googleMap, data) ->
     mark = googleMap.markLocation data[0].get("latitude"), data[0].get("longitude")
     googleMap.openInfoWindow mark, data[0].toJSON(), data.length
 
