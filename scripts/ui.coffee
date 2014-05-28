@@ -23,7 +23,14 @@ class UI
     if _.isEmpty(data)
       return @noResultMessage()
     else if data.length == 1
-      return @showDetailOfResult(data)
+      return @showDetailOfResult(@inspections.models)
+    @resultMessage(data.length)
+    googleMap = new GoogleMap(@google)
+    _.each(data, (d) =>
+      rest = @inspections.restaurantHasViolationsByLicenseID(d)
+      mark = googleMap.markLocation rest[0].get("latitude"), rest[0].get("longitude")
+      googleMap.openInfoWindow mark, rest[0].toJSON(), rest.length
+      @resultsList(rest[0]))
 
   showDetailOfResult: (data) ->
     @setMapCSS("37%", "50%")
@@ -57,7 +64,7 @@ class UI
     $(".result").before "<div class='bs-callout bs-callout-warning'><h3>About #{totalResultQty} results<h3> </div>"
 
   resultsList: (data) ->
-    $(".title").before "<li><h3>#{data[0].get('dba_name')} <small> (#{data[0].get('address')})</small></h3></li>")
+    $(".title").before "<li><h3>#{data[0].get('dba_name')} <small> (#{data[0].get('address')})</small></h3></li>"
 
   setMapCSS: (height, width) ->
     $("#map-canvas").css "height": "#{height}", "width": "#{width}"
