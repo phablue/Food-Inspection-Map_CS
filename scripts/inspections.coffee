@@ -25,11 +25,14 @@ class Inspections extends Backbone.Collection
     @restaurantsFilterBy2014Year().forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
     _.uniq(licenseIDs);
 
-  restaurantsViolationsOnGoogleMap: ->
+  restaurantsViolationsOnGoogleMap: (restaurants) ->
     googleMap = new GoogleMap(@google)
-    _.each(@licenseIDsOfRestaurantsViolations(), (restaurantLicenseID) =>
+    _.each(restaurants, (restaurantLicenseID) =>
       restaurant = @restaurantHasViolationsByLicenseID(restaurantLicenseID)
-      mark = googleMap.markLocation restaurant[0].get("latitude"), restaurant[0].get("longitude")
-      googleMap.openInfoWindow mark, restaurant[0].toJSON(), restaurant.length)
+      @settingForGoogleMap(restaurant))
+
+  settingForGoogleMap: (data) ->
+    mark = googleMap.markLocation data[0].get("latitude"), data[0].get("longitude")
+    googleMap.openInfoWindow mark, data[0].toJSON(), data.length
 
 window.Inspections = Inspections
