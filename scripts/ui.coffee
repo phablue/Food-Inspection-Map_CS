@@ -17,7 +17,7 @@ class UI
   searchResult: ->
     @inspections.fetch
       success: =>
-        @showResult(@inspections.restaurantsFilterBy2014Year())
+        @showResult(@inspections.licenseIDsOfRestaurantsViolations())
 
   showResult: (data) ->
     if _.isEmpty(data)
