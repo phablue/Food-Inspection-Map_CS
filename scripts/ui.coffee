@@ -49,12 +49,15 @@ class UI
     googleMap.map.setCenter(googleMap.getLocation(data[0].get("latitude"), data[0].get("longitude")))
     googleMap.markLocation data[0].get("latitude"), data[0].get("longitude")
 
-  setMapCSS: ->
-    $("#map-canvas").css "height": "37%", "width": "50%"
-
   noResultMessage: ->
     $("#map-canvas").css "height": "0%", "width": "0%"
     $(".result").before "<br><br><p class='bg-danger'>No results for &nbsp'#{@restaurantName}'</p>"
+
+  resultMessage: (totalResultQty) ->
+    $(".result").before "<div class='bs-callout bs-callout-warning'><h3>About #{totalResultQty} results<h3> </div>"
+
+  setMapCSS: (height, width) ->
+    $("#map-canvas").css "height": "#{height}", "width": "#{width}" #"height": "37%", "width": "50%"
 
   setTitle: (data) ->
     $(".title").append """<h1 class = 'page-header'>#{data[0].get("dba_name")}
