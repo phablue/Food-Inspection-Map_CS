@@ -53,6 +53,11 @@ describe "Test Inspections class", ->
       url = inspections.url()
       expect(url).toBe("#{inspections.resourceURL}&dba_name=hi")
 
+    it "url is resourceURL?dba_name=123, if UI restaurantID is '123'", ->
+      inspections.ui.restaurantName = "123"
+      url = inspections.url()
+      expect(url).toBe("#{inspections.resourceURL}&dba_name=123")      
+
   describe "Test licenseIDsOfRestaurantsViolations function", ->
     it "Return only license_ ['Chicago', 'Seattle'] in data", ->
       data = [{"license_": "Chicago", "violations": "dirty", "inspection_date": "2014-10-05T00:00:00"}, {"license_": "Seattle", "violations": "Too dirty", "inspection_date": "2014-10-05T00:00:00"}]
