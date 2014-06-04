@@ -56,7 +56,23 @@ describe "Test Inspections class", ->
     it "url is resourceURL?dba_name=123, if UI restaurantID is '123'", ->
       inspections.ui.restaurantName = "123"
       url = inspections.url()
-      expect(url).toBe("#{inspections.resourceURL}&dba_name=123")      
+      expect(url).toBe("#{inspections.resourceURL}&dba_name=123")
+
+  describe "Test restaurantHasViolationsByLicenseID function", ->
+    beforeEach ->
+      data = [{license_: "123", dba_name: "Domino pizza", address: "Chicago", violations: "dirty", inspection_date: "2014-10-05T00:00:00"},
+              {license_: "456", dba_name: "Pizza Hut", address: "Downtown", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}]
+      respondWithDataServer(inspections.url(), data)
+      inspections.fetch()
+      fakeServer.respond()
+
+    it "Return data dba_name is Domino pizza if restaurantID is 123", ->
+      result = inspections.restaurantHasViolationsByLicenseID("123")
+      expect(result[0].get("dba_name")).toEqual("Domino pizza")
+
+    it "Return data is null if restaurantID is 567", ->
+      result = inspections.restaurantHasViolationsByLicenseID("567")
+      expect(result).toBeNull
 
   describe "Test licenseIDsOfRestaurantsViolations function", ->
     it "Return only license_ ['Chicago', 'Seattle'] in data", ->
