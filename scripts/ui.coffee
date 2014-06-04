@@ -20,6 +20,7 @@ class UI
         @showResult(@inspections.licenseIDsOfRestaurantsViolations())
 
   showResult: (data) ->
+    @resetSearchResult()
     if _.isEmpty(data)
       return @noResultMessage()
     else if data.length == 1
@@ -41,7 +42,6 @@ class UI
   searchingRestaurant: ->
     $("form").submit (e) =>
       @searchWords()
-      @resetSearchResult()
       @searchResult()
       e.preventDefault()
 
