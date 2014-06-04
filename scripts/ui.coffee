@@ -29,7 +29,7 @@ class UI
     _.each(data, (d) =>
       rest = @inspections.restaurantHasViolationsByLicenseID(d)
       @inspections.settingForGoogleMap(googleMap, rest)
-      @resultsList(rest[0]))
+      @setResultsList(rest[0]))
 
   showDetailOfResult: (data) ->
     @setMapCSS("37%", "50%")
@@ -47,9 +47,8 @@ class UI
 
   goBackHome: ->
     $(".navbar-brand").click =>
-      $("#map-canvas").css "height": "70%", "width": "100%"
+      @setMapCSS("70%", "100%")
       @resetSearchResult()
-      @restaurantName = null
       @getInspectionsDataOnGoogleMap()
 
   mainPage: ->
@@ -66,6 +65,9 @@ class UI
   resetSearchResult: ->
     $(".form-control").val("")
     $("li, .page-header, small, tr, th, td, .bs-callout-warning, .bg-danger, br").remove()
+    @setMapCSS("70%", "100%")
+    @restaurantName = null
+    @restaurantID = null
 
   noResultMessage: ->
     @setMapCSS("0%", "0%")
@@ -74,8 +76,8 @@ class UI
   resultMessage: (totalResultQty) ->
     $(".result").before "<div class='bs-callout bs-callout-warning'><h3>About #{totalResultQty} results<h3> </div>"
 
-  resultsList: (data) ->
-    $(".title").before "<li class='#{data.get('license_')}'><h3>#{data.get('dba_name').toUpperCase()} <small> (#{data.get('address')})</small></h3></li>"
+  setResultsList: (data) ->
+    $(".title").before "<li><h3 data-id='#{data.get('license_')}'>#{data.get('dba_name').toUpperCase()} <small> (#{data.get('address')})</small></h3></li>"
 
   setMapCSS: (height, width) ->
     $("#map-canvas").css "height": "#{height}", "width": "#{width}"
