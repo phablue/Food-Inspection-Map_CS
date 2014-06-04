@@ -31,6 +31,13 @@ class UI
       rest = @inspections.restaurantHasViolationsByLicenseID(d)
       @inspections.settingForGoogleMap(googleMap, rest)
       @setResultsList(rest[0]))
+    @resultsList()
+
+  resultsList: ->
+    $("h3").click =>
+      @restaurantName = null
+      @restaurantID = $(event.target).data('id')
+      @searchResult()
 
   showDetailOfResult: (data) ->
     @setMapCSS("37%", "50%")
