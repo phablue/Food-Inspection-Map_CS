@@ -49,7 +49,7 @@ describe "Test UI", ->
 
     beforeEach ->
       ui.restaurantName = "Domino pizza"
-      data = [{"dba_name": "Domino pizza", "address": "DownTown", "violations": "dirty", "inspection_date": "2014-10-05T00:00:00"}]
+      data = [{license_: "123456", dba_name: "Domino pizza", address: "DownTown", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}]
       respondToRestaurantsUI(ui.inspections.url(), data)
 
     it "Call showResult function if suscess get http request", ->
@@ -141,64 +141,6 @@ describe "Test UI", ->
       ui.searchResult()
       fakeServer.respond()
       expect($("p")).toContainText "No results for"
-
-  describe "Test showResult function", ->
-    data = null
-
-    beforeEach ->
-      ui.restaurantName = "Domino pizza"
-      dataModel = new Backbone.Model
-        dba_name: "Domino pizza"
-        address: "DownTown"
-        violations: "dirty"
-        inspection_date: "2014-10-05T00:00:00"
-      dataCollection = new Backbone.Collection([dataModel])
-      data = dataCollection.models
-
-    it "Makes <h1> tag if data has violations", ->
-      expect($("h1")).not.toExist
-      ui.showResult(data)
-      expect($("h1")).toExist
-
-    it "Text in <h1> is restaurantName if data has violations", ->
-      expect($("h1")).not.toExist
-      ui.showResult(data)
-      expect($("h1")).toContainText "Domino pizza"
-
-    it "Makes <small> tag if data has violations", ->
-      expect($("small")).not.toExist
-      ui.showResult(data)
-      expect($("small")).toExist
-
-    it "Text in <small> is address if data has violations", ->
-      expect($("small")).not.toExist
-      ui.showResult(data)
-      expect($("small")).toContainText "DownTown"
-
-    it 'Makes <p> tag for warnning message if data empty', ->
-      data = []
-      expect($("p")).not.toExist
-      ui.showResult(data)
-      expect($("p")).toExist
-
-    it 'Text in <p> has a warnning message if data empty', ->
-      data = []
-      expect($("p")).not.toExist
-      ui.showResult(data)
-      expect($("p")).toContainText "No results for"
-
-    it 'Makes <tr><td> if data has violations', ->
-      expect($("tr")).not.toExist
-      expect($("td")).not.toExist
-      ui.showResult(data)
-      expect($("tr")).toExist
-      expect($("td")).toExist
-
-    it '<td> has data values if data has violations', ->
-      expect($("td")).not.toExist
-      ui.showResult(data)
-      expect($("td")).toContainText "dirty"
-      expect($("td")).toContainText "2014-10-05"
 
   describe "Test searchingRestaurant function", ->
     data = null
