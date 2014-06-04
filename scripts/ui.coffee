@@ -45,15 +45,27 @@ class UI
       @searchResult()
       e.preventDefault()
 
-  resetSearchResult: ->
-    $(".form-control").val("")
-    $("li, .page-header, small, tr, th, td, .bs-callout-warning, .bg-danger, br").remove()
+  goBackHome: ->
+    $(".navbar-brand").click =>
+      $("#map-canvas").css "height": "70%", "width": "100%"
+      @resetSearchResult()
+      @restaurantName = null
+      @getInspectionsDataOnGoogleMap()
+
+  mainPage: ->
+    @goBackHome()
+    @getInspectionsDataOnGoogleMap()
+    @searchingRestaurant()
 
   showMarkOnGoogleMap: (data) ->
     googleMap = new GoogleMap(@google)
     $("#map-canvas").off "click"
     googleMap.map.setCenter(googleMap.getLocation(data[0].get("latitude"), data[0].get("longitude")))
     googleMap.markLocation data[0].get("latitude"), data[0].get("longitude")
+
+  resetSearchResult: ->
+    $(".form-control").val("")
+    $("li, .page-header, small, tr, th, td, .bs-callout-warning, .bg-danger, br").remove()
 
   noResultMessage: ->
     @setMapCSS("0%", "0%")
@@ -63,7 +75,7 @@ class UI
     $(".result").before "<div class='bs-callout bs-callout-warning'><h3>About #{totalResultQty} results<h3> </div>"
 
   resultsList: (data) ->
-    $(".title").before "<li><h3>#{data.get('dba_name').toUpperCase()} <small> (#{data.get('address')})</small></h3></li>"
+    $(".title").before "<li class='#{data.get('license_')}'><h3>#{data.get('dba_name').toUpperCase()} <small> (#{data.get('address')})</small></h3></li>"
 
   setMapCSS: (height, width) ->
     $("#map-canvas").css "height": "#{height}", "width": "#{width}"
@@ -93,17 +105,5 @@ class UI
 
   resetDate: (data) ->
     data.get("inspection_date").replace('T00:00:00', '')
-
-  goBackHome: ->
-    $(".navbar-brand").click =>
-      $("#map-canvas").css "height": "70%", "width": "100%"
-      @resetSearchResult()
-      @restaurantName = null
-      @getInspectionsDataOnGoogleMap()
-
-  mainPage: ->
-    @goBackHome()
-    @getInspectionsDataOnGoogleMap()
-    @searchingRestaurant()
 
 window.UI = UI
