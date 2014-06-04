@@ -56,6 +56,7 @@ class UI
     $(".navbar-brand").click =>
       @setMapCSS("70%", "100%")
       @resetSearchResult()
+      @restaurantName = null
       @getInspectionsDataOnGoogleMap()
 
   mainPage: ->
@@ -73,7 +74,6 @@ class UI
     $(".form-control").val("")
     $("li, .page-header, small, tr, th, td, .bs-callout-warning, .bg-danger, br").remove()
     @setMapCSS("70%", "100%")
-    @restaurantName = null
     @restaurantID = null
 
   noResultMessage: ->
@@ -84,7 +84,7 @@ class UI
     $(".result").before "<div class='bs-callout bs-callout-warning'><h3>About #{totalResultQty} results<h3> </div>"
 
   setResultsList: (data) ->
-    $(".title").before "<li><h3 data-id='#{data.get('license_')}'>#{data.get('dba_name').toUpperCase()} <small data-id='#{data.get('license_')}> (#{data.get('address')})</small></h3></li>"
+    $(".title").before "<li><h3 data-id='#{data.get('license_')}'>#{data.get('dba_name').toUpperCase()} <small data-id='#{data.get('license_')}'> (#{data.get('address')})</small></h3></li>"
 
   setMapCSS: (height, width) ->
     $("#map-canvas").css "height": "#{height}", "width": "#{width}"
