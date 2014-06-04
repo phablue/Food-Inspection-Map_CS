@@ -28,8 +28,7 @@ class UI
     googleMap = new GoogleMap(@google)
     _.each(data, (d) =>
       rest = @inspections.restaurantHasViolationsByLicenseID(d)
-      mark = googleMap.markLocation rest[0].get("latitude"), rest[0].get("longitude")
-      googleMap.openInfoWindow mark, rest[0].toJSON(), rest.length
+      @inspections.settingForGoogleMap(googleMap, rest)
       @resultsList(rest[0]))
 
   showDetailOfResult: (data) ->
