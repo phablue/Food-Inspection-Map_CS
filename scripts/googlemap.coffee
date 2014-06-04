@@ -10,7 +10,7 @@ class GoogleMap
     @map = new google.maps.Map $("#map-canvas")[0], @mapConfig
     $('#map-canvas').on 'click', '.detail', (e) =>
       $("#map-canvas").off "click"
-      @ui.restaurantName = $(e.target).data('id')
+      @ui.restaurantID = $(e.target).data('id')
       @ui.searchResult()
 
   getLocation: (latitude, longitude) ->
@@ -44,7 +44,7 @@ class GoogleMap
                     <div id="bodyContent">
                       <p class="lead"><b>Address : &nbsp</b>#{data.address}, CHICAGO</p>
                       <p class="lead"><b>Total Inspections Q'ty : &nbsp</b>#{numOfInspections}</p>
-                      <p class="lead"><a data-id="#{data.dba_name}" class = "detail">Go Detail</a></p>
+                      <p class="lead"><a data-id="#{data.license_}" class = "detail">Go Detail</a></p>
                     </div>
                   </div>
                 </div>"""
