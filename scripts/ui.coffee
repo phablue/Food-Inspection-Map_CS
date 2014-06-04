@@ -23,7 +23,7 @@ class UI
     if _.isEmpty(data)
       return @noResultMessage()
     else if data.length == 1
-      return @showDetailOfResult(@inspections.models)
+      return @showDetailOfResult(@inspections.restaurantsFilterBy2014Year())
     @resultMessage(data.length)
     googleMap = new GoogleMap(@google)
     _.each(data, (d) =>
