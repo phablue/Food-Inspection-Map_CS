@@ -2,7 +2,6 @@ class UI
   constructor: (google) ->
     @google = google
     @inspections = new Inspections({google: google, ui: this})
-    @restaurantName = null
     @restaurantID = null
     @mark = null
 
@@ -12,7 +11,7 @@ class UI
         @inspections.restaurantsViolationsOnGoogleMap(@inspections.licenseIDsOfRestaurantsViolations())
 
   searchWords: ->
-    @restaurantName = $(".form-control").val()
+    $(".form-control").val()
 
   searchResult: ->
     @inspections.fetch
@@ -35,7 +34,6 @@ class UI
 
   resultsList: ->
     $("h3").click =>
-      @restaurantName = null
       @restaurantID = $(event.target).data('id')
       @searchResult()
 
@@ -56,7 +54,6 @@ class UI
     $(".navbar-brand").click =>
       @setMapCSS("70%", "100%")
       @resetSearchResult()
-      @restaurantName = null
       @getInspectionsDataOnGoogleMap()
 
   mainPage: ->
