@@ -40,7 +40,7 @@ describe "Test UI", ->
     it "Changes restaurantName value", ->
       $(".form-control").val "EpicBurger"
       ui.searchWords()
-      expect(ui.ui.searchWords()).toBe "EpicBurger"
+      expect(ui.searchWords()).toBe "EpicBurger"
 
   describe "Test searchResult function", ->
     data = null
@@ -146,14 +146,6 @@ describe "Test UI", ->
 
     beforeEach ->
       data = [{dba_name: "dimsum", address: "The Loop", violations: "dirty", inspection_date: "2014-10-05T00:00:00", risk: "high", inspection_type: "risk", results: "failed"}]
-
-    it "ui.restaurantName value changed to search words after submit search words", ->
-      ui.searchingRestaurant()
-      $(".form-control").val "dimsum"
-      $("form").trigger("submit")
-      respondToRestaurantsUI(ui.inspections.url(), data)
-      fakeServer.respond()
-      expect(ui.restaurantName).toBe "dimsum"
 
     it "Show title after submit search words", ->
       $(".form-control").val "dimsum"

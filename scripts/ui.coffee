@@ -55,7 +55,7 @@ class UI
   goBackHome: ->
     $(".navbar-brand").click =>
       @setMapCSS("70%", "100%")
-      @resetSearchResult()
+      @resetSearch()
       @getInspectionsDataOnGoogleMap()
 
   mainPage: ->
