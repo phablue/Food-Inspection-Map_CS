@@ -30,8 +30,8 @@ describe "Test Inspections class", ->
     it "Return 1 if if inspection_date contain 2014", ->
       data = [{dba_name: "Domino pizza", address: "Chicago", violations: "dirty", inspection_date: "2013-10-05T00:00:00"},
               {dba_name: "Pizza Hut", address: "Downtown", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}]
-      respondWithDataServer(inspections.url(), data)
       inspections.fetch()
+      respondWithDataServer(inspections.url(), data)
       fakeServer.respond()
       result = inspections.restaurantsFilterBy2014Year()
       expect(result.length).toBe 1
@@ -39,8 +39,8 @@ describe "Test Inspections class", ->
 
     it "Return 0 if if inspection_date contain 2014", ->
       data = [{dba_name: "Domino pizza", address: "Chicago", violations: "dirty", inspection_date: "2013-10-05T00:00:00"}]
-      respondWithDataServer(inspections.url(), data)
       inspections.fetch()
+      respondWithDataServer(inspections.url(), data)
       fakeServer.respond()
       result = inspections.restaurantsFilterBy2014Year()
       expect(result.length).toBe 0
@@ -87,8 +87,8 @@ describe "Test Inspections class", ->
     beforeEach ->
       data = [{license_: "123", dba_name: "Domino pizza", address: "Chicago", violations: "dirty", inspection_date: "2014-10-05T00:00:00"},
               {license_: "456", dba_name: "Pizza Hut", address: "Downtown", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}]
-      respondWithDataServer(inspections.url(), data)
       inspections.fetch()
+      respondWithDataServer(inspections.url(), data)
       fakeServer.respond()
 
     it "Return data dba_name is Domino pizza if restaurantID is 123", ->
@@ -103,8 +103,8 @@ describe "Test Inspections class", ->
     it "Return only license_ ['Chicago', 'Seattle'] in data", ->
       data = [{license_: "Chicago", dba_name: "Pizza", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}, {license_: "Seattle", dba_name: "Pizza", violations: "Too dirty", inspection_date: "2014-10-05T00:00:00"}]
       $(".form-control").val "pizza"
-      respondWithDataServer(inspections.url(), data)
       inspections.fetch()
+      respondWithDataServer(inspections.url(), data)
       fakeServer.respond()
       result = inspections.licenseIDsOfRestaurantsViolations()
       expect(result.length).toBe 2
@@ -113,8 +113,8 @@ describe "Test Inspections class", ->
     it "Return ['Seoul'] in data after delete duplications", ->
       $(".form-control").val "pizza"
       data = [{license_: "Seoul", dba_name: "Pizza", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}, {license_: "Seoul", dba_name: "Pizza", violations: "Too dirty", inspection_date: "2014-10-05T00:00:00"}]
-      respondWithDataServer(inspections.url(), data)
       inspections.fetch()
+      respondWithDataServer(inspections.url(), data)
       fakeServer.respond()
       result = inspections.licenseIDsOfRestaurantsViolations()
       expect(result.length).toBe 1
