@@ -67,8 +67,10 @@ class UI
     googleMap.map.setCenter(googleMap.getLocation(data[0].get("latitude"), data[0].get("longitude")))
     googleMap.markLocation data[0].get("latitude"), data[0].get("longitude")
 
-  resetSearchResult: ->
+  resetSearchWords: ->
     $(".form-control").val("")
+
+  resetSearch: ->
     $("li, .page-header, small, tr, th, td, .bs-callout-warning, .bg-danger, br").remove()
     @setMapCSS("70%", "100%")
     @restaurantID = null
