@@ -38,7 +38,6 @@ describe "Test UI", ->
 
   describe "Test searchWords function", ->
     it "Changes restaurantName value", ->
-      expect(ui.restaurantName).toBeNull
       $(".form-control").val "EpicBurger"
       ui.searchWords()
       expect(ui.restaurantName).toBe "EpicBurger"
@@ -187,34 +186,48 @@ describe "Test UI", ->
       fakeServer.respond()
       expect($("p")).toContainText "No results for"
 
-  describe "Test resetSearchResult function", ->
-    it "resetSearchResult function", ->
-      ui.resetSearchResult()
-
-    it "reset <tbody><tbody>", ->
-      $(".title").prepend '<p class="bg-danger">danger</p>'
-      $("tbody").append "<tr><td>hi</td></tr>"
-      expect($(".bg-danger")).toExist
-      expect($("td")).toExist
-      expect($("tbody")).toHaveText "hi"
-      ui.resetSearchResult()
-      expect($(".bg-danger")).not.toExist
-      expect($("td")).not.toExist
-      expect($("tbody")).not.toHaveText "hi"
-
+  describe "Test resetSearchWords function", ->
     it "reset textbox value", ->
       $(".form-control").val "dimsum"
       expect($(".form-control")).toHaveValue "dimsum"
-      ui.resetSearchResult()
+      ui.resetSearchWords()
       expect($(".form-control")).toBeEmpty
+
+  describe "Test resetSearch function", ->
+    it "Reset detailed search result", ->
+      $("tbody").append "<tr><td>hi</td></tr>"
+      expect($("td")).toExist
+      expect($("tbody")).toHaveText "hi"
+      ui.resetSearch()
+      expect($("td")).not.toExist
+      expect($("tbody")).not.toHaveText "hi"
+
+    it "Reset no search result message", ->
+      $(".title").prepend '<p class="bg-danger">danger</p>'
+      expect($(".bg-danger")).toExist
+      ui.resetSearch()
+      expect($(".bg-danger")).not.toExist
+
+    it "Reset search title", ->
+      $(".title").append "<h1 class = 'page-header'>Pizza House</h1>"
+      expect($(".page-header")).toExist
+      ui.resetSearch()
+      expect($(".page-header")).not.toExist
+
+    it "Reset search results list", ->
+      $(".title").before """<li><h3 data-id='123'>Subway
+                            <small data-id='123'> (The Loop)</small></h3></li>"""
+      expect($(".li")).toExist
+      ui.resetSearch()
+      expect($(".li")).not.toExist
 
   describe "Test goBackHome function", ->
     it "call functions after click", ->
-      resetSearchResult = spyOn(ui, "resetSearchResult")
+      resetSearch = spyOn(ui, "resetSearch")
       getInspectionsDataOnGoogleMap = spyOn(ui, "getInspectionsDataOnGoogleMap")
       ui.goBackHome()
       $(".navbar-brand").click()
-      expect(resetSearchResult).toHaveBeenCalled
+      expect(resetSearch).toHaveBeenCalled
       expect(getInspectionsDataOnGoogleMap).toHaveBeenCalled
 
   describe "Test replaceViolations and resetDate functions", ->
