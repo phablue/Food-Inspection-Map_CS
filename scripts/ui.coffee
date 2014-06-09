@@ -19,11 +19,13 @@ class UI
         @showResult(@inspections.licenseIDsOfRestaurantsViolations())
 
   showResult: (data) ->
-    @resetSearchResult()
+    @resetSearch()
     if _.isEmpty(data)
       return @noResultMessage()
-    else if data.length == 1
+    @resetSearchWords()
+    if data.length == 1
       return @showDetailOfResult(@inspections.restaurantsFilterBy2014Year())
+    @resetSearchWords()
     @resultMessage(data.length)
     googleMap = new GoogleMap(@google)
     _.each(data, (d) =>
@@ -77,7 +79,7 @@ class UI
 
   noResultMessage: ->
     @setMapCSS("0%", "0%")
-    $(".result").before "<br><br><p class='bg-danger'>No results for &nbsp'#{@restaurantName}'</p>"
+    $(".result").before "<br><br><p class='bg-danger'>No results for &nbsp'#{@searchWords()}'</p>"
 
   resultMessage: (totalResultQty) ->
     $(".result").before "<div class='bs-callout bs-callout-warning'><h3>About #{totalResultQty} results<h3> </div>"

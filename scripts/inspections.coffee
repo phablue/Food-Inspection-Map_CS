@@ -9,7 +9,7 @@ class Inspections extends Backbone.Collection
 
   urlByName: ->
     if !_.isNull(@ui.restaurantName)
-      return "#{@resourceURL}&$q=#{encodeURIComponent @ui.restaurantName}"
+      return "#{@resourceURL}&$q=#{encodeURIComponent @ui.searchWords()}"
     else if !_.isNull(@ui.restaurantID)
       return "#{@resourceURL}&license_=#{@ui.restaurantID}"
     @resourceURL
@@ -18,7 +18,7 @@ class Inspections extends Backbone.Collection
     this.filter((restaurant) -> restaurant.get("inspection_date").match(/2014-*/g))
 
   restaurantsFilterByKeyWords: ->
-    keyWords = new RegExp("#{@ui.restaurantName}", "gi")
+    keyWords = new RegExp("#{@ui.searchWords()}", "gi")
     @restaurantsFilterBy2014Year().filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
 
   restaurantsFilterBy: (restaurantID) ->
