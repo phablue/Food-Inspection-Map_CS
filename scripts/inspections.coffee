@@ -21,7 +21,7 @@ class Inspections extends Backbone.Collection
     keyWords = new RegExp("#{@ui.restaurantName}", "gi")
     @restaurantsFilterBy2014Year().filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
 
-  restaurantHasViolationsByLicenseID: (restaurantID) ->
+  restaurantsFilterBy: (restaurantID) ->
     @restaurantsFilterBy2014Year().filter((restaurant) -> restaurant.get("license_") == restaurantID)
 
   licenseIDsOfRestaurantsViolations: ->
