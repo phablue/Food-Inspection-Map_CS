@@ -9,7 +9,7 @@ class Inspections extends Backbone.Collection
 
   urlByName: ->
     if !_.isNull(@ui.restaurantName)
-      return "#{@resourceURL}&dba_name=#{encodeURIComponent @ui.restaurantName}"
+      return "#{@resourceURL}&$q=#{encodeURIComponent @ui.restaurantName}"
     else if !_.isNull(@ui.restaurantID)
       return "#{@resourceURL}&license_=#{@ui.restaurantID}"
     @resourceURL

@@ -51,12 +51,12 @@ describe "Test Inspections class", ->
     it "url is resourceURL?dba_name=hi, if UI restaurantName is 'hi'", ->
       inspections.ui.restaurantName = "hi"
       url = inspections.url()
-      expect(url).toBe("#{inspections.resourceURL}&dba_name=hi")
+      expect(url).toBe("#{inspections.resourceURL}&$q=hi")
 
     it "url is resourceURL?dba_name=123, if UI restaurantID is '123'", ->
       inspections.ui.restaurantName = "123"
       url = inspections.url()
-      expect(url).toBe("#{inspections.resourceURL}&dba_name=123")
+      expect(url).toBe("#{inspections.resourceURL}&$q=123")
 
   describe "Test restaurantHasViolationsByLicenseID function", ->
     beforeEach ->
