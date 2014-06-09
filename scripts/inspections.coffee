@@ -17,6 +17,10 @@ class Inspections extends Backbone.Collection
   restaurantsFilterBy2014Year: ->
     this.filter((restaurant) -> restaurant.get("inspection_date").match(/2014-*/g))
 
+  restaurantsFilterByKeyWords: ->
+    keyWords = new RegExp("#{@ui.restaurantName}", "gi")
+    @restaurantsFilterBy2014Year().filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
+
   restaurantHasViolationsByLicenseID: (restaurantID) ->
     @restaurantsFilterBy2014Year().filter((restaurant) -> restaurant.get("license_") == restaurantID)
 
