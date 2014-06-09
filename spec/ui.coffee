@@ -40,7 +40,7 @@ describe "Test UI", ->
     it "Changes restaurantName value", ->
       $(".form-control").val "EpicBurger"
       ui.searchWords()
-      expect(ui.restaurantName).toBe "EpicBurger"
+      expect(ui.ui.searchWords()).toBe "EpicBurger"
 
   describe "Test searchResult function", ->
     data = null
