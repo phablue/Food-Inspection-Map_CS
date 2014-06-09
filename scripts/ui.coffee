@@ -6,16 +6,20 @@ class UI
     @mark = null
 
   getInspectionsDataOnGoogleMap: ->
+    @displayLoading()
     @inspections.fetch
       success: =>
+        @removeLoading()
         @inspections.restaurantsViolationsOnGoogleMap(@inspections.licenseIDsOfRestaurantsViolations())
 
   searchWords: ->
     $(".form-control").val()
 
   searchResult: ->
+    @displayLoading()
     @inspections.fetch
       success: =>
+        @removeLoading()
         @resetSearch()
         if !_.isNull(@restaurantID)
           return @showDetailOfResult(@inspections.restaurantsFilterBy2014Year())
@@ -55,8 +59,8 @@ class UI
 
   goBackHome: ->
     $(".navbar-brand").click =>
-      @setMapCSS("70%", "100%")
       @resetSearch()
+      @setMapCSS("70%", "100%")
       @getInspectionsDataOnGoogleMap()
 
   mainPage: ->
@@ -93,7 +97,7 @@ class UI
     $("#map-canvas").css "height": "#{height}", "width": "#{width}"
 
   setTitle: (data) ->
-    $(".title").append """<h1 class = 'page-header'>#{data[0].get("dba_name")}
+    $(".title").append """<h1 class='page-header'>#{data[0].get("dba_name")}
                          <small>&nbsp&nbsp(#{data[0].get("address")}, Chicago)</small>"""
 
   setTableHead: ->
@@ -117,5 +121,11 @@ class UI
 
   resetDate: (data) ->
     data.get("inspection_date").replace('T00:00:00', '')
+
+  displayLoading: ->
+    $("#map-canvas").append "<img class='loading' src='./stylesheets/ajax-loader.gif'>"
+
+  removeLoading: ->
+    $(".loading").remove()
 
 window.UI = UI
