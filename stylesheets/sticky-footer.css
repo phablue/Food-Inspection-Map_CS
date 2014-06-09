@@ -20,8 +20,6 @@ body {
 -------------------------------------------------- */
 /* Not required for template or sticky footer method. */
 .loading {
-  margin-left: 40%;
-  margin-top: 15%;
   height: 36%;
   width: 18%;
 }

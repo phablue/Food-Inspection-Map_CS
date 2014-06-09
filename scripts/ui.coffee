@@ -6,7 +6,7 @@ class UI
     @mark = null
 
   getInspectionsDataOnGoogleMap: ->
-    @displayLoading()
+    @displayLoading("40%", "15%")
     @inspections.fetch
       success: =>
         @removeLoading()
@@ -16,13 +16,15 @@ class UI
     $(".form-control").val()
 
   searchResult: ->
-    @displayLoading()
+    @resetSearch()
+    @resetGoogleMap()
+    @displayLoading("40%", "8%")
     @inspections.fetch
       success: =>
         @removeLoading()
-        @resetSearch()
         if !_.isNull(@restaurantID)
           return @showDetailOfResult(@inspections.restaurantsFilterBy2014Year())
+        @restaurantID = null
         @showResult(@inspections.licenseIDsOfRestaurantsViolations())
 
   showResult: (data) ->
@@ -60,6 +62,8 @@ class UI
   goBackHome: ->
     $(".navbar-brand").click =>
       @resetSearch()
+      @restaurantID = null
+      @resetGoogleMap()
       @setMapCSS("70%", "100%")
       @getInspectionsDataOnGoogleMap()
 
@@ -80,7 +84,10 @@ class UI
   resetSearch: ->
     $("li, .page-header, small, tr, th, td, .bs-callout-warning, .bg-danger, br").remove()
     @setMapCSS("70%", "100%")
-    @restaurantID = null
+
+  resetGoogleMap: ->
+    $("#map-canvas").css "background-color", ""
+    $(".gm-style").remove()
 
   noResultMessage: ->
     @setMapCSS("0%", "0%")
@@ -122,8 +129,9 @@ class UI
   resetDate: (data) ->
     data.get("inspection_date").replace('T00:00:00', '')
 
-  displayLoading: ->
+  displayLoading: (marginL, marginT) ->
     $("#map-canvas").append "<img class='loading' src='./stylesheets/ajax-loader.gif'>"
+    $(".loading").css "margin-left": "#{marginL}", "margin-top": "#{marginT}"
 
   removeLoading: ->
     $(".loading").remove()
