@@ -45,6 +45,29 @@ describe "Test Inspections class", ->
       result = inspections.restaurantsFilterBy2014Year()
       expect(result.length).toBe 0
 
+  describe "Test restaurantsFilterByKeyWords function", ->
+    data = null
+
+    beforeEach ->
+      data = [{license_: "123", dba_name: "Domino pizza", address: "Chicago", violations: "dirty", inspection_date: "2014-10-05T00:00:00"},
+              {license_: "456", dba_name: "Pizza Hut", address: "Downtown", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}]
+
+    it "Return result length is 2 if search word is 'pizza'", ->
+      $(".form-control").val "pizza"
+      inspections.fetch()
+      respondWithDataServer(inspections.url(), data)
+      fakeServer.respond()
+      result = inspections.restaurantsFilterByKeyWords()
+      expect(result.length).toBe 2
+
+    it "Return result length is 1 if search word is 'hut'", ->
+      $(".form-control").val "hut"
+      inspections.fetch()
+      respondWithDataServer(inspections.url(), data)
+      fakeServer.respond()
+      result = inspections.restaurantsFilterByKeyWords()
+      expect(result.length).toBe 1
+
   describe "Test urlByName function", ->
     it "url is resourceURL, if UI searchWord is empty", ->
       url = inspections.url()
