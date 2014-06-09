@@ -131,9 +131,12 @@ class UI
 
   displayLoading: (marginL, marginT) ->
     $("#map-canvas").append "<img class='loading' src='./stylesheets/ajax-loader.gif'>"
-    $(".loading").css "margin-left": "#{marginL}", "margin-top": "#{marginT}"
+    @setLoadingCSS(marginL, marginT)
 
   removeLoading: ->
     $(".loading").remove()
+
+  setLoadingCSS: (marginL, marginT) ->
+    $(".loading").css "margin-left": "#{marginL}", "margin-top": "#{marginT}"
 
 window.UI = UI
