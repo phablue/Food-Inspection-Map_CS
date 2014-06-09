@@ -32,7 +32,7 @@ class Inspections extends Backbone.Collection
   restaurantsViolationsOnGoogleMap: (restaurantsID) ->
     googleMap = new GoogleMap(@google)
     _.each(restaurantsID, (restaurantID) =>
-      restaurant = @restaurantHasViolationsByLicenseID(restaurantID)
+      restaurant = @restaurantsFilterBy(restaurantID)
       @settingForGoogleMap(googleMap, restaurant))
 
   settingForGoogleMap: (googleMap, data) ->

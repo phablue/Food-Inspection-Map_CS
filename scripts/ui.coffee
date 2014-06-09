@@ -29,7 +29,7 @@ class UI
     @resultMessage(data.length)
     googleMap = new GoogleMap(@google)
     _.each(data, (d) =>
-      restaturant = @inspections.restaurantHasViolationsByLicenseID(d)
+      restaturant = @inspections.restaurantsFilterBy(d)
       @inspections.settingForGoogleMap(googleMap, restaturant)
       @setResultsList(restaturant[0]))
     @resultsList()
