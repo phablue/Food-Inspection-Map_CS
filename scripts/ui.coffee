@@ -16,10 +16,12 @@ class UI
   searchResult: ->
     @inspections.fetch
       success: =>
+        @resetSearch()
+        if !_.isNull(@restaurantID)
+          return @showDetailOfResult(@inspections.restaurantsFilterBy2014Year())
         @showResult(@inspections.licenseIDsOfRestaurantsViolations())
 
   showResult: (data) ->
-    @resetSearch()
     if _.isEmpty(data)
       return @noResultMessage()
     @resetSearchWords()
@@ -48,7 +50,6 @@ class UI
 
   searchingRestaurant: ->
     $("form").submit (e) =>
-      @searchWords()
       @searchResult()
       e.preventDefault()
 

@@ -22,11 +22,11 @@ class Inspections extends Backbone.Collection
     @restaurantsFilterBy2014Year().filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
 
   restaurantsFilterBy: (restaurantID) ->
-    @restaurantsFilterBy2014Year().filter((restaurant) -> restaurant.get("license_") == restaurantID)
+    @restaurantsFilterByKeyWords().filter((restaurant) -> restaurant.get("license_") == restaurantID)
 
   licenseIDsOfRestaurantsViolations: ->
     licenseIDs = []
-    @restaurantsFilterBy2014Year().forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
+    @restaurantsFilterByKeyWords().forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
     _.uniq(licenseIDs);
 
   restaurantsViolationsOnGoogleMap: (restaurantsID) ->
