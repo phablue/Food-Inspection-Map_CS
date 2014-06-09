@@ -78,7 +78,8 @@ describe "Test Inspections class", ->
 
   describe "Test licenseIDsOfRestaurantsViolations function", ->
     it "Return only license_ ['Chicago', 'Seattle'] in data", ->
-      data = [{"license_": "Chicago", "violations": "dirty", "inspection_date": "2014-10-05T00:00:00"}, {"license_": "Seattle", "violations": "Too dirty", "inspection_date": "2014-10-05T00:00:00"}]
+      data = [{license_: "Chicago", dba_name: "Pizza", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}, {license_: "Seattle", dba_name: "Pizza", violations: "Too dirty", inspection_date: "2014-10-05T00:00:00"}]
+      $(".form-control").val "pizza"
       respondWithDataServer(inspections.url(), data)
       inspections.fetch()
       fakeServer.respond()
@@ -87,7 +88,8 @@ describe "Test Inspections class", ->
       expect(result).toEqual(["Chicago", "Seattle"])
 
     it "Return ['Seoul'] in data after delete duplications", ->
-      data = [{"license_": "Seoul", "violations": "dirty", "inspection_date": "2014-10-05T00:00:00"}, {"license_": "Seoul", "violations": "Too dirty", "inspection_date": "2014-10-05T00:00:00"}]
+      $(".form-control").val "pizza"
+      data = [{license_: "Seoul", dba_name: "Pizza", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}, {license_: "Seoul", dba_name: "Pizza", violations: "Too dirty", inspection_date: "2014-10-05T00:00:00"}]
       respondWithDataServer(inspections.url(), data)
       inspections.fetch()
       fakeServer.respond()
