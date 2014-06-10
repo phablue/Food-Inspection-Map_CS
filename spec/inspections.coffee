@@ -68,7 +68,7 @@ describe "Test Inspections class", ->
       result = inspections.restaurantsFilterByKeyWords()
       expect(result.length).toBe 1
 
-  describe "Test urlByName function", ->
+  describe "Test urlConfig function", ->
     it "url is resourceURL, if UI searchWord is empty", ->
       url = inspections.url()
       expect(url).toBe(inspections.resourceURL)

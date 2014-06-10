@@ -5,9 +5,9 @@ class Inspections extends Backbone.Collection
     @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json?$where=violations IS NOT NULL"
 
   url: ->
-    @urlByName()
+    @urlConfig()
 
-  urlByName: ->
+  urlConfig: ->
     if !_.isEmpty(@ui.searchWords())
       return "#{@resourceURL}&$q=#{encodeURIComponent @ui.searchWords()}"
     else if !_.isNull(@ui.restaurantID)
