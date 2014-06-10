@@ -22,9 +22,9 @@ class UI
     @inspections.fetch
       success: =>
         @removeLoading()
+        @restaurantID = null
         if !_.isNull(@restaurantID)
           return @showDetailOfResult(@inspections.restaurantsFilterBy2014Year())
-        @restaurantID = null
         @showResult(@inspections.licenseIDsOfRestaurantsViolations())
 
   showResult: (data) ->
@@ -33,7 +33,6 @@ class UI
     @resetSearchWords()
     if data.length == 1
       return @showDetailOfResult(@inspections.restaurantsFilterBy2014Year())
-    @resetSearchWords()
     @resultMessage(data.length)
     googleMap = new GoogleMap(@google)
     _.each(data, (d) =>
