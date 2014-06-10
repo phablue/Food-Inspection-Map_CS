@@ -8,8 +8,9 @@ class GoogleMap
       center: new google.maps.LatLng 41.8819, -87.6278
       zoom: 14
     @map = new google.maps.Map $("#map-canvas")[0], @mapConfig
+    $("#map-canvas").off 'click'
     $('#map-canvas').on 'click', '.detail', (e) =>
-      $("#map-canvas").off "click"
+      $("#map-canvas").off 'click'
       @ui.restaurantID = $(e.target).data('id')
       @ui.searchResult()
 
