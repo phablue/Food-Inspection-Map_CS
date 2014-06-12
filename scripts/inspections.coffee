@@ -15,7 +15,7 @@ class Inspections extends Backbone.Collection
     @resourceURL
 
   restaurantsFilterBy2014Year: ->
-    this.filter((restaurant) -> restaurant.get("inspection_date").match(/2014-*/g))
+    @filter((restaurant) -> restaurant.get("inspection_date").match(/2014-*/g))
 
   restaurantsFilterByKeyWords: ->
     keyWords = new RegExp("#{@ui.searchWords()}", "gi")
