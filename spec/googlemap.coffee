@@ -16,5 +16,7 @@ describe "Test GoogleMap", ->
       googlemap = new GoogleMap(@google)
       infoWindows = {id: "123"}
       googlemap.currentMark = null
+
       googlemap.checkCurrentWindow(infoWindows)
+
       expect(googlemap.currentMark).toEqual("123")
