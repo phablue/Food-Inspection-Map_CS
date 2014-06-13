@@ -81,12 +81,34 @@ class UI
     $(".form-control").val("")
 
   resetSearch: ->
-    $("li, .page-header, small, tr, th, td, .bs-callout-warning, .bg-danger, br").remove()
+    @resetResultsList()
+    @resetSearchTitle()
+    @resetNoResultMessage()
+    @resetResultMessage()
+    @resetResultTable()
     @setMapCSS("70%", "100%")
+
+  resetResultsList: ->
+    @remove("li")
+
+  resetSearchTitle: ->
+    @remove(".page-header, small")
+
+  resetNoResultMessage: ->
+    @remove(".bg-danger")
+
+  resetResultMessage: ->
+    @remove(".bs-callout-warning")
 
   resetGoogleMap: ->
     $("#map-canvas").css "background-color", ""
-    $(".gm-style").remove()
+    @remove(".gm-style")
+
+  resetResultTable: ->
+    @remove("tr, th, td, br")
+
+  remove: (elements) ->
+    $(elements).remove()
 
   noResultMessage: ->
     @setMapCSS("0%", "0%")
