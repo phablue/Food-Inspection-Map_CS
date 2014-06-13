@@ -12,7 +12,7 @@ class Inspections extends Backbone.Collection
       return "#{@resourceURL}&$q=#{encodeURIComponent @ui.searchWords()}"
     else if !_.isNull(@ui.restaurantID)
       return "#{@resourceURL}&license_=#{@ui.restaurantID}"
-    @resourceURL
+    "#{@resourceURL}&$q=2014-}"
 
   restaurantsFilterBy2014Year: ->
     @filter((restaurant) -> restaurant.get("inspection_date").match(/2014-*/g))
