@@ -8,19 +8,19 @@
   <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand">2014 Food Inspection Map in Chicago</a>
+        <a class="navbar-brand" data-id="home">2014 Food Inspection Map in Chicago</a>
       </div>
       <form class="navbar-form navbar-right">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="Search...">
+          <input type="text" class="form-control" data-id="searchWord" placeholder="Search...">
         </div>
       </form>
     </div>
   </div>
   <div class="container">
-    <div id="map-canvas"></div>
-    <div class="result">
-      <div class="title">
+    <div id="map-canvas" data-id="googlaMap"></div>
+    <div class="result" data-id="result">
+      <div class="title" data-id="title">
       </div>
       <div class="row placeholders">
         <table class="table table-striped">

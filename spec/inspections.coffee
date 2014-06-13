@@ -5,7 +5,7 @@ describe "Test Inspections class", ->
 
   beforeEach ->
     setFixtures ('<form>
-                    <input type="text" class="form-control" placeholder="Search...">
+                    <input type="text" class="form-control" data-id="searchWord" placeholder="Search...">
                   </form>')
     google = 
       maps:

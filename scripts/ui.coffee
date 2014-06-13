@@ -13,7 +13,7 @@ class UI
         @inspections.restaurantsViolationsOnGoogleMap(@inspections.licenseIDsOfRestaurantsViolations())
 
   searchWords: ->
-    $(".form-control").val()
+    $("[data-id='searchWord']").val()
 
   searchResult: ->
     @resetSearch()
@@ -42,7 +42,7 @@ class UI
     @resultsList()
 
   resultsList: ->
-    $("h3").click =>
+    $("[data-id='resultsList']").click =>
       @restaurantID = $(event.target).data('id')
       @searchResult()
 
@@ -59,7 +59,7 @@ class UI
       e.preventDefault()
 
   goBackHome: ->
-    $(".navbar-brand").click =>
+    $("[data-id='home']").click =>
       @resetSearch()
       @restaurantID = null
       @resetGoogleMap()
@@ -73,12 +73,12 @@ class UI
 
   showMarkOnGoogleMap: (data) ->
     googleMap = new GoogleMap(@google)
-    $("#map-canvas").off "click"
+    $("[data-id='googlaMap']").off "click"
     googleMap.map.setCenter(googleMap.getLocation(data[0].get("latitude"), data[0].get("longitude")))
     googleMap.markLocation data[0].get("latitude"), data[0].get("longitude")
 
   resetSearchWords: ->
-    $(".form-control").val("")
+    $("[data-id='searchWord']").val("")
 
   resetSearch: ->
     @resetResultsList()
@@ -89,47 +89,49 @@ class UI
     @setMapCSS("70%", "100%")
 
   resetResultsList: ->
-    @remove("li")
+    @remove("[data-id='resultsList']")
 
   resetSearchTitle: ->
-    @remove(".page-header, small")
+    @remove("[data-id='restaturantName']")
+    @remove("[data-id='restaturantAddress']")
 
   resetNoResultMessage: ->
-    @remove(".bg-danger")
+    @remove("[data-id='noResultMessage']")
 
   resetResultMessage: ->
-    @remove(".bs-callout-warning")
+    @remove("[data-id='resultMessage']")
 
   resetGoogleMap: ->
-    $("#map-canvas").css "background-color", ""
+    $("[data-id='googlaMap']").css "background-color", ""
     @remove(".gm-style")
 
   resetResultTable: ->
-    @remove("tr, th, td, br")
+    @remove("[data-id='tableHead']")
+    @remove("[data-id='tableBody']")
 
   remove: (elements) ->
     $(elements).remove()
 
   noResultMessage: ->
     @setMapCSS("0%", "0%")
-    $(".result").before "<br><br><p class='bg-danger'>No results for &nbsp'#{@searchWords()}'</p>"
+    $("[data-id='result']").before "<br><br><p class='bg-danger' data-id='noResultMessage'>No results for &nbsp'#{@searchWords()}'</p>"
 
   resultMessage: (totalResultQty) ->
-    $(".result").before "<div class='bs-callout bs-callout-warning'><h3>About #{totalResultQty} results<h3> </div>"
+    $("[data-id='result']").before "<div class='bs-callout bs-callout-warning' data-id='resultMessage'><h3>About #{totalResultQty} results<h3> </div>"
 
   setResultsList: (data) ->
-    $(".title").before """<li><h3 data-id='#{data.get('license_')}'>#{data.get('dba_name').toUpperCase()}
+    $("[data-id='title']").before """<li data-id='resultsList'><h3 data-id='#{data.get('license_')}'>#{data.get('dba_name').toUpperCase()}
                             <small data-id='#{data.get('license_')}'> (#{data.get('address')})</small></h3></li>"""
 
   setMapCSS: (height, width) ->
-    $("#map-canvas").css "height": "#{height}", "width": "#{width}"
+    $("[data-id='googlaMap']").css "height": "#{height}", "width": "#{width}"
 
   setTitle: (data) ->
-    $(".title").append """<h1 class='page-header'>#{data[0].get("dba_name")}
-                         <small>&nbsp&nbsp(#{data[0].get("address")}, Chicago)</small>"""
+    $("[data-id='title']").append """<h1 class='page-header' data-id='restaturantName'>#{data[0].get("dba_name")}
+                         <small data-id='restaturantAddress'>&nbsp&nbsp(#{data[0].get("address")}, Chicago)</small>"""
 
   setTableHead: ->
-    $("thead").append """<tr>
+    $("thead").append """<tr data-id='tableHead'>
                             <th>Inspection Date</th>
                             <th>Inspection Type</th>
                             <th>Risk</th>
@@ -140,7 +142,7 @@ class UI
   setTableBody: (data) ->
     date = @resetDate(data)
     violations = @replaceViolations(data)
-    $("tbody").append """<tr><td>#{date}</td><td>#{data.get("inspection_type")}</td>
+    $("tbody").append """<tr data-id='tableBody'><td>#{date}</td><td>#{data.get("inspection_type")}</td>
                          <td>#{data.get("risk")}</td><td>#{data.get("results")}
                          </td><td>#{violations}</td></tr>"""
 
@@ -151,13 +153,13 @@ class UI
     data.get("inspection_date").replace('T00:00:00', '')
 
   displayLoading: (marginL, marginT) ->
-    $("#map-canvas").append "<img class='loading' src='./stylesheets/ajax-loader.gif'>"
+    $("[data-id='googlaMap']").append "<img data-id='loading' src='./stylesheets/ajax-loader.gif'>"
     @setLoadingCSS(marginL, marginT)
 
   removeLoading: ->
-    $(".loading").remove()
+    $("[data-id='loading']").remove()
 
   setLoadingCSS: (marginL, marginT) ->
-    $(".loading").css "margin-left": "#{marginL}", "margin-top": "#{marginT}"
+    $("[data-id='loading']").css "margin-left": "#{marginL}", "margin-top": "#{marginT}"
 
 window.UI = UI

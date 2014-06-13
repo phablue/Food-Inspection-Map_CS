@@ -14,12 +14,12 @@ describe "Test UI", ->
         event: ->
           addListener: ->
 
-    setFixtures ('<a class="navbar-brand">Food Inspection Map in Chicago</a>
+    setFixtures ('<a class="navbar-brand" data-id="home">Food Inspection Map in Chicago</a>
                   <form>
-                    <input type="text" class="form-control" placeholder="Search...">
+                    <input type="text" class="form-control" data-id="searchWord" placeholder="Search...">
                   </form>
-                  <div id="map-canvas"></div>
-                  <div class="result"><div class="title"></div>
+                  <div id="map-canvas data-id="googlaMap"></div>
+                  <div class="result" data-id="result"><div class="title" data-id="title"></div>
                     <table>
                       <thead></thead>
                       <tbody></tbody>
@@ -41,7 +41,7 @@ describe "Test UI", ->
 
   describe "Test searchWords function", ->
     it "Changes restaurantName value", ->
-      $(".form-control").val "EpicBurger"
+      $("[data-id='searchWord']").val "EpicBurger"
 
       result = ui.searchWords()
       expect(result).toBe "EpicBurger"
@@ -75,49 +75,49 @@ describe "Test UI", ->
       expect(markLocation).toHaveBeenCalled
 
     it "Makes <h1> tag if data has violations", ->
-      expect($("h1")).not.toExist
+      expect($("[data-id='restaturantName']")).not.toExist
 
       getRequestsOfSearchResultFunc()
 
-      expect($("h1")).toExist
+      expect($("[data-id='restaturantName']")).toExist
 
     it "Text in <h1> is restaurantName if data has violations", ->
-      expect($("h1")).not.toExist
+      expect($("[data-id='restaturantName']")).not.toExist
 
       getRequestsOfSearchResultFunc()
 
-      expect($("h1")).toContainText "Domino pizza"
+      expect($("[data-id='restaturantName']")).toContainText "Domino pizza"
 
     it "Makes <small> tag if data has violations", ->
-      expect($("small")).not.toExist
+      expect($("[data-id='restaturantAddress']")).not.toExist
 
       getRequestsOfSearchResultFunc()
 
-      expect($("small")).toExist
+      expect($("[data-id='restaturantAddress']")).toExist
 
     it "Text in <small> is address if data has violations", ->
-      expect($("small")).not.toExist
+      expect($("[data-id='restaturantAddress']")).not.toExist
 
       getRequestsOfSearchResultFunc()
 
-      expect($("small")).toContainText "DownTown"
+      expect($("[data-id='restaturantAddress']")).toContainText "DownTown"
 
-    it 'Makes <tr><td> if data has violations', ->
-      expect($("tr")).not.toExist
-      expect($("td")).not.toExist
-
-      getRequestsOfSearchResultFunc()
-
-      expect($("tr")).toExist
-      expect($("td")).toExist
-
-    it '<td> has data values if data has violations', ->
-      expect($("td")).not.toExist
+    it 'Makes <tr><td> in <tbody> if data has violations', ->
+      expect($("[data-id='tableBody']")).not.toExist
+      expect($("[data-id='tableBody'] td")).not.toExist
 
       getRequestsOfSearchResultFunc()
 
-      expect($("td")).toContainText "dirty"
-      expect($("td")).toContainText "2014-10-05"
+      expect($("[data-id='tableBody']")).toExist
+      expect($("[data-id='tableBody'] td")).toExist
+
+    it '<td> <td> in <tbody> has data values if data has violations', ->
+      expect($("[data-id='tableBody'] td")).not.toExist
+
+      getRequestsOfSearchResultFunc()
+
+      expect($("[data-id='tableBody'] td")).toContainText "dirty"
+      expect($("[data-id='tableBody'] td")).toContainText "2014-10-05"
 
     it "Call noResultMessage function if data's dba_name doesnt match to restaurantName", ->
       respondNoDataToRestaurantsUI(ui.inspections.url())
@@ -131,20 +131,20 @@ describe "Test UI", ->
     it 'Makes <p> tag for warnning message if data empty', ->
       respondNoDataToRestaurantsUI(ui.inspections.url())
 
-      expect($("p")).not.toExist
+      expect($("[data-id='noResultMessage']")).not.toExist
 
       getRequestsOfSearchResultFunc()
 
-      expect($("p")).toExist
+      expect($("[data-id='noResultMessage']")).toExist
 
     it 'Text in <p> has a warnning message if data empty', ->
       respondNoDataToRestaurantsUI(ui.inspections.url())
 
-      expect($("p")).not.toExist
+      expect($("[data-id='noResultMessage']")).not.toExist
 
       getRequestsOfSearchResultFunc()
 
-      expect($("p")).toContainText "No results for"
+      expect($("[data-id='noResultMessage']")).toContainText "No results for"
 
   describe "Test searchingRestaurant function", ->
     data = null
@@ -153,10 +153,10 @@ describe "Test UI", ->
       data = [{dba_name: "dimsum", address: "The Loop", violations: "dirty", inspection_date: "2014-10-05T00:00:00", risk: "high", inspection_type: "risk", results: "failed"}]
 
     it "Show title after submit search words", ->
-      $(".form-control").val "dimsum"
+      $("[data-id='searchWord']").val "dimsum"
 
-      expect($("h1")).not.toExist
-      expect($("small")).not.toExist
+      expect($("[data-id='restaturantName']")).not.toExist
+      expect($("[data-id='restaturantAddress']")).not.toExist
 
       ui.searchingRestaurant()
       $("form").trigger("submit")
@@ -164,14 +164,14 @@ describe "Test UI", ->
       respondToRestaurantsUI(ui.inspections.url(), data)
       fakeServer.respond()
 
-      expect($("h1")).toContainText "dimsum"
-      expect($("small")).toContainText "The Loop"
+      expect($("[data-id='restaturantName']")).toContainText "dimsum"
+      expect($("[data-id='restaturantAddress']")).toContainText "The Loop"
 
     it "Show data on table after submit search words", ->
-      $(".form-control").val "dimsum"
+      $("[data-id='searchWord']").val "dimsum"
 
-      expect($("th")).not.toExist
-      expect($("td")).not.toExist
+      expect($("[data-id='tableHead'] th")).not.toExist
+      expect($("[data-id='tableBody'] td")).not.toExist
 
       ui.searchingRestaurant()
       $("form").trigger("submit")
@@ -179,13 +179,13 @@ describe "Test UI", ->
       respondToRestaurantsUI(ui.inspections.url(), data)
       fakeServer.respond()
 
-      expect($("th")).toContainText "Violations"
-      expect($("td")).toContainText "dirty"
+      expect($("[data-id='tableHead'] th")).toContainText "Violations"
+      expect($("[data-id='tableBody'] td")).toContainText "dirty"
 
     it "show warnning message if search word is not in data, after search", ->
-      $(".form-control").val "pizza"
+      $("[data-id='searchWord']").val "pizza"
 
-      expect($("p")).not.toExist
+      expect($("[data-id='noResultMessage']")).not.toExist
 
       ui.searchingRestaurant()
       $("form").trigger("submit")
@@ -193,11 +193,11 @@ describe "Test UI", ->
       respondNoDataToRestaurantsUI(ui.inspections.url())
       fakeServer.respond()
 
-      expect($("p")).toContainText "No results for"
+      expect($("[data-id='noResultMessage']")).toContainText "No results for"
 
   describe "Test resetSearchWords function", ->
     it "reset textbox value", ->
-      $(".form-control").val "dimsum"
+      $("[data-id='searchWord']").val "dimsum"
 
       expect($(".form-control")).toHaveValue "dimsum"
 
@@ -207,43 +207,54 @@ describe "Test UI", ->
 
   describe "Test resetSearch function", ->
     it "Reset detailed search result", ->
-      $("tbody").append "<tr><td>hi</td></tr>"
+      $("tbody").append "<tr data-id='tableBody'><td>hi</td></tr>"
 
-      expect($("td")).toExist
-      expect($("tbody")).toHaveText "hi"
+      expect($("[data-id='tableBody'] td")).toExist
+      expect($("[data-id='tableBody'] td")).toHaveText "hi"
 
       ui.resetSearch()
 
-      expect($("td")).not.toExist
-      expect($("tbody")).not.toHaveText "hi"
+      expect($("[data-id='tableBody'] td")).not.toExist
+      expect($("[data-id='tableBody'] td")).not.toHaveText "hi"
 
     it "Reset no search result message", ->
-      $(".title").prepend '<p class="bg-danger">danger</p>'
+      $(".title").prepend "<p class='bg-danger' data-id='noResultMessage'>danger</p>"
 
-      expect($(".bg-danger")).toExist
-
-      ui.resetSearch()
-
-      expect($(".bg-danger")).not.toExist
-
-    it "Reset search title", ->
-      $(".title").append "<h1 class = 'page-header'>Pizza House</h1>"
-
-      expect($(".page-header")).toExist
+      expect($("[data-id='noResultMessage']")).toExist
 
       ui.resetSearch()
 
-      expect($(".page-header")).not.toExist
+      expect($("[data-id='noResultMessage']")).not.toExist
+
+    it "Reset search restaurant name in title", ->
+      $(".title").append "<h1 class='page-header' data-id='restaturantName'>Pizza House</h1>"
+
+      expect($("[data-id='restaturantName']")).toExist
+      expect($("[data-id='restaturantName']")).toContainText "Pizza House"
+
+      ui.resetSearch()
+
+      expect($("[data-id='restaturantName']")).not.toExist
+
+    it "Reset search restaurant address in title", ->
+      $(".title").append "<small data-id='restaturantAddress'>Loop</small>"
+
+      expect($("[data-id='restaturantAddress']")).toExist
+      expect($("[data-id='restaturantAddress']")).toContainText "Loop"
+
+      ui.resetSearch()
+
+      expect($("small[data-id='restaturantAddress']")).not.toExist
 
     it "Reset search results list", ->
-      $(".title").before """<li><h3 data-id='123'>Subway
+      $(".title").before """<li data-id='resultsList'><h3 data-id='123'>Subway
                             <small data-id='123'> (The Loop)</small></h3></li>"""
 
-      expect($(".li")).toExist
+      expect($("[data-id='resultsList']")).toExist
 
       ui.resetSearch()
 
-      expect($(".li")).not.toExist
+      expect($("[data-id='resultsList']")).not.toExist
 
   describe "Test goBackHome function", ->
     it "call functions after click", ->
