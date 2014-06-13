@@ -51,35 +51,17 @@ describe "Test UI", ->
       data = [{license_: "123456", dba_name: "Domino pizza", address: "DownTown", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}]
       respondToRestaurantsUI(ui.inspections.url(), data)
 
-    it "Call showResult function if suscess get http request", ->
-      showResult = spyOn(ui, "showResult")
-      ui.searchResult()
-      fakeServer.respond()
-      expect(showResult).toHaveBeenCalled
-
     it "Call setMapCSS function if data's dba_name match to restaurantName", ->
       setMapCSS = spyOn(ui, "setMapCSS")
       ui.searchResult()
       fakeServer.respond()
       expect(setMapCSS).toHaveBeenCalled
 
-    it "Call setTitle function if data's dba_name match to restaurantName", ->
-      setTitle = spyOn(ui, "setTitle")
-      ui.searchResult()
-      fakeServer.respond()
-      expect(setTitle).toHaveBeenCalled
-
     it "Call markLocation function if data's dba_name match to restaurantName", ->
       markLocation = spyOn(googlemap, "markLocation")
       ui.searchResult()
       fakeServer.respond()
       expect(markLocation).toHaveBeenCalled
-
-    it "Call setTableBody function if data's dba_name match to restaurantName", ->
-      setTableBody = spyOn(ui, "setTableBody")
-      ui.searchResult()
-      fakeServer.respond()
-      expect(setTableBody).toHaveBeenCalled
 
     it "Makes <h1> tag if data has violations", ->
       expect($("h1")).not.toExist
