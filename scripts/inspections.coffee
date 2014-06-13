@@ -13,10 +13,17 @@ class Inspections extends Backbone.Collection
       return "#{@resourceURL}&$q=#{encodeURIComponent @ui.searchWords()}"
     else if !_.isNull(@ui.restaurantID)
       return "#{@resourceURL}&license_=#{@ui.restaurantID}"
-    "#{@resourceURL}&$q=2014-}"
+    "#{@resourceURL}&$q=2014"
 
   changeOffSet: ->
     @offset += 1000
+
+  gatherAllRestaurants: ->
+    allRestaurants = new Backbone.Collection
+    @fetch
+      success: =>
+        allRestaurants.add(@models)
+        @changeOffSet()
 
   restaurantsFilterBy2014Year: ->
     @filter((restaurant) -> restaurant.get("inspection_date").match(/2014-*/g))
