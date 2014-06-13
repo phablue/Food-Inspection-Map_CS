@@ -2,6 +2,7 @@ class Inspections extends Backbone.Collection
   initialize: (options) ->
     @ui = options.ui
     @google = options.google
+    @offset = 0
     @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json?$where=violations IS NOT NULL"
 
   url: ->
@@ -13,6 +14,9 @@ class Inspections extends Backbone.Collection
     else if !_.isNull(@ui.restaurantID)
       return "#{@resourceURL}&license_=#{@ui.restaurantID}"
     "#{@resourceURL}&$q=2014-}"
+
+  changeOffSet: ->
+    @offset += 1000
 
   restaurantsFilterBy2014Year: ->
     @filter((restaurant) -> restaurant.get("inspection_date").match(/2014-*/g))
