@@ -69,18 +69,19 @@ describe "Test Inspections class", ->
       expect(result.length).toBe 1
 
   describe "Test urlConfig function", ->
+    url = inspections.url()
+
     it "url is resourceURL, if UI searchWord is empty", ->
-      url = inspections.url()
       expect(url).toBe(inspections.resourceURL)
 
     it "url is resourceURL?&$q=hi, if searchWord is 'hi'", ->
       $(".form-control").val "hi"
-      url = inspections.url()
+
       expect(url).toBe("#{inspections.resourceURL}&$q=hi")
 
     it "url is resourceURL?&$q=123, if UI searchWord is '123'", ->
       $(".form-control").val "123"
-      url = inspections.url()
+
       expect(url).toBe("#{inspections.resourceURL}&$q=123")
 
   describe "Test restaurantsFilterBy function", ->
