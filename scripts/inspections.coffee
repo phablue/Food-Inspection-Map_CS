@@ -24,13 +24,14 @@ class Inspections extends Backbone.Collection
       success: =>
         @allRestaurants.add(@models)
         @changeOffSet()
-        return @restaurantsFilterByKeyWords() if @length < 1000
+        if @length < 1000
+          return @restaurantsFilterByKeyWords()
         @getAllRestaurants()
 
   restaurantsFilterByKeyWords: ->
     keyWords = new RegExp("#{@ui.searchWords()}", "gi")
     if @url().search("offset")
-      return @allRestaurants
+      return @allRestaurants.models
     @filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
 
   restaurantsFilterBy: (restaurantID) ->
