@@ -31,25 +31,6 @@ describe "Test Inspections class", ->
     respondWithDataServer(inspections.url(), data)
     fakeServer.respond()
 
-  describe "Test restaurantsFilterBy2014Year function", ->
-    it "Return 1 if if inspection_date contain 2014", ->
-      data = [{dba_name: "Domino pizza", address: "Chicago", violations: "dirty", inspection_date: "2013-10-05T00:00:00"},
-              {dba_name: "Pizza Hut", address: "Downtown", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}]
-
-      getRequestfromDataServer(data)
-      result = inspections.restaurantsFilterBy2014Year()
-
-      expect(result.length).toBe 1
-      expect(result[0].get("dba_name")).toBe "Pizza Hut"
-
-    it "Return 0 if if inspection_date contain 2014", ->
-      data = [{dba_name: "Domino pizza", address: "Chicago", violations: "dirty", inspection_date: "2013-10-05T00:00:00"}]
-
-      getRequestfromDataServer(data)
-      result = inspections.restaurantsFilterBy2014Year()
-
-      expect(result.length).toBe 0
-
   describe "Test restaurantsFilterByKeyWords function", ->
     data = null
 
