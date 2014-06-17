@@ -3,6 +3,7 @@ class Inspections extends Backbone.Collection
     @ui = options.ui
     @google = options.google
     @offset = 0
+    @allRestaurants = new Backbone.Collection
     @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json?$where=violations IS NOT NULL AND inspection_date >= '2014-01-01'"
 
   url: ->
@@ -17,6 +18,14 @@ class Inspections extends Backbone.Collection
 
   changeOffSet: ->
     @offset += 1000
+
+  getAllRestaurants: ->
+    @fetch
+      success: =>
+        @allRestaurants.add(@models)
+        @changeOffSet()
+        return @allRestaurants if @length < 1000
+        return @getAllRestaurants()
 
   restaurantsFilterByKeyWords: ->
     keyWords = new RegExp("#{@ui.searchWords()}", "gi")
