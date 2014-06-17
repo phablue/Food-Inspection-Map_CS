@@ -32,14 +32,11 @@ describe "Test Inspections class", ->
     fakeServer.respond()
 
   describe "Test restaurantsFilterByKeyWords function", ->
-    data = null
-
-    beforeEach ->
-      data = [{license_: "123", dba_name: "Domino pizza", address: "Chicago", violations: "dirty", inspection_date: "2014-10-05T00:00:00"},
-              {license_: "456", dba_name: "Pizza Hut", address: "Downtown", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}]
+    data = [{license_: "123", dba_name: "Domino pizza", address: "Chicago", violations: "dirty", inspection_date: "2014-10-05T00:00:00"},
+            {license_: "456", dba_name: "Pizza Hut", address: "Downtown", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}]
 
     it "Return result length is 2 if search word is 'pizza'", ->
-      $(".form-control").val "pizza"
+      $("[data-id='searchWord']").val "pizza"
 
       getRequestfromDataServer(data)
       result = inspections.restaurantsFilterByKeyWords()
@@ -47,7 +44,7 @@ describe "Test Inspections class", ->
       expect(result.length).toBe 2
 
     it "Return result length is 1 if search word is 'hut'", ->
-      $(".form-control").val "hut"
+      $("[data-id='searchWord']").val "hut"
 
       getRequestfromDataServer(data)
       result = inspections.restaurantsFilterByKeyWords()
@@ -55,18 +52,22 @@ describe "Test Inspections class", ->
       expect(result.length).toBe 1
 
   describe "Test urlConfig function", ->
-    url = inspections.url()
-
     it "url is resourceURL, if UI searchWord is empty", ->
-      expect(url).toBe(inspections.resourceURL)
+      url = inspections.url()
+
+      expect(url).toBe("#{inspections.resourceURL}&$offset=0")
 
     it "url is resourceURL?&$q=hi, if searchWord is 'hi'", ->
-      $(".form-control").val "hi"
+      $("[data-id='searchWord']").val "hi"
+
+      url = inspections.url()
 
       expect(url).toBe("#{inspections.resourceURL}&$q=hi")
 
     it "url is resourceURL?&$q=123, if UI searchWord is '123'", ->
-      $(".form-control").val "123"
+      $("[data-id='searchWord']").val "123"
+
+      url = inspections.url()
 
       expect(url).toBe("#{inspections.resourceURL}&$q=123")
 
@@ -90,7 +91,7 @@ describe "Test Inspections class", ->
   describe "Test licenseIDsOfRestaurantsViolations function", ->
     it "Return only license_ ['Chicago', 'Seattle'] in data", ->
       data = [{license_: "Chicago", dba_name: "Pizza", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}, {license_: "Seattle", dba_name: "Pizza", violations: "Too dirty", inspection_date: "2014-10-05T00:00:00"}]
-      $(".form-control").val "pizza"
+      $("[data-id='searchWord']").val "pizza"
 
       getRequestfromDataServer(data)
       result = inspections.licenseIDsOfRestaurantsViolations()
@@ -99,7 +100,7 @@ describe "Test Inspections class", ->
       expect(result).toEqual(["Chicago", "Seattle"])
 
     it "Return ['Seoul'] in data after delete duplications", ->
-      $(".form-control").val "pizza"
+      $("[data-id='searchWord']").val "pizza"
       data = [{license_: "Seoul", dba_name: "Pizza", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}, {license_: "Seoul", dba_name: "Pizza", violations: "Too dirty", inspection_date: "2014-10-05T00:00:00"}]
 
       getRequestfromDataServer(data)
