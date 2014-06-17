@@ -24,7 +24,7 @@ class UI
         @removeLoading()
         @restaurantID = null
         if !_.isNull(@restaurantID)
-          return @showDetailOfResult(@inspections)
+          return @showDetailOfResult(@inspections.models)
         @showResult(@inspections.licenseIDsOfRestaurantsViolations())
 
   showResult: (data) ->
@@ -32,7 +32,7 @@ class UI
       return @noResultMessage()
     @resetSearchWords()
     if data.length == 1
-      return @showDetailOfResult(@inspections)
+      return @showDetailOfResult(@inspections.models)
     @resultMessage(data.length)
     googleMap = new GoogleMap(@google)
     _.each(data, (d) =>
