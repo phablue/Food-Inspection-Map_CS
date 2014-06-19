@@ -28,14 +28,12 @@ class Inspections extends Backbone.Collection
         @allRestaurants.add(@models)
         @changeOffSet()
         if @length < 1000
-          return @doEverythingINeedToDoNowThatIhaveData()
+          return @filterByKeyWordsFor()
         @getAllRestaurants()
-      error: =>
-        console.log("NO!")
 
-  filterByKeyWordsFor: (restaurants) ->
+  filterByKeyWordsFor: ->
     keyWords = new RegExp("#{@ui.searchWords()}", "gi")
-    restaurants.filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
+    @allRestaurants.filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
 
   restaurantsFilterBy: (restaurantID) ->
     $.when(@getAllRestaurants()).done((restaurants) ->
