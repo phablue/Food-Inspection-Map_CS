@@ -28,13 +28,10 @@ class Inspections extends Backbone.Collection
         @allRestaurants.add(@models)
         @changeOffSet()
         if @length < 1000
-          return @allRestaurantsByURL()
+          return @doEverythingINeedToDoNowThatIhaveData()
         @getAllRestaurants()
-
-  allRestaurantsByURL:  ->
-    if @searchInURL("offset") > -1
-      return @filterByKeyWordsFor(@allRestaurants)
-    @filterByKeyWordsFor(this)
+      error: =>
+        console.log("NO!")
 
   filterByKeyWordsFor: (restaurants) ->
     keyWords = new RegExp("#{@ui.searchWords()}", "gi")
