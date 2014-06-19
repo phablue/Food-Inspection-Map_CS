@@ -31,7 +31,7 @@ describe "Test Inspections class", ->
     respondWithDataServer(inspections.url(), data)
     fakeServer.respond()
 
-  describe "Test restaurantsFilterByKeyWords function", ->
+  describe "Test FilterByKeyWordsFor function", ->
     data = [{license_: "123", dba_name: "Domino pizza", address: "Chicago", violations: "dirty", inspection_date: "2014-10-05T00:00:00"},
             {license_: "456", dba_name: "Pizza Hut", address: "Downtown", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}]
 
@@ -39,7 +39,7 @@ describe "Test Inspections class", ->
       $("[data-id='searchWord']").val "pizza"
 
       getRequestfromDataServer(data)
-      result = inspections.restaurantsFilterByKeyWords()
+      result = inspections.filterByKeyWordsFor(inspections)
 
       expect(result.length).toBe 2
 
@@ -47,7 +47,7 @@ describe "Test Inspections class", ->
       $("[data-id='searchWord']").val "hut"
 
       getRequestfromDataServer(data)
-      result = inspections.restaurantsFilterByKeyWords()
+      result = inspections.filterByKeyWordsFor(inspections)
 
       expect(result.length).toBe 1
 
@@ -72,10 +72,10 @@ describe "Test Inspections class", ->
       expect(url).toBe("#{inspections.resourceURL}&$q=123")
 
   describe "Test searchInURL function", ->
-    it "Return 6 if 'offset' include url address", ->
+    it "Bigger than -1 if 'offset' include url address", ->
       result = inspections.searchInURL('offset')
 
-      expect(result).toBe 6
+      expect(result).toBe > -1
 
     it "Return -1 if 'offset' not include url address", ->
       $("[data-id='searchWord']").val "123"

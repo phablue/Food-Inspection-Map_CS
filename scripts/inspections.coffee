@@ -28,21 +28,24 @@ class Inspections extends Backbone.Collection
         @allRestaurants.add(@models)
         @changeOffSet()
         if @length < 1000
-          return @restaurantsFilterByKeyWords()
+          return @()
         @getAllRestaurants()
 
-  restaurantsFilterByKeyWords: ->
+  allRestaurantsByURL: ->
+    if @searchInURL("offset") > -1
+      return @filterByKeyWordsFor(@allRestaurants)
+    @filterByKeyWordsFor(this)
+
+  filterByKeyWordsFor: (restaurants) ->
     keyWords = new RegExp("#{@ui.searchWords()}", "gi")
-    if @searchInURL("offset")
-      return @allRestaurants.models
-    @filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
+    restaurants.filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
 
   restaurantsFilterBy: (restaurantID) ->
-    @getAllRestaurants().filter((restaurant) -> restaurant.get("license_") == restaurantID)
+    @allRestaurantsByURL().filter((restaurant) -> restaurant.get("license_") == restaurantID)
 
   licenseIDsOfRestaurants: ->
     licenseIDs = []
-    @getAllRestaurants().forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
+    @allRestaurantsByURL().forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
     _.uniq(licenseIDs);
 
   restaurantsOnGoogleMapBy: (restaurantsID) ->
