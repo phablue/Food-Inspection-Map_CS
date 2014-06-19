@@ -47,8 +47,8 @@ class Inspections extends Backbone.Collection
   licenseIDsOfRestaurants: ->
     licenseIDs = []
     $.when(@getAllRestaurants()).done((restaurants) ->
-      restaurants.forEach((restaurant) -> licenseIDs.push(restaurant.get("license_"))))
-    _.uniq(licenseIDs)
+      restaurants.forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
+      _.uniq(licenseIDs))
 
   restaurantsOnGoogleMapBy: (restaurantsID) ->
     googleMap = new GoogleMap(@google)
