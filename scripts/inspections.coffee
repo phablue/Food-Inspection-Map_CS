@@ -19,6 +19,9 @@ class Inspections extends Backbone.Collection
   changeOffSet: ->
     @offset += 1000
 
+  searchInURL: (words) ->
+    @url().search(words)
+
   getAllRestaurants: ->
     @fetch
       success: =>
@@ -30,7 +33,7 @@ class Inspections extends Backbone.Collection
 
   restaurantsFilterByKeyWords: ->
     keyWords = new RegExp("#{@ui.searchWords()}", "gi")
-    if @url().search("offset")
+    if searchInURL("offset")
       return @allRestaurants.models
     @filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
 
