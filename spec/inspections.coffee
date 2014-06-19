@@ -71,6 +71,19 @@ describe "Test Inspections class", ->
 
       expect(url).toBe("#{inspections.resourceURL}&$q=123")
 
+  describe "Test searchInURL function", ->
+    it "Return 6 if 'offset' include url address", ->
+      result = inspections.searchInURL('offset')
+
+      expect(result).toBe 6
+
+    it "Return -1 if 'offset' not include url address", ->
+      $("[data-id='searchWord']").val "123"
+
+      result = inspections.searchInURL('offset')
+
+      expect(result).toBe -1
+
   describe "Test restaurantsFilterBy function", ->
     beforeEach ->
       data = [{license_: "123", dba_name: "Domino pizza", address: "Chicago", violations: "dirty", inspection_date: "2014-10-05T00:00:00"},
@@ -88,13 +101,13 @@ describe "Test Inspections class", ->
 
       expect(result).toBeNull
 
-  describe "Test licenseIDsOfRestaurantsViolations function", ->
+  describe "Test licenseIDsOfRestaurants function", ->
     it "Return only license_ ['Chicago', 'Seattle'] in data", ->
       data = [{license_: "Chicago", dba_name: "Pizza", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}, {license_: "Seattle", dba_name: "Pizza", violations: "Too dirty", inspection_date: "2014-10-05T00:00:00"}]
       $("[data-id='searchWord']").val "pizza"
 
       getRequestfromDataServer(data)
-      result = inspections.licenseIDsOfRestaurantsViolations()
+      result = inspections.licenseIDsOfRestaurants()
 
       expect(result.length).toBe 2
       expect(result).toEqual(["Chicago", "Seattle"])
@@ -104,7 +117,7 @@ describe "Test Inspections class", ->
       data = [{license_: "Seoul", dba_name: "Pizza", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}, {license_: "Seoul", dba_name: "Pizza", violations: "Too dirty", inspection_date: "2014-10-05T00:00:00"}]
 
       getRequestfromDataServer(data)
-      result = inspections.licenseIDsOfRestaurantsViolations()
+      result = inspections.licenseIDsOfRestaurants()
 
       expect(result.length).toBe 1
       expect(result).toEqual(["Seoul"])

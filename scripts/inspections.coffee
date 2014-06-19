@@ -33,7 +33,7 @@ class Inspections extends Backbone.Collection
 
   restaurantsFilterByKeyWords: ->
     keyWords = new RegExp("#{@ui.searchWords()}", "gi")
-    if searchInURL("offset")
+    if @searchInURL("offset")
       return @allRestaurants.models
     @filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
 
