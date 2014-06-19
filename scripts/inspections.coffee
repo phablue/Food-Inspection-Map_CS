@@ -37,12 +37,12 @@ class Inspections extends Backbone.Collection
   restaurantsFilterBy: (restaurantID) ->
     @getAllRestaurants().filter((restaurant) -> restaurant.get("license_") == restaurantID)
 
-  licenseIDsOfRestaurantsViolations: ->
+  licenseIDsOfRestaurants: ->
     licenseIDs = []
     @getAllRestaurants().forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
     _.uniq(licenseIDs);
 
-  restaurantsViolationsOnGoogleMap: (restaurantsID) ->
+  restaurantsOnGoogleMapBy: (restaurantsID) ->
     googleMap = new GoogleMap(@google)
     _.each(restaurantsID, (restaurantID) =>
       restaurant = @restaurantsFilterBy(restaurantID)

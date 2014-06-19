@@ -10,7 +10,7 @@ class UI
     @inspections.fetch
       success: =>
         @removeLoading()
-        @inspections.restaurantsViolationsOnGoogleMap(@inspections.licenseIDsOfRestaurantsViolations())
+        @inspections.restaurantsOnGoogleMapBy(@inspections.licenseIDsOfRestaurants())
 
   searchWords: ->
     $("[data-id='searchWord']").val()
@@ -25,7 +25,7 @@ class UI
         @restaurantID = null
         if !_.isNull(@restaurantID)
           return @showDetailOfResult(@inspections.models)
-        @showResult(@inspections.licenseIDsOfRestaurantsViolations())
+        @showResult(@inspections.licenseIDsOfRestaurants())
 
   showResult: (data) ->
     if _.isEmpty(data)
