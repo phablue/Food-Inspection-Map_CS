@@ -22,13 +22,13 @@ class Inspections extends Backbone.Collection
   searchInURL: (words) ->
     @url().search(words)
 
-  getAllRestaurants:  ->
+  getAllRestaurants: (def) ->
     @fetch
       success: =>
         @allRestaurants.add(@models)
         @changeOffSet()
         if @length < 1000
-          return @filterByKeyWordsFor()
+          return def.resolve(@filterByKeyWordsFor())
         @getAllRestaurants()
 
   filterByKeyWordsFor: ->
