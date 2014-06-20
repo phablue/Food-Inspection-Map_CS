@@ -28,22 +28,23 @@ class Inspections extends Backbone.Collection
         @allRestaurants.add(@models)
         @changeOffSet()
         if @length < 1000
-          return def.resolve(@filterByKeyWordsFor())
+          return def.resolve(@allRestaurants)
         @getAllRestaurants()
+
+  displayAllRestaurantsOnGoogleMap: ->
+    def = $.deferred()
+    def.done
 
   filterByKeyWordsFor: ->
     keyWords = new RegExp("#{@ui.searchWords()}", "gi")
-    @allRestaurants.filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
+    @filter((restaurant) -> restaurant.get("dba_name").match(keyWords))
 
   restaurantsFilterBy: (restaurantID) ->
-    $.when(@getAllRestaurants()).done((restaurants) ->
-      restaurants.filter((restaurant) -> restaurant.get("license_") == restaurantID))
+    @filterByKeyWordsFor().filter((restaurant) -> restaurant.get("license_") == restaurantID)
 
   licenseIDsOfRestaurants: ->
-    licenseIDs = []
-    $.when(@getAllRestaurants()).done((restaurants) ->
-      restaurants.forEach((restaurant) -> licenseIDs.push(restaurant.get("license_")))
-      _.uniq(licenseIDs))
+    restaurants = new Backbone.Collection(@filterByKeyWordsFor())
+    _.uniq(restaurants.pluck("license_"))
 
   restaurantsOnGoogleMapBy: (restaurantsID) ->
     googleMap = new GoogleMap(@google)
