@@ -5,11 +5,20 @@ class UI
     @restaurantID = null
     @mark = null
 
-  getInspectionsDataOnGoogleMap: ->
+  displayRestaurantsOnGoogleMap: ->
+    def = $.Deferred()
+    @displayLoading("40%", "15%")
+    @inspections.getAllRestaurants(def)
+    def.done((restaurants) =>
+      @removeLoading()
+      @inspections.restaurantsOnGoogleMap(restaurants))
+
+  reDisplayRestaurantsOnGoogleMap: ->
     @displayLoading("40%", "15%")
     @inspections.fetch
       success: =>
-        @inspections.restaurantsOnGoogleMap()
+        @removeLoading()
+        @inspections.restaurantsOnGoogleMap(@inspections.allRestaurants)
 
   searchWords: ->
     $("[data-id='searchWord']").val()
@@ -65,11 +74,11 @@ class UI
       @restaurantID = null
       @resetGoogleMap()
       @setMapCSS("70%", "100%")
-      @getInspectionsDataOnGoogleMap()
+      @reDisplayRestaurantsOnGoogleMap()
 
   mainPage: ->
     @goBackHome()
-    @getInspectionsDataOnGoogleMap()
+    @displayRestaurantsOnGoogleMap()
     @searchingRestaurant()
 
   showMarkOnGoogleMap: (data) ->

@@ -41,15 +41,11 @@ class Inspections extends Backbone.Collection
   licenseIDsOf: (restaurants) ->
     _.uniq(restaurants.pluck("license_"))
 
-  restaurantsOnGoogleMap: ->
-    def = $.Deferred()
-    @getAllRestaurants(def)
-    def.done((restaurants) =>
-      @ui.removeLoading()
-      googleMap = new GoogleMap(@google)
-      _.each(@licenseIDsOf(restaurants), (restaurantID) =>
-        restaurant = @restaurantsFilterBy(restaurants, restaurantID)
-        @settingForGoogleMap(googleMap, restaurant)))
+  restaurantsOnGoogleMap: (restaurants) ->
+    googleMap = new GoogleMap(@google)
+    _.each(@licenseIDsOf(restaurants), (restaurantID) =>
+      restaurant = @restaurantsFilterBy(restaurants, restaurantID)
+      @settingForGoogleMap(googleMap, restaurant))
 
   settingForGoogleMap: (googleMap, data) ->
     mark = googleMap.markLocation data[0].get("latitude"), data[0].get("longitude")
