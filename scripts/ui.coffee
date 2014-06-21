@@ -9,8 +9,7 @@ class UI
     @displayLoading("40%", "15%")
     @inspections.fetch
       success: =>
-        @removeLoading()
-        @inspections.restaurantsOnGoogleMapBy(@inspections.licenseIDsOfRestaurants())
+        @inspections.restaurantsOnGoogleMapBy()
 
   searchWords: ->
     $("[data-id='searchWord']").val()

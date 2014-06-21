@@ -29,7 +29,7 @@ class Inspections extends Backbone.Collection
         @changeOffSet()
         if @length < 1000
           return def.resolve(@allRestaurants)
-        @getAllRestaurants()
+        @getAllRestaurants(def)
 
   filterByKeyWordsFor: ->
     keyWords = new RegExp("#{@ui.searchWords()}", "gi")
@@ -42,10 +42,14 @@ class Inspections extends Backbone.Collection
     _.uniq(restaurants.pluck("license_"))
 
   restaurantsOnGoogleMapBy: ->
-    googleMap = new GoogleMap(@google)
-    _.each(restaurantsID, (restaurantID) =>
-      restaurant = @restaurantsFilterBy(restaurants, restaurantID)
-      @settingForGoogleMap(googleMap, restaurant))
+    def = $.Deferred()
+    @getAllRestaurants(def)
+    def.done((restaurants) =>
+      @ui.removeLoading()
+      googleMap = new GoogleMap(@google)
+      _.each(@licenseIDsOf(restaurants), (restaurantID) =>
+        restaurant = @restaurantsFilterBy(restaurants, restaurantID)
+        @settingForGoogleMap(googleMap, restaurant)))
 
   settingForGoogleMap: (googleMap, data) ->
     mark = googleMap.markLocation data[0].get("latitude"), data[0].get("longitude")
