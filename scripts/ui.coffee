@@ -25,18 +25,20 @@ class UI
         @restaurantID = null
         if !_.isNull(@restaurantID)
           return @showDetailOfResult(@inspections.models)
-        @showResult(@inspections.licenseIDsOfRestaurants())
+        restaturants = @inspections.filterByKeyWordsFor()
+        restaturantIDs = @inspections.licenseIDsOf(new Backbone.Collection(restaturants))
+        @showResult(restaturants, restaturantIDs)
 
-  showResult: (data) ->
-    if _.isEmpty(data)
+  showResult: (restaturants, restaturantIDs) ->
+    if _.isEmpty(restaturantIDs)
       return @noResultMessage()
     @resetSearchWords()
-    if data.length == 1
+    if restaturantIDs.length == 1
       return @showDetailOfResult(@inspections.models)
-    @resultMessage(data.length)
+    @resultMessage(restaturantIDs.length)
     googleMap = new GoogleMap(@google)
-    _.each(data, (d) =>
-      restaturant = @inspections.restaurantsFilterBy(d)
+    _.each(restaturantIDs, (restaturantID) =>
+      restaturant = @inspections.restaurantsFilterBy(restaturants, restaturantID)
       @inspections.settingForGoogleMap(googleMap, restaturant)
       @setResultsList(restaturant[0]))
     @resultsList()
