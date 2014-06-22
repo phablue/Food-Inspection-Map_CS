@@ -6,7 +6,7 @@ class Inspections extends Backbone.Collection
     @allRestaurants = new Backbone.Collection
     @resourceURL = "https://data.cityofchicago.org/resource/4ijn-s7e5.json?$where=violations IS NOT NULL AND inspection_date >= '2014-01-01'"
 
-  url: ->
+  url: -> 
     @urlConfig()
 
   urlConfig: ->
