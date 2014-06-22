@@ -259,13 +259,13 @@ describe "Test UI", ->
   describe "Test goBackHome function", ->
     it "call functions after click", ->
       resetSearch = spyOn(ui, "resetSearch")
-      getInspectionsDataOnGoogleMap = spyOn(ui, "getInspectionsDataOnGoogleMap")
+      reDisplayRestaurantsOnGoogleMap = spyOn(ui, "reDisplayRestaurantsOnGoogleMap")
 
       ui.goBackHome()
       $(".navbar-brand").click()
 
       expect(resetSearch).toHaveBeenCalled
-      expect(getInspectionsDataOnGoogleMap).toHaveBeenCalled
+      expect(reDisplayRestaurantsOnGoogleMap).toHaveBeenCalled
 
   describe "Test replaceViolations and resetDate functions", ->
     dataModel = null

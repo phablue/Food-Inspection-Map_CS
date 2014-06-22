@@ -90,24 +90,27 @@ describe "Test Inspections class", ->
               {license_: "456", dba_name: "Pizza Hut", address: "Downtown", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}]
 
       getRequestfromDataServer(data)
+      inspections.fetch()
 
     it "Return data dba_name is Domino pizza if restaurantID is 123", ->
-      result = inspections.restaurantsFilterBy("123")
+      result = inspections.restaurantsFilterBy(inspections.models, "123")
 
       expect(result[0].get("dba_name")).toEqual("Domino pizza")
 
     it "Return data is null if restaurantID is 567", ->
-      result = inspections.restaurantsFilterBy("567")
+      result = inspections.restaurantsFilterBy(inspections.models, "567")
 
       expect(result).toBeNull
 
-  describe "Test licenseIDsOfRestaurants function", ->
+  describe "Test licenseIDsOf function", ->
     it "Return only license_ ['Chicago', 'Seattle'] in data", ->
       data = [{license_: "Chicago", dba_name: "Pizza", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}, {license_: "Seattle", dba_name: "Pizza", violations: "Too dirty", inspection_date: "2014-10-05T00:00:00"}]
       $("[data-id='searchWord']").val "pizza"
 
       getRequestfromDataServer(data)
-      result = inspections.licenseIDsOfRestaurants()
+      inspections.fetch
+      
+      result = inspections.licenseIDsOf(inspections)
 
       expect(result.length).toBe 2
       expect(result).toEqual(["Chicago", "Seattle"])
@@ -117,7 +120,9 @@ describe "Test Inspections class", ->
       data = [{license_: "Seoul", dba_name: "Pizza", violations: "dirty", inspection_date: "2014-10-05T00:00:00"}, {license_: "Seoul", dba_name: "Pizza", violations: "Too dirty", inspection_date: "2014-10-05T00:00:00"}]
 
       getRequestfromDataServer(data)
-      result = inspections.licenseIDsOfRestaurants()
+      inspections.fetch
+      
+      result = inspections.licenseIDsOf(inspections)
 
       expect(result.length).toBe 1
       expect(result).toEqual(["Seoul"])
