@@ -106,6 +106,7 @@ class UI
     @remove("[data-id='restaturantAddress']")
 
   resetNoResultMessage: ->
+    @remove("br")
     @remove("[data-id='noResultMessage']")
 
   resetResultMessage: ->
